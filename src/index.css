@@ -8,9 +8,9 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* Warm beige/cream backgrounds */
-    --background: 30 25% 90%;
-    --foreground: 25 50% 15%;
+    /* Warm beige/tan backgrounds - updated from design reference */
+    --background: 35 25% 85%;
+    --foreground: 25 45% 20%;
 
     /* Cards with white background */
     --card: 0 0% 100%;
@@ -23,9 +23,9 @@ All colors MUST be HSL.
     --primary: 0 85% 55%;
     --primary-foreground: 0 0% 100%;
 
-    /* Light beige secondary */
-    --secondary: 30 20% 95%;
-    --secondary-foreground: 25 50% 15%;
+    /* Light beige secondary - updated */
+    --secondary: 35 22% 88%;
+    --secondary-foreground: 25 45% 20%;
 
     /* Muted browns */
     --muted: 30 15% 85%;

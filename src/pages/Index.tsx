@@ -33,6 +33,7 @@ import {
 } from 'lucide-react';
 import heroImage from '@/assets/hero-bg.jpg';
 import founderImage from '@/assets/founder.jpg';
+import endToEndImage from '@/assets/end-to-end-solutions.jpg';
 
 const Index = () => {
   const services = [
@@ -48,23 +49,6 @@ const Index = () => {
     { icon: Box, title: '3D Design & Visualization' },
   ];
 
-  const solutions = [
-    { icon: ChefHat, label: 'Modular Kitchen' },
-    { icon: Armchair, label: 'Storage & Wardrobe' },
-    { icon: ShoppingBag, label: 'Crockery Units' },
-    { icon: Sofa, label: 'Space Saving Furniture' },
-    { icon: Monitor, label: 'TV Units' },
-    { icon: BookOpen, label: 'Study Tables' },
-    { icon: Waves, label: 'False Ceiling' },
-    { icon: Zap, label: 'Lights' },
-    { icon: Wallpaper, label: 'Wallpaper' },
-    { icon: Paintbrush, label: 'Wall Paint' },
-    { icon: Droplet, label: 'Bathroom' },
-    { icon: Church, label: 'Pooja Unit' },
-    { icon: DoorOpen, label: 'Foyer Designs' },
-    { icon: Table, label: 'Movable Furniture' },
-    { icon: Baby, label: 'Kids Bedroom' },
-  ];
 
   const reviews = [
     {
@@ -174,25 +158,12 @@ const Index = () => {
       {/* End-to-End Solutions Section */}
       <section className="py-16 md:py-20 bg-secondary">
         <div className="container mx-auto px-4">
-          <h2 className="font-serif text-3xl md:text-4xl font-bold text-center mb-4 text-foreground">
-            End-to-end interior solutions in Bangalore
-          </h2>
-          <p className="text-center text-muted-foreground text-lg max-w-3xl mx-auto mb-12">
-            Whether you're dreaming of a state-of-the-art kitchen or an interior you can't stop
-            admiring, our team works with you to create your perfect home.
-          </p>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 mb-8">
-            {solutions.map((solution, index) => (
-              <div key={index} className="flex flex-col items-center text-center">
-                <solution.icon className="h-12 w-12 md:h-16 md:w-16 text-primary mb-3" strokeWidth={1} />
-                <span className="text-sm font-medium text-foreground">{solution.label}</span>
-              </div>
-            ))}
-          </div>
-          <div className="text-center">
-            <Button asChild size="lg" className="bg-primary hover:bg-primary/90">
-              <a href="#contact">Book Free Design Session</a>
-            </Button>
+          <div className="max-w-5xl mx-auto">
+            <img
+              src={endToEndImage}
+              alt="End-to-end interior solutions in Bangalore"
+              className="w-full rounded-xl shadow-lg"
+            />
           </div>
         </div>
       </section>

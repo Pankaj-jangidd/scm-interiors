@@ -61,7 +61,7 @@ const Contact = () => {
       {/* Quick Contact Options */}
       <section className="py-16 md:py-20">
         <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto mb-16">
+          <div className="grid sm:grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto mb-16">
             <a
               href="tel:+918824374977"
               className="bg-card p-8 rounded-xl shadow-md hover-lift text-center"
@@ -77,7 +77,7 @@ const Contact = () => {
             >
               <Mail className="h-12 w-12 text-primary mx-auto mb-4" />
               <h3 className="font-semibold text-lg mb-2 text-foreground">Mail Us</h3>
-              <p className="text-muted-foreground text-sm">
+              <p className="text-muted-foreground text-sm break-words">
                 srichamundeshwariinteriors@gmail.com
               </p>
             </a>

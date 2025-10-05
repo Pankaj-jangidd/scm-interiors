@@ -1,6 +1,15 @@
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import { CheckCircle, Users, Award, Clock, Heart, Shield, MessageCircle } from 'lucide-react';
+import {
+  Heart,
+  Award,
+  CheckCircle,
+  Clock,
+  DollarSign,
+  Shield,
+  MessageCircle,
+  Users,
+} from 'lucide-react';
 import founderImage from '@/assets/founder.jpg';
 
 const About = () => {
@@ -9,9 +18,10 @@ const About = () => {
     { icon: Award, title: 'Premium Finishing' },
     { icon: CheckCircle, title: 'Detailing & Precision' },
     { icon: Clock, title: 'Timely Delivery' },
-    { icon: Shield, title: 'Reasonable Rates' },
-    { icon: Award, title: 'Quality Materials' },
+    { icon: DollarSign, title: 'Reasonable Rates' },
+    { icon: Shield, title: 'Quality Materials' },
     { icon: MessageCircle, title: 'Transparent Communication' },
+    { icon: Users, title: 'Experienced Team' },
   ];
 
   return (
@@ -93,7 +103,7 @@ const About = () => {
           <h2 className="font-serif text-3xl md:text-4xl font-bold text-center mb-12 text-foreground">
             Our Main Aim
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
             {values.map((value, index) => (
               <div
                 key={index}

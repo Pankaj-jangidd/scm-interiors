@@ -1,6 +1,7 @@
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import ReviewCard from '@/components/ReviewCard';
+import AddReviewDialog from '@/components/AddReviewDialog';
 
 const Reviews = () => {
   const allReviews = [
@@ -98,7 +99,7 @@ const Reviews = () => {
       {/* Reviews Grid */}
       <section className="py-16 md:py-20">
         <div className="container mx-auto px-4">
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto mb-12">
             {allReviews.map((review, index) => (
               <div
                 key={index}
@@ -108,6 +109,9 @@ const Reviews = () => {
                 <ReviewCard {...review} />
               </div>
             ))}
+          </div>
+          <div className="text-center">
+            <AddReviewDialog />
           </div>
         </div>
       </section>
