@@ -1,168 +1,97 @@
-import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import ServiceCard from '@/components/ServiceCard';
-import ReviewCard from '@/components/ReviewCard';
 import ContactForm from '@/components/ContactForm';
-import {
-  Home,
-  Wrench,
-  Lightbulb,
-  Paintbrush,
-  Hammer,
-  Package,
-  Grid,
-  Layers,
-  RefreshCw,
-  Box,
-  ChefHat,
-  Sofa,
-  ShoppingBag,
-  Table,
-  Monitor,
-  BookOpen,
-  Waves,
-  Zap,
-  Wallpaper,
-  Droplet,
-  Church,
-  DoorOpen,
-  Armchair,
-  Baby,
-} from 'lucide-react';
 import heroImage from '@/assets/hero-bg.jpg';
-import founderImage from '@/assets/founder.jpg';
 import endToEndImage from '@/assets/end-to-end-solutions.jpg';
 
 const Index = () => {
-  const services = [
-    { icon: Package, title: 'Turnkey Interior Projects' },
-    { icon: ChefHat, title: 'Modular Kitchen Design' },
-    { icon: Layers, title: 'False Ceiling & Lighting' },
-    { icon: Paintbrush, title: 'Painting & Wall Finishes' },
-    { icon: Hammer, title: 'Wood & Furniture Fabrication' },
-    { icon: Grid, title: 'Flooring Solutions' },
-    { icon: Wrench, title: 'MS & SS Fabrication' },
-    { icon: Layers, title: 'Glass & Partition Work' },
-    { icon: RefreshCw, title: 'Renovation & Remodeling' },
-    { icon: Box, title: '3D Design & Visualization' },
-  ];
-
-
-  const reviews = [
-    {
-      name: 'Rajesh Kumar',
-      rating: 5,
-      review:
-        'Outstanding work! The team transformed our home beautifully. Very professional and delivered on time.',
-    },
-    {
-      name: 'Priya Sharma',
-      rating: 5,
-      review:
-        'Excellent modular kitchen design. The quality of materials and finish is top-notch. Highly recommended!',
-    },
-    {
-      name: 'Anil Patel',
-      rating: 5,
-      review:
-        'Great attention to detail. The false ceiling work was done perfectly. Very satisfied with the results.',
-    },
-    {
-      name: 'Meena Reddy',
-      rating: 5,
-      review:
-        'Professional team and excellent craftsmanship. They understood our requirements perfectly.',
-    },
-  ];
-
   return (
     <div className="min-h-screen">
       <Navbar />
 
       {/* Hero Section */}
-      <section className="relative h-screen min-h-[600px] flex items-center justify-center">
+      <section className="relative h-[70vh] min-h-[500px] flex items-center justify-center">
         <div
           className="absolute inset-0 bg-cover bg-center"
           style={{ backgroundImage: `url(${heroImage})` }}
         >
-          <div className="absolute inset-0 bg-black/50" />
+          <div className="absolute inset-0 bg-black/30" />
         </div>
-        <div className="relative z-10 text-center text-white px-4 animate-fade-in">
-          <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold mb-6 max-w-4xl mx-auto">
-            Designing Beautiful Spaces That Reflect Your Lifestyle
+        <div className="relative z-10 text-center text-white px-4 animate-fade-in max-w-4xl mx-auto">
+          <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
+            End-to-end interior solutions in Bangalore
           </h1>
-          <p className="text-lg md:text-xl mb-8 max-w-2xl mx-auto font-light">
-            We craft elegant, functional, and timeless interiors — blending design with comfort.
+          <p className="text-lg md:text-xl mb-8 font-light">
+            30+ years of Experience | Bangalore, Karnataka
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-lg">
-              <Link to="/gallery">View Gallery</Link>
-            </Button>
-            <Button
-              asChild
-              size="lg"
-              variant="outline"
-              className="bg-white hover:bg-white/90 text-primary border-white text-lg"
-            >
-              <a href="#contact">Get a Free Quote</a>
-            </Button>
-          </div>
+          <Button size="lg" className="bg-primary hover:bg-primary/90 text-lg">
+            <a href="#contact">Book Free Design Session</a>
+          </Button>
         </div>
       </section>
 
       {/* About Section */}
-      <section className="py-16 md:py-20 bg-card">
-        <div className="container mx-auto px-4">
-          <h2 className="font-serif text-3xl md:text-4xl font-bold text-center mb-12 text-foreground">
-            <span className="border-b-4 border-primary pb-2">SRI CHAMUNDESHWARI INTERIORS</span>
-          </h2>
-          <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center max-w-6xl mx-auto">
-            <div className="space-y-4 text-muted-foreground leading-relaxed">
-              <p>
-                Founded by Ganapat Lal in 1995, Sri Chamundeshwari Interiors brings over 30+ years
-                of experience in transforming homes and commercial spaces across Bangalore.
-              </p>
-              <p>
-                Belonging to the traditional Jangid community of Rajasthan, known for their
-                excellence in wood craftsmanship, our legacy combines art, precision, and modern
-                design to deliver interiors that stand the test of time.
-              </p>
-            </div>
-            <div className="flex justify-center">
+      <section className="py-16 md:py-20">
+        <div className="container mx-auto px-4 max-w-6xl">
+          <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+            <div>
               <img
-                src={founderImage}
-                alt="Founder Ganapat Lal"
-                className="rounded-lg shadow-lg max-w-sm w-full"
+                src={heroImage}
+                alt="Interior work showcase"
+                className="w-full h-[400px] object-cover rounded-lg"
               />
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Services Section */}
-      <section className="py-16 md:py-20">
-        <div className="container mx-auto px-4">
-          <h2 className="font-serif text-3xl md:text-4xl font-bold text-center mb-12 text-foreground">
-            Services We Offer
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
-            {services.map((service, index) => (
-              <ServiceCard key={index} icon={service.icon} title={service.title} />
-            ))}
+            <div className="space-y-4">
+              <h2 className="font-serif text-3xl md:text-4xl font-bold text-accent mb-6">
+                About Us
+              </h2>
+              <p className="text-base md:text-lg leading-relaxed text-foreground">
+                Sri Chamundeshwari Interiors & Contractors is a Bangalore-based firm with 30+ years
+                of experience in interior execution and fabrication.
+              </p>
+              <div className="mt-6">
+                <h3 className="font-semibold text-lg mb-3 text-accent">Services we provide:</h3>
+                <ul className="space-y-2 text-base">
+                  <li className="flex items-start">
+                    <span className="text-primary mr-2">•</span>
+                    <span>Carpentary works</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-primary mr-2">•</span>
+                    <span>Paint works</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-primary mr-2">•</span>
+                    <span>False Ceiling</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-primary mr-2">•</span>
+                    <span>SS Fabrication</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-primary mr-2">•</span>
+                    <span>Modular Fittings</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-primary mr-2">•</span>
+                    <span>Wall Scapes</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
       {/* End-to-End Solutions Section */}
-      <section className="py-16 md:py-20 bg-secondary">
-        <div className="container mx-auto px-4">
-          <div className="max-w-5xl mx-auto">
+      <section className="py-16 md:py-20 bg-secondary/30">
+        <div className="container mx-auto px-4 max-w-6xl">
+          <div className="text-center">
             <img
               src={endToEndImage}
               alt="End-to-end interior solutions in Bangalore"
-              className="w-full rounded-xl shadow-lg"
+              className="w-full max-w-5xl mx-auto rounded-lg shadow-lg"
             />
           </div>
         </div>
@@ -171,59 +100,50 @@ const Index = () => {
       {/* Gallery Preview Section */}
       <section className="py-16 md:py-20">
         <div className="container mx-auto px-4">
-          <h2 className="font-serif text-3xl md:text-4xl font-bold text-center mb-12 text-foreground">
+          <h2 className="font-serif text-3xl md:text-4xl font-bold text-center mb-12 text-accent">
             View Our Projects
           </h2>
           <div className="grid md:grid-cols-2 gap-6 max-w-6xl mx-auto">
-            <Link
-              to="/gallery"
-              className="relative h-96 rounded-xl overflow-hidden group cursor-pointer"
+            <a
+              href="/gallery"
+              className="relative h-96 rounded-xl overflow-hidden group cursor-pointer block"
             >
-              <div className="absolute inset-0 bg-gradient-to-b from-accent/20 to-accent/80 group-hover:to-accent/90 transition-all" />
+              <div
+                className="absolute inset-0 bg-cover bg-center"
+                style={{ backgroundImage: `url(${heroImage})` }}
+              >
+                <div className="absolute inset-0 bg-accent/60 group-hover:brightness-110 transition-all" />
+              </div>
               <div className="absolute inset-0 flex items-center justify-center">
                 <h3 className="font-serif text-3xl md:text-4xl font-bold text-white group-hover:scale-110 transition-transform">
                   Residential Projects
                 </h3>
               </div>
-            </Link>
-            <Link
-              to="/gallery"
-              className="relative h-96 rounded-xl overflow-hidden group cursor-pointer"
+            </a>
+            <a
+              href="/gallery"
+              className="relative h-96 rounded-xl overflow-hidden group cursor-pointer block"
             >
-              <div className="absolute inset-0 bg-gradient-to-b from-muted/20 to-muted/80 group-hover:to-muted/90 transition-all" />
+              <div
+                className="absolute inset-0 bg-cover bg-center"
+                style={{ backgroundImage: `url(${heroImage})` }}
+              >
+                <div className="absolute inset-0 bg-muted/60 group-hover:brightness-110 transition-all" />
+              </div>
               <div className="absolute inset-0 flex items-center justify-center">
                 <h3 className="font-serif text-3xl md:text-4xl font-bold text-white group-hover:scale-110 transition-transform">
                   Commercial Projects
                 </h3>
               </div>
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* Reviews Section */}
-      <section className="py-16 md:py-20 bg-card">
-        <div className="container mx-auto px-4">
-          <h2 className="font-serif text-3xl md:text-4xl font-bold text-center mb-12 text-foreground">
-            Client Reviews
-          </h2>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-            {reviews.map((review, index) => (
-              <ReviewCard key={index} {...review} />
-            ))}
-          </div>
-          <div className="text-center">
-            <Button asChild variant="outline" className="border-primary text-primary hover:bg-primary/10">
-              <Link to="/reviews">Read More</Link>
-            </Button>
+            </a>
           </div>
         </div>
       </section>
 
       {/* Contact Form Section */}
-      <section id="contact" className="py-16 md:py-20">
+      <section id="contact" className="py-16 md:py-20 bg-secondary/20">
         <div className="container mx-auto px-4">
-          <h2 className="font-serif text-3xl md:text-4xl font-bold text-center mb-12 text-foreground">
+          <h2 className="font-serif text-3xl md:text-4xl font-bold text-center mb-12 text-accent">
             Contact Us
           </h2>
           <ContactForm />

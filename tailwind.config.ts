@@ -49,7 +49,7 @@ export default {
         },
       },
       fontFamily: {
-        serif: ['Libre Baskerville', 'serif'],
+        serif: ['Playfair Display', 'serif'],
         sans: ['Inter', 'sans-serif'],
       },
       borderRadius: {

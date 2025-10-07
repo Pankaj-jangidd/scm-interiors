@@ -77,7 +77,7 @@ const Contact = () => {
             >
               <Mail className="h-12 w-12 text-primary mx-auto mb-4" />
               <h3 className="font-semibold text-lg mb-2 text-foreground">Mail Us</h3>
-              <p className="text-muted-foreground text-sm break-words">
+              <p className="text-muted-foreground text-xs md:text-sm break-all">
                 srichamundeshwariinteriors@gmail.com
               </p>
             </a>
