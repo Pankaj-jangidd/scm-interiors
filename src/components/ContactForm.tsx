@@ -10,12 +10,16 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { toast } from 'sonner';
+import { useAdmin } from '@/contexts/AdminContext';
 
 const ContactForm = () => {
+  const { addContactSubmission } = useAdmin();
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
+    email: '',
     projectType: '',
+    message: '',
   });
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -32,8 +36,9 @@ const ContactForm = () => {
       return;
     }
 
+    addContactSubmission(formData);
     toast.success('Thank you! We will get back to you shortly.');
-    setFormData({ name: '', phone: '', projectType: '' });
+    setFormData({ name: '', phone: '', email: '', projectType: '', message: '' });
   };
 
   return (
@@ -61,6 +66,29 @@ const ContactForm = () => {
             onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
             placeholder="+91 XXXXX XXXXX"
             required
+            className="mt-1"
+          />
+        </div>
+
+        <div>
+          <Label htmlFor="email">Email Address</Label>
+          <Input
+            id="email"
+            type="email"
+            value={formData.email}
+            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+            placeholder="your.email@example.com"
+            className="mt-1"
+          />
+        </div>
+
+        <div>
+          <Label htmlFor="message">Message</Label>
+          <Input
+            id="message"
+            value={formData.message}
+            onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+            placeholder="Tell us about your project..."
             className="mt-1"
           />
         </div>

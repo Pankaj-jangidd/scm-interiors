@@ -80,7 +80,8 @@ const Footer = () => {
                 <Mail className="h-4 w-4 flex-shrink-0 mt-1 text-white/80" />
                 <a
                   href="mailto:srichamundeshwariinteriors@gmail.com"
-                  className="text-white/80 hover:text-white transition-colors break-all text-xs"
+                  className="text-white/80 hover:text-white transition-colors text-xs break-all"
+                  style={{ wordBreak: 'break-all' }}
                 >
                   srichamundeshwariinteriors@gmail.com
                 </a>

@@ -2,8 +2,11 @@ import { Button } from '@/components/ui/button';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import ContactForm from '@/components/ContactForm';
+import ServicesSection from '@/components/ServicesSection';
+import EndToEndSection from '@/components/EndToEndSection';
+import TestimonialsSection from '@/components/TestimonialsSection';
 import heroImage from '@/assets/hero-bg.jpg';
-import endToEndImage from '@/assets/end-to-end-solutions.jpg';
+import founderImage from '@/assets/founder.jpg';
 
 const Index = () => {
   return (
@@ -32,70 +35,63 @@ const Index = () => {
       </section>
 
       {/* About Section */}
-      <section className="py-16 md:py-20">
+      <section className="py-16 md:py-20 bg-background">
         <div className="container mx-auto px-4 max-w-6xl">
           <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
             <div>
               <img
-                src={heroImage}
-                alt="Interior work showcase"
-                className="w-full h-[400px] object-cover rounded-lg"
+                src={founderImage}
+                alt="Founder of Sri Chamundeshwari Interiors"
+                className="w-full h-[450px] object-cover rounded-lg shadow-lg"
               />
             </div>
-            <div className="space-y-4">
-              <h2 className="font-serif text-3xl md:text-4xl font-bold text-accent mb-6">
-                About Us
+            <div className="space-y-6">
+              <h2 className="font-serif text-3xl md:text-4xl font-bold text-accent mb-4">
+                About Sri Chamundeshwari Interiors
               </h2>
-              <p className="text-base md:text-lg leading-relaxed text-foreground">
-                Sri Chamundeshwari Interiors & Contractors is a Bangalore-based firm with 30+ years
-                of experience in interior execution and fabrication.
-              </p>
-              <div className="mt-6">
-                <h3 className="font-semibold text-lg mb-3 text-accent">Services we provide:</h3>
-                <ul className="space-y-2 text-base">
-                  <li className="flex items-start">
-                    <span className="text-primary mr-2">•</span>
-                    <span>Carpentary works</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-primary mr-2">•</span>
-                    <span>Paint works</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-primary mr-2">•</span>
-                    <span>False Ceiling</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-primary mr-2">•</span>
-                    <span>SS Fabrication</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-primary mr-2">•</span>
-                    <span>Modular Fittings</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-primary mr-2">•</span>
-                    <span>Wall Scapes</span>
-                  </li>
-                </ul>
+              
+              <div className="border-b border-border pb-4 mb-4">
+                <h3 className="text-xl md:text-2xl font-bold text-foreground">
+                  Mr. Ganapat Lal
+                </h3>
+                <p className="text-base text-muted-foreground">Founder & Principal Designer</p>
               </div>
+
+              <p className="text-base md:text-lg leading-relaxed text-foreground">
+                Sri Chamundeshwari Interiors & Contractors brings over 30+ years of excellence in transforming 
+                residential and commercial spaces across Bangalore. Founded by Mr. Ganapat Lal in 1995, our 
+                firm has built a reputation for quality craftsmanship and innovative design solutions.
+              </p>
+
+              <p className="text-base md:text-lg leading-relaxed text-foreground">
+                Belonging to the traditional Jangid community of Rajasthan, renowned for their mastery in 
+                woodwork and architectural craftsmanship, we combine heritage techniques with modern design 
+                principles to deliver interiors that are both timeless and contemporary.
+              </p>
+
+              <p className="text-base md:text-lg leading-relaxed text-foreground">
+                Our vision is to create spaces that not only reflect your personal style but also enhance 
+                functionality and comfort. We are committed to delivering exceptional results through meticulous 
+                attention to detail, premium materials, and transparent communication throughout every project.
+              </p>
+
+              <p className="text-base md:text-lg leading-relaxed text-foreground">
+                Serving Bangalore and surrounding areas, we are available to transform your dream space into 
+                reality with our comprehensive interior solutions and dedicated team of skilled professionals.
+              </p>
             </div>
           </div>
         </div>
       </section>
 
+      {/* Services Section */}
+      <ServicesSection />
+
       {/* End-to-End Solutions Section */}
-      <section className="py-16 md:py-20 bg-secondary/30">
-        <div className="container mx-auto px-4 max-w-6xl">
-          <div className="text-center">
-            <img
-              src={endToEndImage}
-              alt="End-to-end interior solutions in Bangalore"
-              className="w-full max-w-5xl mx-auto rounded-lg shadow-lg"
-            />
-          </div>
-        </div>
-      </section>
+      <EndToEndSection />
+
+      {/* Testimonials Section */}
+      <TestimonialsSection />
 
       {/* Gallery Preview Section */}
       <section className="py-16 md:py-20">

@@ -14,8 +14,10 @@ import {
 } from '@/components/ui/select';
 import { Phone, Mail, MessageCircle, MapPin } from 'lucide-react';
 import { toast } from 'sonner';
+import { useAdmin } from '@/contexts/AdminContext';
 
 const Contact = () => {
+  const { addContactSubmission } = useAdmin();
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
@@ -37,6 +39,14 @@ const Contact = () => {
       return;
     }
 
+    addContactSubmission({
+      name: formData.name,
+      phone: formData.phone,
+      email: formData.email,
+      projectType: formData.projectType,
+      message: formData.message,
+    });
+    
     toast.success("Thank you! We'll get back to you shortly.");
     setFormData({ name: '', phone: '', email: '', projectType: '', message: '' });
   };
@@ -77,7 +87,7 @@ const Contact = () => {
             >
               <Mail className="h-12 w-12 text-primary mx-auto mb-4" />
               <h3 className="font-semibold text-lg mb-2 text-foreground">Mail Us</h3>
-              <p className="text-muted-foreground text-xs md:text-sm break-all">
+              <p className="text-muted-foreground text-xs break-all">
                 srichamundeshwariinteriors@gmail.com
               </p>
             </a>
