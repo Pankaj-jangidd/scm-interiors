@@ -36,10 +36,10 @@ const services = [
 
 const ServicesSection = () => {
   return (
-    <section className="py-16 md:py-20 bg-background">
+    <section className="py-16 md:py-20 bg-card">
       <div className="container mx-auto px-4 max-w-6xl">
-        <h2 className="font-serif text-3xl md:text-4xl font-bold text-center mb-4 text-accent">
-          What We Do
+        <h2 className="font-serif text-3xl md:text-4xl font-bold text-center mb-4 text-primary">
+          Services We Provide
         </h2>
         <p className="text-center text-base md:text-lg text-muted-foreground mb-12 max-w-2xl mx-auto">
           Comprehensive interior solutions tailored to your needs
@@ -51,11 +51,11 @@ const ServicesSection = () => {
             return (
               <Card 
                 key={service.name}
-                className="bg-card p-8 rounded-xl border border-border hover:-translate-y-1 hover:shadow-xl transition-all duration-300"
+                className="bg-background p-7 rounded-xl border border-border hover:-translate-y-1 hover:shadow-xl transition-all duration-300"
               >
-                <Icon className="h-12 w-12 text-accent mb-4" />
+                <Icon className="h-12 w-12 text-primary mb-4" />
                 <h3 className="text-xl font-bold mb-3 text-foreground">{service.name}</h3>
-                <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
+                <p className="text-sm text-muted-foreground leading-relaxed">
                   {service.description}
                 </p>
               </Card>

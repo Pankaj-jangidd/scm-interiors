@@ -19,7 +19,7 @@ const Index = () => {
           className="absolute inset-0 bg-cover bg-center"
           style={{ backgroundImage: `url(${heroImage})` }}
         >
-          <div className="absolute inset-0 bg-black/30" />
+          <div className="absolute inset-0 bg-black/40" />
         </div>
         <div className="relative z-10 text-center text-white px-4 animate-fade-in max-w-4xl mx-auto">
           <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
@@ -28,56 +28,39 @@ const Index = () => {
           <p className="text-lg md:text-xl mb-8 font-light">
             30+ years of Experience | Bangalore, Karnataka
           </p>
-          <Button size="lg" className="bg-primary hover:bg-primary/90 text-lg">
+          <Button size="lg" className="bg-accent hover:bg-accent/90 text-lg">
             <a href="#contact">Book Free Design Session</a>
           </Button>
         </div>
       </section>
 
       {/* About Section */}
-      <section className="py-16 md:py-20 bg-background">
+      <section className="py-16 md:py-20 bg-secondary">
         <div className="container mx-auto px-4 max-w-6xl">
-          <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
-            <div>
+          <h2 className="font-serif text-3xl md:text-4xl font-bold text-center mb-12 text-primary">
+            About Sri Chamundeshwari Interiors
+          </h2>
+          
+          <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-start">
+            <div className="flex flex-col items-center">
               <img
                 src={founderImage}
-                alt="Founder of Sri Chamundeshwari Interiors"
-                className="w-full h-[450px] object-cover rounded-lg shadow-lg"
+                alt="Mr. Ganapath Lal - Founder of Sri Chamundeshwari Interiors"
+                className="w-full h-[400px] object-cover rounded-lg shadow-lg mb-4"
               />
-            </div>
-            <div className="space-y-6">
-              <h2 className="font-serif text-3xl md:text-4xl font-bold text-accent mb-4">
-                About Sri Chamundeshwari Interiors
-              </h2>
-              
-              <div className="border-b border-border pb-4 mb-4">
-                <h3 className="text-xl md:text-2xl font-bold text-foreground">
-                  Mr. Ganapat Lal
-                </h3>
-                <p className="text-base text-muted-foreground">Founder & Principal Designer</p>
+              <div className="text-center">
+                <h3 className="text-2xl font-bold text-foreground">Mr. Ganapath Lal</h3>
+                <p className="text-base text-muted-foreground">Founder & Principal Contractor</p>
               </div>
-
-              <p className="text-base md:text-lg leading-relaxed text-foreground">
-                Sri Chamundeshwari Interiors & Contractors brings over 30+ years of excellence in transforming 
-                residential and commercial spaces across Bangalore. Founded by Mr. Ganapat Lal in 1995, our 
-                firm has built a reputation for quality craftsmanship and innovative design solutions.
+            </div>
+            
+            <div className="space-y-6">
+              <p className="text-base md:text-lg leading-relaxed text-muted-foreground text-left">
+                With over three decades of hands-on experience in interior execution, Mr. Ganapati Lal has built Sri Chamundeshwari Interiors into one of Bangalore's most trusted names. His commitment to precision craftsmanship and client satisfaction has shaped countless residential and commercial spaces across the city. Every project reflects his dedication to quality and attention to detail, ensuring spaces that truly feel like home. His expertise spans traditional carpentry to modern modular solutions, bringing together time-tested techniques with contemporary design sensibilities.
               </p>
 
-              <p className="text-base md:text-lg leading-relaxed text-foreground">
-                Belonging to the traditional Jangid community of Rajasthan, renowned for their mastery in 
-                woodwork and architectural craftsmanship, we combine heritage techniques with modern design 
-                principles to deliver interiors that are both timeless and contemporary.
-              </p>
-
-              <p className="text-base md:text-lg leading-relaxed text-foreground">
-                Our vision is to create spaces that not only reflect your personal style but also enhance 
-                functionality and comfort. We are committed to delivering exceptional results through meticulous 
-                attention to detail, premium materials, and transparent communication throughout every project.
-              </p>
-
-              <p className="text-base md:text-lg leading-relaxed text-foreground">
-                Serving Bangalore and surrounding areas, we are available to transform your dream space into 
-                reality with our comprehensive interior solutions and dedicated team of skilled professionals.
+              <p className="text-base md:text-lg leading-relaxed text-muted-foreground text-left">
+                Founded in Bangalore, Sri Chamundeshwari Interiors & Contractors specializes in comprehensive interior solutions from concept to completion. Our experienced team handles everything from modular kitchens and wardrobes to false ceilings and complete home makeovers. We believe in transparent pricing, timely delivery, and creating spaces that blend functionality with aesthetic appeal. Whether it's a cozy apartment or a sprawling commercial space, we bring the same level of dedication and craftsmanship to every project, making dream interiors accessible to every homeowner and business.
               </p>
             </div>
           </div>
@@ -93,53 +76,10 @@ const Index = () => {
       {/* Testimonials Section */}
       <TestimonialsSection />
 
-      {/* Gallery Preview Section */}
-      <section className="py-16 md:py-20">
-        <div className="container mx-auto px-4">
-          <h2 className="font-serif text-3xl md:text-4xl font-bold text-center mb-12 text-accent">
-            View Our Projects
-          </h2>
-          <div className="grid md:grid-cols-2 gap-6 max-w-6xl mx-auto">
-            <a
-              href="/gallery"
-              className="relative h-96 rounded-xl overflow-hidden group cursor-pointer block"
-            >
-              <div
-                className="absolute inset-0 bg-cover bg-center"
-                style={{ backgroundImage: `url(${heroImage})` }}
-              >
-                <div className="absolute inset-0 bg-accent/60 group-hover:brightness-110 transition-all" />
-              </div>
-              <div className="absolute inset-0 flex items-center justify-center">
-                <h3 className="font-serif text-3xl md:text-4xl font-bold text-white group-hover:scale-110 transition-transform">
-                  Residential Projects
-                </h3>
-              </div>
-            </a>
-            <a
-              href="/gallery"
-              className="relative h-96 rounded-xl overflow-hidden group cursor-pointer block"
-            >
-              <div
-                className="absolute inset-0 bg-cover bg-center"
-                style={{ backgroundImage: `url(${heroImage})` }}
-              >
-                <div className="absolute inset-0 bg-muted/60 group-hover:brightness-110 transition-all" />
-              </div>
-              <div className="absolute inset-0 flex items-center justify-center">
-                <h3 className="font-serif text-3xl md:text-4xl font-bold text-white group-hover:scale-110 transition-transform">
-                  Commercial Projects
-                </h3>
-              </div>
-            </a>
-          </div>
-        </div>
-      </section>
-
       {/* Contact Form Section */}
-      <section id="contact" className="py-16 md:py-20 bg-secondary/20">
+      <section id="contact" className="py-16 md:py-20 bg-secondary">
         <div className="container mx-auto px-4">
-          <h2 className="font-serif text-3xl md:text-4xl font-bold text-center mb-12 text-accent">
+          <h2 className="font-serif text-3xl md:text-4xl font-bold text-center mb-12 text-primary">
             Contact Us
           </h2>
           <ContactForm />

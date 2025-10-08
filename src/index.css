@@ -8,40 +8,40 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* New color scheme from design reference */
-    --background: 35 36% 97%; /* #FAF8F5 off-white */
+    /* New color scheme - Classic Earthy Contrast */
+    --background: 39 33% 96%; /* #FAF8F5 off-white */
     --foreground: 0 0% 17%; /* #2C2C2C dark gray */
 
     /* Cards with white background */
-    --card: 0 0% 100%;
+    --card: 0 0% 100%; /* #FFFFFF pure white */
     --card-foreground: 0 0% 17%;
 
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 17%;
 
-    /* Terracotta red accent for CTAs */
-    --primary: 0 53% 58%; /* #C85C5C */
-    --primary-foreground: 0 0% 100%;
+    /* Dark Brown - Navbar & Footer */
+    --primary: 25 22% 34%; /* #6B5444 dark brown */
+    --primary-foreground: 39 33% 96%; /* #FAF8F5 off-white for text on dark */
 
-    /* Beige secondary */
-    --secondary: 35 32% 78%; /* #D4C4B0 */
+    /* Cream/Beige for sections */
+    --secondary: 35 36% 94%; /* #F5EFE7 cream/beige */
     --secondary-foreground: 0 0% 17%;
 
-    /* Brown muted tones */
-    --muted: 35 32% 78%;
-    --muted-foreground: 30 21% 44%;
+    /* Light Beige for alternating sections */
+    --muted: 35 29% 94%; /* #F5F1ED light beige */
+    --muted-foreground: 0 0% 29%; /* #4A4A4A gray */
 
-    /* Brown accent */
-    --accent: 30 21% 44%; /* #8B7355 */
+    /* Accent Red for CTAs */
+    --accent: 0 43% 57%; /* #C85C5C terracotta red */
     --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 53% 58%;
+    --destructive: 0 43% 57%;
     --destructive-foreground: 0 0% 100%;
 
-    /* Borders in light beige */
-    --border: 35 32% 85%;
-    --input: 35 32% 85%;
-    --ring: 0 53% 58%;
+    /* Borders */
+    --border: 35 30% 88%; /* #E5DDD5 */
+    --input: 35 30% 88%;
+    --ring: 0 43% 57%;
 
     --radius: 0.5rem;
 

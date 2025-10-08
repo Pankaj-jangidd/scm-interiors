@@ -64,7 +64,7 @@ const Gallery = () => {
         <Navbar />
         <section className="py-16 md:py-20">
           <div className="container mx-auto px-4">
-            <h1 className="font-serif text-3xl md:text-4xl font-bold mb-12 text-accent text-center">
+            <h1 className="font-serif text-3xl md:text-4xl font-bold mb-12 text-primary text-center">
               Gallery
             </h1>
             <div className="grid md:grid-cols-2 gap-6 max-w-6xl mx-auto">
@@ -113,7 +113,7 @@ const Gallery = () => {
     return (
       <div className="min-h-screen">
         <Navbar />
-        <section className="py-16 md:py-20">
+        <section className="py-16 md:py-20 bg-card">
           <div className="container mx-auto px-4 max-w-4xl">
             <div className="mb-6 text-sm text-muted-foreground">
               <button onClick={() => setCurrentCategory('main')} className="hover:text-primary">
@@ -121,7 +121,7 @@ const Gallery = () => {
               </button>{' '}
               &gt; Residential
             </div>
-            <h1 className="font-serif text-3xl md:text-4xl font-bold mb-12 text-accent">
+            <h1 className="font-serif text-3xl md:text-4xl font-bold mb-12 text-primary">
               Residential Projects
             </h1>
             <div className="space-y-4">
@@ -147,7 +147,7 @@ const Gallery = () => {
   return (
     <div className="min-h-screen">
       <Navbar />
-      <section className="py-16 md:py-20">
+      <section className="py-16 md:py-20 bg-card">
         <div className="container mx-auto px-4">
           <div className="mb-6 text-sm text-muted-foreground">
             <button onClick={() => setCurrentCategory('main')} className="hover:text-primary">
@@ -165,7 +165,7 @@ const Gallery = () => {
             )}
             {currentCategory === 'commercial' && ' > Commercial'}
           </div>
-          <h1 className="font-serif text-3xl md:text-4xl font-bold mb-12 text-accent">
+          <h1 className="font-serif text-3xl md:text-4xl font-bold mb-12 text-primary">
             {currentCategory === 'commercial' ? 'Commercial Projects' : currentCategory}
           </h1>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">

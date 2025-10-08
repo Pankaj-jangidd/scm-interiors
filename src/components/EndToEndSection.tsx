@@ -20,9 +20,9 @@ const services = [
 
 const EndToEndSection = () => {
   return (
-    <section className="py-16 md:py-20 bg-[#F5F1ED]">
+    <section className="py-16 md:py-20 bg-muted">
       <div className="container mx-auto px-4 max-w-6xl">
-        <h2 className="font-serif text-3xl md:text-4xl font-bold text-center mb-4 text-accent">
+        <h2 className="font-serif text-3xl md:text-4xl font-bold text-center mb-4 text-primary">
           End-to-end interior solutions in Bangalore
         </h2>
         <p className="text-center text-base md:text-lg text-muted-foreground mb-12 max-w-3xl mx-auto">
@@ -33,10 +33,10 @@ const EndToEndSection = () => {
           {services.map((service) => (
             <Card 
               key={service.id}
-              className="bg-white p-6 rounded-xl hover:scale-105 hover:shadow-lg transition-all duration-300 cursor-pointer flex flex-col items-center justify-center text-center"
+              className="bg-card p-6 rounded-xl hover:scale-105 hover:shadow-lg transition-all duration-300 cursor-pointer flex flex-col items-center justify-center text-center shadow-sm"
             >
               <div className="w-20 h-20 mb-3 bg-secondary/30 rounded-lg flex items-center justify-center">
-                <span className="text-2xl font-bold text-accent">{service.id}</span>
+                <span className="text-2xl font-bold text-primary">[{service.id}]</span>
               </div>
               <p className="text-sm md:text-base font-medium text-foreground">{service.name}</p>
             </Card>

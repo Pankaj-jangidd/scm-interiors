@@ -18,15 +18,15 @@ const Navbar = () => {
   const isActive = (path: string) => location.pathname === path;
 
   return (
-    <nav className="sticky top-0 z-50 bg-white/90 backdrop-blur-md shadow-sm">
+    <nav className="sticky top-0 z-50 bg-primary shadow-md">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
           <Link to="/" className="flex flex-col">
-            <span className="font-serif text-lg md:text-2xl font-bold text-accent leading-tight">
+            <span className="font-serif text-lg md:text-2xl font-bold text-primary-foreground leading-tight">
               SRI CHAMUNDESHWARI INTERIORS
             </span>
-            <span className="text-xs md:text-sm text-muted-foreground">
+            <span className="text-xs md:text-sm text-primary-foreground/80">
               Interior Execution & Fabrication
             </span>
           </Link>
@@ -37,17 +37,14 @@ const Navbar = () => {
               <Link
                 key={link.path}
                 to={link.path}
-                className={`text-base font-medium transition-colors hover:text-primary relative ${
-                  isActive(link.path) ? 'text-primary' : 'text-foreground'
+                className={`text-base font-medium transition-colors relative ${
+                  isActive(link.path) ? 'text-accent font-semibold' : 'text-primary-foreground hover:text-accent'
                 }`}
               >
                 {link.name}
-                {isActive(link.path) && (
-                  <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-primary" />
-                )}
               </Link>
             ))}
-            <Button asChild className="bg-primary hover:bg-primary/90">
+            <Button asChild className="bg-accent hover:bg-accent/90">
               <a href="tel:+918824374977">
                 <Phone className="h-4 w-4 mr-2" />
                 Call Us
@@ -62,30 +59,30 @@ const Navbar = () => {
             aria-label="Toggle menu"
           >
             {mobileMenuOpen ? (
-              <X className="h-6 w-6 text-foreground" />
+              <X className="h-6 w-6 text-primary-foreground" />
             ) : (
-              <Menu className="h-6 w-6 text-foreground" />
+              <Menu className="h-6 w-6 text-primary-foreground" />
             )}
           </button>
         </div>
 
         {/* Mobile Menu */}
         {mobileMenuOpen && (
-          <div className="md:hidden py-4 border-t border-border">
+          <div className="md:hidden py-4 border-t border-primary-foreground/20">
             <div className="flex flex-col gap-4">
               {navLinks.map((link) => (
                 <Link
                   key={link.path}
                   to={link.path}
                   className={`text-base font-medium transition-colors ${
-                    isActive(link.path) ? 'text-primary' : 'text-foreground'
+                    isActive(link.path) ? 'text-accent font-semibold' : 'text-primary-foreground'
                   }`}
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   {link.name}
                 </Link>
               ))}
-              <Button asChild className="bg-primary hover:bg-primary/90 w-full">
+              <Button asChild className="bg-accent hover:bg-accent/90 w-full">
                 <a href="tel:+918824374977">
                   <Phone className="h-4 w-4 mr-2" />
                   Call Us

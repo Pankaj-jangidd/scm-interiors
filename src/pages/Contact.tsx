@@ -56,9 +56,9 @@ const Contact = () => {
       <Navbar />
 
       {/* Page Header */}
-      <section className="py-16 md:py-20 bg-card">
+      <section className="py-16 md:py-20 bg-secondary">
         <div className="container mx-auto px-4 text-center">
-          <h1 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-foreground">
+          <h1 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-primary">
             Get in Touch With Us
           </h1>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
@@ -69,44 +69,40 @@ const Contact = () => {
       </section>
 
       {/* Quick Contact Options */}
-      <section className="py-16 md:py-20">
+      <section className="py-16 md:py-20 bg-card">
         <div className="container mx-auto px-4">
           <div className="grid sm:grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto mb-16">
             <a
               href="tel:+918824374977"
-              className="bg-card p-8 rounded-xl shadow-md hover-lift text-center"
+              className="bg-secondary p-8 rounded-xl shadow-md hover-lift text-center"
             >
               <Phone className="h-12 w-12 text-primary mx-auto mb-4" />
               <h3 className="font-semibold text-lg mb-2 text-foreground">Call Now</h3>
               <p className="text-muted-foreground">+91 8824374977</p>
             </a>
 
-            <a
-              href="mailto:srichamundeshwariinteriors@gmail.com"
-              className="bg-card p-8 rounded-xl shadow-md hover-lift text-center"
-            >
+            <div className="bg-secondary p-8 rounded-xl shadow-md text-center">
               <Mail className="h-12 w-12 text-primary mx-auto mb-4" />
               <h3 className="font-semibold text-lg mb-2 text-foreground">Mail Us</h3>
-              <p className="text-muted-foreground text-xs break-all">
+              <a
+                href="mailto:srichamundeshwariinteriors@gmail.com"
+                className="text-muted-foreground text-sm break-all hover:text-primary transition-colors"
+                style={{ wordBreak: 'break-all' }}
+              >
                 srichamundeshwariinteriors@gmail.com
-              </p>
-            </a>
+              </a>
+            </div>
 
-            <a
-              href="https://wa.me/918824374977?text=Hi,%20I%20want%20to%20discuss%20an%20interior%20project"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-card p-8 rounded-xl shadow-md hover-lift text-center"
-            >
-              <MessageCircle className="h-12 w-12 text-primary mx-auto mb-4" />
-              <h3 className="font-semibold text-lg mb-2 text-foreground">Chat on WhatsApp</h3>
-              <p className="text-muted-foreground">Message us instantly</p>
-            </a>
+            <div className="bg-secondary p-8 rounded-xl shadow-md text-center">
+              <MapPin className="h-12 w-12 text-primary mx-auto mb-4" />
+              <h3 className="font-semibold text-lg mb-2 text-foreground">Location</h3>
+              <p className="text-muted-foreground text-sm">Bangalore, Karnataka</p>
+            </div>
           </div>
 
           {/* Booking Form */}
           <div className="max-w-2xl mx-auto">
-            <h2 className="font-serif text-2xl md:text-3xl font-bold text-center mb-8 text-foreground">
+            <h2 className="font-serif text-2xl md:text-3xl font-bold text-center mb-8 text-primary">
               Book a Free Design Visit
             </h2>
             <form
@@ -183,7 +179,7 @@ const Contact = () => {
                   />
                 </div>
 
-                <Button type="submit" className="w-full bg-primary hover:bg-primary/90 mt-4">
+                <Button type="submit" className="w-full bg-accent hover:bg-accent/90 mt-4">
                   Schedule My Visit
                 </Button>
               </div>
@@ -195,7 +191,7 @@ const Contact = () => {
       {/* Location Section */}
       <section className="py-16 md:py-20 bg-secondary">
         <div className="container mx-auto px-4">
-          <h2 className="font-serif text-2xl md:text-3xl font-bold text-center mb-8 text-foreground">
+          <h2 className="font-serif text-2xl md:text-3xl font-bold text-center mb-8 text-primary">
             Visit Our Workspace
           </h2>
           <div className="flex items-center justify-center gap-2 text-muted-foreground text-lg max-w-2xl mx-auto text-center">
