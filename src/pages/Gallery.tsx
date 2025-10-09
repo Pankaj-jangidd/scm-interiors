@@ -1,40 +1,33 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useMemo } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import { useAdmin } from '@/contexts/AdminContext';
 import { X, ChevronLeft, ChevronRight, ChevronRight as ArrowRight } from 'lucide-react';
 
 const Gallery = () => {
+  const { galleryImages } = useAdmin();
   const [selectedImage, setSelectedImage] = useState<number | null>(null);
   const [currentCategory, setCurrentCategory] = useState<'main' | 'residential' | 'commercial' | string>('main');
 
-  // Residential subcategories
-  const residentialSubcategories = [
-    'Modular Kitchen',
-    'Living Rooms',
-    'Bedrooms',
-    'Wardrobes',
-    'False Ceilings',
-    'Wall Panelling',
-    'Dressing Units',
-  ];
+  // Get unique subcategories for residential images
+  const residentialSubcategories = useMemo(() => {
+    const residential = galleryImages.filter(img => img.category === 'residential');
+    const unique = Array.from(new Set(residential.map(img => img.subcategory).filter(Boolean)));
+    return unique.sort();
+  }, [galleryImages]);
 
-  // Placeholder images - in production, these would be actual project photos
-  const residentialImages = Array(12).fill(null).map((_, i) => ({
-    id: i,
-    url: `https://images.unsplash.com/photo-${1600566752355 + i * 1000}-4a8e3d1e9e1e?w=800&h=600&fit=crop`,
-    alt: `Residential Project ${i + 1}`,
-  }));
-
-  const commercialImages = Array(8).fill(null).map((_, i) => ({
-    id: i + 100,
-    url: `https://images.unsplash.com/photo-${1497366216000 + i * 1000}-4a8e3d1e9e1e?w=800&h=600&fit=crop`,
-    alt: `Commercial Project ${i + 1}`,
-  }));
-
+  // Get current images based on category
   const getCurrentImages = () => {
-    if (currentCategory === 'commercial') return commercialImages;
-    return residentialImages;
+    if (currentCategory === 'commercial') {
+      return galleryImages.filter(img => img.category === 'commercial');
+    }
+    if (currentCategory === 'main' || currentCategory === 'residential') {
+      return [];
+    }
+    // Specific subcategory
+    return galleryImages.filter(
+      img => img.category === 'residential' && img.subcategory === currentCategory
+    );
   };
 
   const currentImages = getCurrentImages();
@@ -124,18 +117,25 @@ const Gallery = () => {
             <h1 className="font-serif text-3xl md:text-4xl font-bold mb-12 text-primary">
               Residential Projects
             </h1>
-            <div className="space-y-4">
-              {residentialSubcategories.map((subcategory) => (
-                <button
-                  key={subcategory}
-                  onClick={() => setCurrentCategory(subcategory)}
-                  className="w-full bg-card p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow flex items-center justify-between group"
-                >
-                  <span className="font-semibold text-lg text-foreground">{subcategory}</span>
-                  <ArrowRight className="h-5 w-5 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all" />
-                </button>
-              ))}
-            </div>
+            {residentialSubcategories.length === 0 ? (
+              <div className="text-center py-20">
+                <p className="text-xl text-muted-foreground">No residential images yet.</p>
+                <p className="text-sm text-muted-foreground mt-2">Images will appear here once uploaded via Admin Panel.</p>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                {residentialSubcategories.map((subcategory) => (
+                  <button
+                    key={subcategory}
+                    onClick={() => setCurrentCategory(subcategory!)}
+                    className="w-full bg-card p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow flex items-center justify-between group"
+                  >
+                    <span className="font-semibold text-lg text-foreground">{subcategory}</span>
+                    <ArrowRight className="h-5 w-5 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all" />
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
         </section>
         <Footer />
@@ -168,26 +168,33 @@ const Gallery = () => {
           <h1 className="font-serif text-3xl md:text-4xl font-bold mb-12 text-primary">
             {currentCategory === 'commercial' ? 'Commercial Projects' : currentCategory}
           </h1>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {currentImages.map((image, index) => (
-              <div
-                key={image.id}
-                className="aspect-square rounded-lg overflow-hidden cursor-pointer group"
-                onClick={() => openLightbox(index)}
-              >
-                <img
-                  src={image.url}
-                  alt={image.alt}
-                  className="w-full h-[300px] object-cover group-hover:scale-110 transition-transform duration-300"
-                />
-              </div>
-            ))}
-          </div>
+          {currentImages.length === 0 ? (
+            <div className="text-center py-20">
+              <p className="text-xl text-muted-foreground">No images in this category yet.</p>
+              <p className="text-sm text-muted-foreground mt-2">Images will appear here once uploaded via Admin Panel.</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+              {currentImages.map((image, index) => (
+                <div
+                  key={image.id}
+                  className="aspect-square rounded-lg overflow-hidden cursor-pointer group"
+                  onClick={() => openLightbox(index)}
+                >
+                  <img
+                    src={image.url}
+                    alt={image.alt}
+                    className="w-full h-[300px] object-cover group-hover:scale-110 transition-transform duration-300"
+                  />
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
       {/* Lightbox */}
-      {selectedImage !== null && (
+      {selectedImage !== null && currentImages.length > 0 && (
         <div className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4">
           <button
             onClick={closeLightbox}

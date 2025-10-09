@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
 export interface Review {
   id: string;
@@ -57,47 +57,57 @@ const ADMIN_USERNAME = 'admin';
 const ADMIN_PASSWORD = 'scminteriors2025';
 
 export const AdminProvider = ({ children }: { children: ReactNode }) => {
+  // Load data from localStorage on mount
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [reviews, setReviews] = useState<Review[]>([
-    {
-      id: '1',
-      name: 'Rajesh Kumar',
-      text: 'Excellent work! The modular kitchen design exceeded our expectations. Professional team and timely completion.',
-      rating: 5,
-      projectType: 'Residential',
-      date: new Date().toISOString(),
-      visible: true,
-    },
-    {
-      id: '2',
-      name: 'Priya Sharma',
-      text: 'Very satisfied with the false ceiling and lighting work. The attention to detail was remarkable.',
-      rating: 5,
-      projectType: 'Residential',
-      date: new Date().toISOString(),
-      visible: true,
-    },
-    {
-      id: '3',
-      name: 'Amit Patel',
-      text: 'Great experience working with SCM Interiors. They transformed our office space beautifully.',
-      rating: 5,
-      projectType: 'Commercial',
-      date: new Date().toISOString(),
-      visible: true,
-    },
-    {
-      id: '4',
-      name: 'Deepika Reddy',
-      text: 'Outstanding craftsmanship! The wardrobe design is both functional and elegant. Highly recommended for quality work.',
-      rating: 5,
-      projectType: 'Residential',
-      date: new Date().toISOString(),
-      visible: true,
-    },
-  ]);
-  const [contactSubmissions, setContactSubmissions] = useState<ContactSubmission[]>([]);
-  const [galleryImages, setGalleryImages] = useState<GalleryImage[]>([]);
+  const [reviews, setReviews] = useState<Review[]>(() => {
+    const saved = localStorage.getItem('scm-reviews');
+    return saved ? JSON.parse(saved) : [
+      {
+        id: '1',
+        name: 'Rajesh Kumar',
+        text: 'Excellent work! The modular kitchen design exceeded our expectations. Professional team and timely completion.',
+        rating: 5,
+        projectType: 'Residential',
+        date: new Date().toISOString(),
+        visible: true,
+      },
+      {
+        id: '2',
+        name: 'Priya Sharma',
+        text: 'Very satisfied with the false ceiling and lighting work. The attention to detail was remarkable.',
+        rating: 5,
+        projectType: 'Residential',
+        date: new Date().toISOString(),
+        visible: true,
+      },
+      {
+        id: '3',
+        name: 'Amit Patel',
+        text: 'Great experience working with SCM Interiors. They transformed our office space beautifully.',
+        rating: 5,
+        projectType: 'Commercial',
+        date: new Date().toISOString(),
+        visible: true,
+      },
+      {
+        id: '4',
+        name: 'Deepika Reddy',
+        text: 'Outstanding craftsmanship! The wardrobe design is both functional and elegant. Highly recommended for quality work.',
+        rating: 5,
+        projectType: 'Residential',
+        date: new Date().toISOString(),
+        visible: true,
+      },
+    ];
+  });
+  const [contactSubmissions, setContactSubmissions] = useState<ContactSubmission[]>(() => {
+    const saved = localStorage.getItem('scm-contacts');
+    return saved ? JSON.parse(saved) : [];
+  });
+  const [galleryImages, setGalleryImages] = useState<GalleryImage[]>(() => {
+    const saved = localStorage.getItem('scm-gallery');
+    return saved ? JSON.parse(saved) : [];
+  });
 
   const login = (username: string, password: string): boolean => {
     if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
@@ -110,6 +120,19 @@ export const AdminProvider = ({ children }: { children: ReactNode }) => {
   const logout = () => {
     setIsAuthenticated(false);
   };
+
+  // Persist to localStorage whenever data changes
+  useEffect(() => {
+    localStorage.setItem('scm-reviews', JSON.stringify(reviews));
+  }, [reviews]);
+
+  useEffect(() => {
+    localStorage.setItem('scm-contacts', JSON.stringify(contactSubmissions));
+  }, [contactSubmissions]);
+
+  useEffect(() => {
+    localStorage.setItem('scm-gallery', JSON.stringify(galleryImages));
+  }, [galleryImages]);
 
   const addReview = (review: Omit<Review, 'id' | 'date'>) => {
     const newReview: Review = {
