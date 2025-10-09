@@ -1,18 +1,18 @@
-import { useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Star } from 'lucide-react';
 import { useAdmin } from '@/contexts/AdminContext';
+import { Link } from 'react-router-dom';
 
 const TestimonialsSection = () => {
   const { reviews } = useAdmin();
-  const [showAll, setShowAll] = useState(false);
   
   const visibleReviews = reviews.filter(review => review.visible);
 
   if (visibleReviews.length === 0) return null;
 
-  const displayedReviews = showAll ? visibleReviews : visibleReviews.slice(0, 6);
+  // Display first 4 reviews in 2x2 grid
+  const displayedReviews = visibleReviews.slice(0, 4);
 
   return (
     <section className="py-16 md:py-20 bg-card">
@@ -45,16 +45,13 @@ const TestimonialsSection = () => {
           ))}
         </div>
 
-        {visibleReviews.length > 6 && (
-          <div className="text-center">
-            <Button
-              onClick={() => setShowAll(!showAll)}
-              className="bg-accent hover:bg-accent/90 text-accent-foreground"
-            >
-              {showAll ? 'Show Less' : 'See More Reviews'}
+        <div className="text-center">
+          <Link to="/reviews">
+            <Button className="bg-accent hover:bg-accent/90 text-accent-foreground">
+              Read More
             </Button>
-          </div>
-        )}
+          </Link>
+        </div>
       </div>
     </section>
   );

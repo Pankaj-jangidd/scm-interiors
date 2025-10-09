@@ -74,29 +74,29 @@ const Contact = () => {
           <div className="grid sm:grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto mb-16">
             <a
               href="tel:+918824374977"
-              className="bg-secondary p-8 rounded-xl shadow-md hover-lift text-center"
+              className="bg-secondary p-10 rounded-xl shadow-md hover-lift text-center min-h-[240px] flex flex-col items-center justify-center"
             >
-              <Phone className="h-12 w-12 text-primary mx-auto mb-4" />
-              <h3 className="font-semibold text-lg mb-2 text-foreground">Call Now</h3>
-              <p className="text-muted-foreground">+91 8824374977</p>
+              <Phone className="h-14 w-14 text-primary mx-auto mb-4" />
+              <h3 className="font-semibold text-xl mb-3 text-foreground">Call Now</h3>
+              <p className="text-muted-foreground text-base">+91 8824374977</p>
             </a>
 
-            <div className="bg-secondary p-8 rounded-xl shadow-md text-center">
-              <Mail className="h-12 w-12 text-primary mx-auto mb-4" />
-              <h3 className="font-semibold text-lg mb-2 text-foreground">Mail Us</h3>
+            <div className="bg-secondary p-10 rounded-xl shadow-md text-center min-h-[240px] flex flex-col items-center justify-center">
+              <Mail className="h-14 w-14 text-primary mx-auto mb-4" />
+              <h3 className="font-semibold text-xl mb-3 text-foreground">Mail Us</h3>
               <a
                 href="mailto:srichamundeshwariinteriors@gmail.com"
-                className="text-muted-foreground text-sm break-all hover:text-primary transition-colors"
+                className="text-muted-foreground text-base break-all hover:text-primary transition-colors"
                 style={{ wordBreak: 'break-all' }}
               >
                 srichamundeshwariinteriors@gmail.com
               </a>
             </div>
 
-            <div className="bg-secondary p-8 rounded-xl shadow-md text-center">
-              <MapPin className="h-12 w-12 text-primary mx-auto mb-4" />
-              <h3 className="font-semibold text-lg mb-2 text-foreground">Location</h3>
-              <p className="text-muted-foreground text-sm">Bangalore, Karnataka</p>
+            <div className="bg-secondary p-10 rounded-xl shadow-md text-center min-h-[240px] flex flex-col items-center justify-center">
+              <MapPin className="h-14 w-14 text-primary mx-auto mb-4" />
+              <h3 className="font-semibold text-xl mb-3 text-foreground">Location</h3>
+              <p className="text-muted-foreground text-base">Bangalore, Karnataka</p>
             </div>
           </div>
 

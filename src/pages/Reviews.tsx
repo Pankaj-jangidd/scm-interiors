@@ -1,9 +1,13 @@
+import { useState } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import ReviewCard from '@/components/ReviewCard';
 import AddReviewDialog from '@/components/AddReviewDialog';
+import { Button } from '@/components/ui/button';
 
 const Reviews = () => {
+  const [showAll, setShowAll] = useState(false);
+  
   const allReviews = [
     {
       name: 'Rajesh Kumar',
@@ -99,10 +103,42 @@ const Reviews = () => {
       {/* Reviews Grid */}
       <section className="py-16 md:py-20">
         <div className="container mx-auto px-4">
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto mb-12">
-            {allReviews.map((review, index) => (
+          <div className="grid sm:grid-cols-2 lg:grid-cols-2 gap-6 max-w-7xl mx-auto mb-12 relative">
+            {allReviews.slice(0, 6).map((review, index) => (
               <div
                 key={index}
+                className="animate-fade-in"
+                style={{ animationDelay: `${index * 0.05}s` }}
+              >
+                <ReviewCard {...review} />
+              </div>
+            ))}
+            
+            {!showAll && allReviews.length > 6 && (
+              <div className="col-span-full relative">
+                <div className="absolute inset-0 backdrop-blur-md bg-white/50 z-10 rounded-xl" />
+                <div className="absolute inset-0 z-20 flex items-center justify-center">
+                  <Button
+                    onClick={() => setShowAll(true)}
+                    className="bg-accent hover:bg-accent/90 text-accent-foreground shadow-lg"
+                    size="lg"
+                  >
+                    Read More
+                  </Button>
+                </div>
+                <div className="grid sm:grid-cols-2 gap-6 blur-sm pointer-events-none">
+                  {allReviews.slice(6, 8).map((review, index) => (
+                    <div key={index + 6}>
+                      <ReviewCard {...review} />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+            
+            {showAll && allReviews.slice(6).map((review, index) => (
+              <div
+                key={index + 6}
                 className="animate-fade-in"
                 style={{ animationDelay: `${index * 0.05}s` }}
               >

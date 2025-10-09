@@ -70,32 +70,32 @@ const Gallery = () => {
             <div className="grid md:grid-cols-2 gap-6 max-w-6xl mx-auto">
               <button
                 onClick={() => setCurrentCategory('residential')}
-                className="relative h-96 rounded-xl overflow-hidden group cursor-pointer"
+                className="relative h-96 rounded-xl overflow-hidden group cursor-pointer transition-all duration-300"
               >
                 <div
-                  className="absolute inset-0 bg-cover bg-center"
+                  className="absolute inset-0 bg-cover bg-center brightness-75 group-hover:brightness-90 transition-all duration-300"
                   style={{ backgroundImage: `url(https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=800&h=600&fit=crop)` }}
                 >
-                  <div className="absolute inset-0 bg-accent/60 group-hover:brightness-110 transition-all" />
+                  <div className="absolute inset-0 bg-black/30 group-hover:bg-black/20 transition-all duration-300" />
                 </div>
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <h2 className="font-serif text-3xl md:text-4xl font-bold text-white">
+                  <h2 className="font-serif text-3xl md:text-4xl font-bold text-white group-hover:scale-110 transition-transform duration-300">
                     RESIDENTIAL
                   </h2>
                 </div>
               </button>
               <button
                 onClick={() => setCurrentCategory('commercial')}
-                className="relative h-96 rounded-xl overflow-hidden group cursor-pointer"
+                className="relative h-96 rounded-xl overflow-hidden group cursor-pointer transition-all duration-300"
               >
                 <div
-                  className="absolute inset-0 bg-cover bg-center"
+                  className="absolute inset-0 bg-cover bg-center brightness-75 group-hover:brightness-90 transition-all duration-300"
                   style={{ backgroundImage: `url(https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&h=600&fit=crop)` }}
                 >
-                  <div className="absolute inset-0 bg-accent/60 group-hover:brightness-110 transition-all" />
+                  <div className="absolute inset-0 bg-black/30 group-hover:bg-black/20 transition-all duration-300" />
                 </div>
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <h2 className="font-serif text-3xl md:text-4xl font-bold text-white">
+                  <h2 className="font-serif text-3xl md:text-4xl font-bold text-white group-hover:scale-110 transition-transform duration-300">
                     COMMERCIAL
                   </h2>
                 </div>

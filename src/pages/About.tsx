@@ -61,18 +61,18 @@ const About = () => {
             <div className="flex flex-col items-center">
               <img
                 src={founderImage}
-                alt="Mr. Ganapath Lal - Founder"
+                alt="Mr. Ganapathlal - Founder"
                 className="w-full h-[400px] object-cover rounded-lg shadow-lg mb-4"
               />
               <div className="text-center">
-                <h3 className="text-2xl font-bold text-foreground">Mr. Ganapath Lal</h3>
+                <h3 className="text-2xl font-bold text-foreground">Mr. Ganapathlal</h3>
                 <p className="text-base text-muted-foreground">Founder & Principal Contractor</p>
               </div>
             </div>
             
             <div className="space-y-6">
               <p className="text-base md:text-lg leading-relaxed text-muted-foreground">
-                With over three decades of hands-on experience in interior execution, Mr. Ganapati Lal has built Sri Chamundeshwari Interiors into one of Bangalore's most trusted names. His commitment to precision craftsmanship and client satisfaction has shaped countless residential and commercial spaces across the city.
+                With over three decades of hands-on experience in interior execution, Mr. Ganapathlal has built Sri Chamundeshwari Interiors into one of Bangalore's most trusted names. His commitment to precision craftsmanship and client satisfaction has shaped countless residential and commercial spaces across the city.
               </p>
 
               <p className="text-base md:text-lg leading-relaxed text-muted-foreground">
