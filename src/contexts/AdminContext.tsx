@@ -86,6 +86,15 @@ export const AdminProvider = ({ children }: { children: ReactNode }) => {
       date: new Date().toISOString(),
       visible: true,
     },
+    {
+      id: '4',
+      name: 'Deepika Reddy',
+      text: 'Outstanding craftsmanship! The wardrobe design is both functional and elegant. Highly recommended for quality work.',
+      rating: 5,
+      projectType: 'Residential',
+      date: new Date().toISOString(),
+      visible: true,
+    },
   ]);
   const [contactSubmissions, setContactSubmissions] = useState<ContactSubmission[]>([]);
   const [galleryImages, setGalleryImages] = useState<GalleryImage[]>([]);
