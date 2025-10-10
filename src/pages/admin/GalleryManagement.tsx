@@ -23,24 +23,13 @@ import {
 } from '@/components/ui/select';
 
 const RESIDENTIAL_CATEGORIES = [
-  'Kitchen',
-  'Living Room',
-  'Bedroom',
-  'Dining Area',
+  'Modular Kitchen',
+  'Living Rooms',
+  'Wardrobes',
+  'Bedrooms',
+  'Dressing Units',
   'False Ceiling',
-  'Bathroom',
-  'Pooja Unit',
-  'Foyer Designs',
-  'Kids Bedroom',
-];
-
-const COMMERCIAL_CATEGORIES = [
-  'Office',
-  'Retail',
-  'Lobby',
-  'Conference Room',
-  'Reception',
-  'Workspace',
+  'Pooja Units',
 ];
 
 const GalleryManagement = () => {
@@ -54,7 +43,7 @@ const GalleryManagement = () => {
   const [caption, setCaption] = useState('');
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const categories = selectedType === 'residential' ? RESIDENTIAL_CATEGORIES : COMMERCIAL_CATEGORIES;
+  const categories = RESIDENTIAL_CATEGORIES;
 
   const handleImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -77,10 +66,19 @@ const GalleryManagement = () => {
   };
 
   const handleSubmit = () => {
-    if (!imagePreview || !selectedCategory || !altText) {
+    if (!imagePreview || !altText) {
       toast({
         title: 'Error',
         description: 'Please fill all required fields and select an image',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    if (selectedType === 'residential' && !selectedCategory) {
+      toast({
+        title: 'Error',
+        description: 'Please select a category for residential images',
         variant: 'destructive',
       });
       return;
@@ -91,7 +89,7 @@ const GalleryManagement = () => {
       alt: altText,
       caption: caption || undefined,
       category: selectedType,
-      subcategory: selectedCategory,
+      subcategory: selectedType === 'residential' ? selectedCategory : undefined,
       order: galleryImages.length,
     });
 
@@ -256,21 +254,23 @@ const GalleryManagement = () => {
                 </Select>
               </div>
 
-              <div>
-                <Label htmlFor="category">Category *</Label>
-                <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-                  <SelectTrigger className="mt-1">
-                    <SelectValue placeholder="Select category" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {categories.map((cat) => (
-                      <SelectItem key={cat} value={cat}>
-                        {cat}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
+              {selectedType === 'residential' && (
+                <div>
+                  <Label htmlFor="category">Category *</Label>
+                  <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+                    <SelectTrigger className="mt-1">
+                      <SelectValue placeholder="Select category" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {categories.map((cat) => (
+                        <SelectItem key={cat} value={cat}>
+                          {cat}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              )}
 
               <div>
                 <Label htmlFor="alt">Image Description (Alt Text) *</Label>

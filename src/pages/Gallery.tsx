@@ -24,7 +24,7 @@ const Gallery = () => {
     if (currentCategory === 'main' || currentCategory === 'residential') {
       return [];
     }
-    // Specific subcategory
+    // Specific subcategory for residential
     return galleryImages.filter(
       img => img.category === 'residential' && img.subcategory === currentCategory
     );
@@ -103,39 +103,53 @@ const Gallery = () => {
 
   // Residential subcategories view
   if (currentCategory === 'residential' && selectedImage === null) {
+    const predefinedCategories = [
+      'Modular Kitchen',
+      'Living Rooms',
+      'Wardrobes',
+      'Bedrooms',
+      'Dressing Units',
+      'False Ceiling',
+      'Pooja Units',
+    ];
+
     return (
       <div className="min-h-screen">
         <Navbar />
-        <section className="py-16 md:py-20 bg-card">
-          <div className="container mx-auto px-4 max-w-4xl">
+        <section className="py-16 md:py-20 bg-background">
+          <div className="container mx-auto px-4 max-w-5xl">
             <div className="mb-6 text-sm text-muted-foreground">
-              <button onClick={() => setCurrentCategory('main')} className="hover:text-primary">
+              <button onClick={() => setCurrentCategory('main')} className="hover:text-primary transition-colors">
                 Gallery
               </button>{' '}
               &gt; Residential
             </div>
-            <h1 className="font-serif text-3xl md:text-4xl font-bold mb-12 text-primary">
+            <h1 className="font-serif text-3xl md:text-4xl font-bold mb-12 text-primary text-center">
               Residential Projects
             </h1>
-            {residentialSubcategories.length === 0 ? (
-              <div className="text-center py-20">
-                <p className="text-xl text-muted-foreground">No residential images yet.</p>
-                <p className="text-sm text-muted-foreground mt-2">Images will appear here once uploaded via Admin Panel.</p>
-              </div>
-            ) : (
-              <div className="space-y-4">
-                {residentialSubcategories.map((subcategory) => (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {predefinedCategories.map((category) => {
+                const imageCount = galleryImages.filter(
+                  img => img.category === 'residential' && img.subcategory === category
+                ).length;
+                
+                return (
                   <button
-                    key={subcategory}
-                    onClick={() => setCurrentCategory(subcategory!)}
-                    className="w-full bg-card p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow flex items-center justify-between group"
+                    key={category}
+                    onClick={() => setCurrentCategory(category)}
+                    className="group relative bg-card rounded-lg p-8 shadow-sm hover:shadow-md transition-all duration-300 border border-border hover:border-primary/50"
                   >
-                    <span className="font-semibold text-lg text-foreground">{subcategory}</span>
-                    <ArrowRight className="h-5 w-5 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all" />
+                    <h3 className="font-semibold text-xl text-foreground mb-2 group-hover:text-primary transition-colors">
+                      {category}
+                    </h3>
+                    <p className="text-sm text-muted-foreground">
+                      {imageCount} {imageCount === 1 ? 'image' : 'images'}
+                    </p>
+                    <ArrowRight className="absolute bottom-6 right-6 h-5 w-5 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all" />
                   </button>
-                ))}
-              </div>
-            )}
+                );
+              })}
+            </div>
           </div>
         </section>
         <Footer />
@@ -147,16 +161,16 @@ const Gallery = () => {
   return (
     <div className="min-h-screen">
       <Navbar />
-      <section className="py-16 md:py-20 bg-card">
+      <section className="py-16 md:py-20 bg-background">
         <div className="container mx-auto px-4">
           <div className="mb-6 text-sm text-muted-foreground">
-            <button onClick={() => setCurrentCategory('main')} className="hover:text-primary">
+            <button onClick={() => setCurrentCategory('main')} className="hover:text-primary transition-colors">
               Gallery
             </button>
             {currentCategory !== 'commercial' && currentCategory !== 'main' && (
               <>
                 {' > '}
-                <button onClick={() => setCurrentCategory('residential')} className="hover:text-primary">
+                <button onClick={() => setCurrentCategory('residential')} className="hover:text-primary transition-colors">
                   Residential
                 </button>
                 {' > '}
@@ -165,7 +179,7 @@ const Gallery = () => {
             )}
             {currentCategory === 'commercial' && ' > Commercial'}
           </div>
-          <h1 className="font-serif text-3xl md:text-4xl font-bold mb-12 text-primary">
+          <h1 className="font-serif text-3xl md:text-4xl font-bold mb-12 text-primary text-center">
             {currentCategory === 'commercial' ? 'Commercial Projects' : currentCategory}
           </h1>
           {currentImages.length === 0 ? (
@@ -174,17 +188,17 @@ const Gallery = () => {
               <p className="text-sm text-muted-foreground mt-2">Images will appear here once uploaded via Admin Panel.</p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {currentImages.map((image, index) => (
                 <div
                   key={image.id}
-                  className="aspect-square rounded-lg overflow-hidden cursor-pointer group"
+                  className="aspect-square rounded-lg overflow-hidden cursor-pointer group shadow-sm hover:shadow-lg transition-all duration-300"
                   onClick={() => openLightbox(index)}
                 >
                   <img
                     src={image.url}
                     alt={image.alt}
-                    className="w-full h-[300px] object-cover group-hover:scale-110 transition-transform duration-300"
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                   />
                 </div>
               ))}
