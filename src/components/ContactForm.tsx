@@ -1,48 +1,84 @@
-import { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
-import { toast } from 'sonner';
-import { useAdmin } from '@/contexts/AdminContext';
+} from "@/components/ui/select";
+import { toast } from "sonner";
+import { sendContactEmail } from "@/lib/emailService";
+import { submitContactForm } from "@/integrations/supabase/contact";
 
 const ContactForm = () => {
-  const { addContactSubmission } = useAdmin();
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
-    name: '',
-    phone: '',
-    email: '',
-    projectType: '',
-    message: '',
+    name: "",
+    phone: "",
+    email: "",
+    projectType: "",
+    message: "",
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!formData.name || !formData.phone || !formData.projectType) {
-      toast.error('Please fill in all required fields');
+      toast.error("Please fill in all required fields");
       return;
     }
 
-    // Basic phone validation
     if (formData.phone.length < 10) {
-      toast.error('Please enter a valid phone number');
+      toast.error("Please enter a valid phone number");
       return;
     }
 
-    addContactSubmission(formData);
-    toast.success('Thank you! We will get back to you shortly.');
-    setFormData({ name: '', phone: '', email: '', projectType: '', message: '' });
+    setIsSubmitting(true);
+
+    try {
+      // Save to Supabase database
+      await submitContactForm(formData);
+
+      // Send email notification
+      const emailResult = await sendContactEmail({
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        projectType: formData.projectType,
+        message: formData.message,
+      });
+
+      if (emailResult.success) {
+        toast.success("Thank you! We will get back to you shortly.");
+      } else {
+        toast.success("Form submitted! (Email notification pending)");
+      }
+
+      // Reset form
+      setFormData({
+        name: "",
+        phone: "",
+        email: "",
+        projectType: "",
+        message: "",
+      });
+    } catch (error) {
+      console.error("Submit error:", error);
+      toast.error("Something went wrong. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-card p-8 rounded-xl shadow-lg max-w-2xl mx-auto">
+    <form
+      onSubmit={handleSubmit}
+      className="bg-card p-8 rounded-xl shadow-lg max-w-2xl mx-auto"
+    >
       <div className="space-y-4">
         <div>
           <Label htmlFor="name">Name *</Label>
@@ -53,6 +89,7 @@ const ContactForm = () => {
             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
             placeholder="Your full name"
             required
+            disabled={isSubmitting}
             className="mt-1"
           />
         </div>
@@ -63,9 +100,12 @@ const ContactForm = () => {
             id="phone"
             type="tel"
             value={formData.phone}
-            onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+            onChange={(e) =>
+              setFormData({ ...formData, phone: e.target.value })
+            }
             placeholder="+91 XXXXX XXXXX"
             required
+            disabled={isSubmitting}
             className="mt-1"
           />
         </div>
@@ -76,19 +116,11 @@ const ContactForm = () => {
             id="email"
             type="email"
             value={formData.email}
-            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+            onChange={(e) =>
+              setFormData({ ...formData, email: e.target.value })
+            }
             placeholder="your.email@example.com"
-            className="mt-1"
-          />
-        </div>
-
-        <div>
-          <Label htmlFor="message">Message</Label>
-          <Input
-            id="message"
-            value={formData.message}
-            onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-            placeholder="Tell us about your project..."
+            disabled={isSubmitting}
             className="mt-1"
           />
         </div>
@@ -97,7 +129,10 @@ const ContactForm = () => {
           <Label htmlFor="projectType">Type of Project *</Label>
           <Select
             value={formData.projectType}
-            onValueChange={(value) => setFormData({ ...formData, projectType: value })}
+            onValueChange={(value) =>
+              setFormData({ ...formData, projectType: value })
+            }
+            disabled={isSubmitting}
           >
             <SelectTrigger className="mt-1">
               <SelectValue placeholder="Select project type" />
@@ -111,8 +146,27 @@ const ContactForm = () => {
           </Select>
         </div>
 
-        <Button type="submit" className="w-full bg-primary hover:bg-primary/90 mt-6">
-          Book a Visit
+        <div>
+          <Label htmlFor="message">Add a Custom Message</Label>
+          <Textarea
+            id="message"
+            rows={4}
+            value={formData.message}
+            onChange={(e) =>
+              setFormData({ ...formData, message: e.target.value })
+            }
+            placeholder="Message..."
+            disabled={isSubmitting}
+            className="mt-1"
+          />
+        </div>
+
+        <Button
+          type="submit"
+          disabled={isSubmitting}
+          className="w-full bg-primary hover:bg-primary/90 mt-6"
+        >
+          {isSubmitting ? "Submitting..." : "Book a Visit"}
         </Button>
       </div>
     </form>

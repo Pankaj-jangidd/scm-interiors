@@ -14,7 +14,93 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      contact_submissions: {
+        Row: {
+          created_at: string | null
+          email: string
+          id: string
+          message: string
+          name: string
+          phone: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          email: string
+          id?: string
+          message: string
+          name: string
+          phone?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          email?: string
+          id?: string
+          message?: string
+          name?: string
+          phone?: string | null
+        }
+        Relationships: []
+      }
+      gallery_images: {
+        Row: {
+          alt: string | null
+          category: string
+          created_at: string | null
+          id: string
+          order_index: number | null
+          subcategory: string | null
+          url: string
+        }
+        Insert: {
+          alt?: string | null
+          category: string
+          created_at?: string | null
+          id?: string
+          order_index?: number | null
+          subcategory?: string | null
+          url: string
+        }
+        Update: {
+          alt?: string | null
+          category?: string
+          created_at?: string | null
+          id?: string
+          order_index?: number | null
+          subcategory?: string | null
+          url?: string
+        }
+        Relationships: []
+      }
+      reviews: {
+        Row: {
+          created_at: string | null
+          id: string
+          name: string
+          project_type: string | null
+          rating: number
+          review: string
+          visible: boolean | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          name: string
+          project_type?: string | null
+          rating: number
+          review: string
+          visible?: boolean | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          name?: string
+          project_type?: string | null
+          rating?: number
+          review?: string
+          visible?: boolean | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

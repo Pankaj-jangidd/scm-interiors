@@ -1,13 +1,53 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+// ===============================
+//  ADMIN CONTEXT (FINAL VERSION)
+// ===============================
 
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  ReactNode,
+  useRef,
+} from "react";
+
+import {
+  uploadGalleryImage,
+  getGalleryImages as supabaseFetchGallery,
+  deleteGalleryImage as supabaseDeleteGalleryImage,
+} from "@/integrations/supabase/gallery";
+
+import {
+  addReview as addReviewToDB,
+  getReviews as getReviewsFromDB,
+  updateReview as updateReviewInDB,
+  deleteReview as deleteReviewFromDB,
+} from "@/integrations/supabase/reviews";
+
+import {
+  submitContactForm as addContactToDB,
+  getContactSubmissions as getContactsFromDB,
+  updateContactStatus as updateContactStatusInDB,
+  deleteContactSubmission as deleteContactFromDB,
+} from "@/integrations/supabase/contact";
+
+import { supabase } from "@/integrations/supabase/client";
+
+/* ===============================
+      TYPE DECLARATIONS
+================================= */
 export interface Review {
   id: string;
   name: string;
   text: string;
   rating: number;
-  projectType: string;
-  date: string;
+
+  project_type?: string;
+  created_at?: string;
   visible: boolean;
+
+  projectType?: string;
+  date?: string;
 }
 
 export interface ContactSubmission {
@@ -15,10 +55,15 @@ export interface ContactSubmission {
   name: string;
   email: string;
   phone: string;
-  projectType: string;
+
+  project_type?: string;
+  created_at?: string;
+  status?: "new" | "read";
+
+  projectType?: string;
+  date?: string;
+
   message: string;
-  date: string;
-  status: 'new' | 'read';
 }
 
 export interface GalleryImage {
@@ -26,189 +71,342 @@ export interface GalleryImage {
   url: string;
   alt: string;
   caption?: string;
-  category: 'residential' | 'commercial';
+  category: "residential" | "commercial";
   subcategory?: string;
   order: number;
 }
 
+/* ===============================
+      NORMALIZERS (IMPORTANT)
+================================= */
+
+// Convert raw Supabase row → app-safe Review
+const normalizeReview = (r: any): Review => ({
+  id: String(r.id),
+  name: r.name ?? "",
+  text: r.text ?? "",
+  rating: Number(r.rating) || 0,
+  visible: Boolean(r.visible),
+
+  project_type: r.project_type,
+  created_at: r.created_at,
+
+  projectType: r.project_type,
+  date: r.created_at,
+});
+
+// Convert raw Supabase row → app-safe ContactSubmission
+const normalizeContact = (c: any): ContactSubmission => ({
+  id: String(c.id),
+  name: c.name ?? "",
+  email: c.email ?? "",
+  phone: c.phone ?? "",
+  message: c.message ?? "",
+
+  project_type: c.project_type,
+  created_at: c.created_at,
+  status: c.status ?? c.submission_status ?? "new",
+
+  projectType: c.project_type,
+  date: c.created_at,
+});
+
+/* ===============================
+      CONTEXT SETUP
+================================= */
+
 interface AdminContextType {
   isAuthenticated: boolean;
-  login: (username: string, password: string) => boolean;
+  login: (u: string, p: string) => boolean;
   logout: () => void;
+
   reviews: Review[];
-  addReview: (review: Omit<Review, 'id' | 'date'>) => void;
-  updateReview: (id: string, review: Partial<Review>) => void;
-  deleteReview: (id: string) => void;
+  addReview: (r: {
+    name: string;
+    text: string;
+    rating: number;
+    projectType: string;
+    visible?: boolean;
+  }) => Promise<any>;
+  updateReview: (id: string, data: Partial<Review>) => Promise<any>;
+  deleteReview: (id: string) => Promise<any>;
+
   contactSubmissions: ContactSubmission[];
-  addContactSubmission: (submission: Omit<ContactSubmission, 'id' | 'date' | 'status'>) => void;
-  updateSubmissionStatus: (id: string, status: 'new' | 'read') => void;
-  deleteSubmission: (id: string) => void;
+  addContactSubmission: (s: {
+    name: string;
+    email: string;
+    phone: string;
+    projectType: string;
+    message: string;
+  }) => Promise<any>;
+  updateSubmissionStatus: (id: string, status: "new" | "read") => Promise<any>;
+  deleteSubmission: (id: string) => Promise<any>;
+
   galleryImages: GalleryImage[];
-  addGalleryImage: (image: Omit<GalleryImage, 'id'>) => void;
-  deleteGalleryImage: (id: string) => void;
+  addGalleryImage: (data: {
+    file: File;
+    category: string;
+    alt?: string;
+    subcategory?: string;
+  }) => Promise<void>;
+  deleteGalleryImage: (id: string, url: string) => Promise<void>;
   reorderGalleryImages: (images: GalleryImage[]) => void;
+
   exportData: () => void;
-  importData: (data: string) => void;
+  importData: (json: string) => void;
 }
 
 const AdminContext = createContext<AdminContextType | undefined>(undefined);
 
-const ADMIN_USERNAME = 'admin';
-const ADMIN_PASSWORD = 'scminteriors2025';
+const ADMIN_USERNAME = "pankajjangid";
+const ADMIN_PASSWORD = "PANKAJ247";
+
+/* ===============================
+      PROVIDER
+================================= */
 
 export const AdminProvider = ({ children }: { children: ReactNode }) => {
-  // Load data from localStorage on mount
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [reviews, setReviews] = useState<Review[]>(() => {
-    const saved = localStorage.getItem('scm-reviews');
-    return saved ? JSON.parse(saved) : [
-      {
-        id: '1',
-        name: 'Rajesh Kumar',
-        text: 'Excellent work! The modular kitchen design exceeded our expectations. Professional team and timely completion.',
-        rating: 5,
-        projectType: 'Residential',
-        date: new Date().toISOString(),
-        visible: true,
-      },
-      {
-        id: '2',
-        name: 'Priya Sharma',
-        text: 'Very satisfied with the false ceiling and lighting work. The attention to detail was remarkable.',
-        rating: 5,
-        projectType: 'Residential',
-        date: new Date().toISOString(),
-        visible: true,
-      },
-      {
-        id: '3',
-        name: 'Amit Patel',
-        text: 'Great experience working with SCM Interiors. They transformed our office space beautifully.',
-        rating: 5,
-        projectType: 'Commercial',
-        date: new Date().toISOString(),
-        visible: true,
-      },
-      {
-        id: '4',
-        name: 'Deepika Reddy',
-        text: 'Outstanding craftsmanship! The wardrobe design is both functional and elegant. Highly recommended for quality work.',
-        rating: 5,
-        projectType: 'Residential',
-        date: new Date().toISOString(),
-        visible: true,
-      },
-    ];
-  });
-  const [contactSubmissions, setContactSubmissions] = useState<ContactSubmission[]>(() => {
-    const saved = localStorage.getItem('scm-contacts');
-    return saved ? JSON.parse(saved) : [];
-  });
-  const [galleryImages, setGalleryImages] = useState<GalleryImage[]>(() => {
-    const saved = localStorage.getItem('scm-gallery');
-    return saved ? JSON.parse(saved) : [];
-  });
 
-  const login = (username: string, password: string): boolean => {
-    if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
+  const [reviews, setReviews] = useState<Review[]>([]);
+  const [contactSubmissions, setContactSubmissions] = useState<
+    ContactSubmission[]
+  >([]);
+
+  const [galleryImages, setGalleryImages] = useState<GalleryImage[]>([]);
+
+  const reviewsChannelRef = useRef<any>(null);
+  const contactsChannelRef = useRef<any>(null);
+
+  /* ===============================
+      LOAD GALLERY
+================================= */
+  useEffect(() => {
+    (async () => {
+      try {
+        const data = await supabaseFetchGallery();
+        setGalleryImages(
+          (data || []).map((img: any) => ({
+            id: img.id,
+            url: img.url,
+            alt: img.alt || "",
+            caption: img.caption || "",
+            category: img.category,
+            subcategory: img.subcategory || undefined,
+            order: img.order_index ?? 0,
+          }))
+        );
+      } catch (err) {
+        console.error("Gallery load failed:", err);
+      }
+    })();
+  }, []);
+
+  /* ===============================
+      AUTH
+================================= */
+  const login = (u: string, p: string) => {
+    if (u === ADMIN_USERNAME && p === ADMIN_PASSWORD) {
       setIsAuthenticated(true);
       return true;
     }
     return false;
   };
 
-  const logout = () => {
-    setIsAuthenticated(false);
-  };
+  const logout = () => setIsAuthenticated(false);
 
-  // Persist to localStorage whenever data changes
+  /* ===============================
+      LOAD REVIEWS & CONTACTS + REALTIME
+================================= */
   useEffect(() => {
-    localStorage.setItem('scm-reviews', JSON.stringify(reviews));
-  }, [reviews]);
+    let mounted = true;
 
-  useEffect(() => {
-    localStorage.setItem('scm-contacts', JSON.stringify(contactSubmissions));
-  }, [contactSubmissions]);
+    const loadInitial = async () => {
+      try {
+        const [r, c] = await Promise.all([
+          getReviewsFromDB(false),
+          getContactsFromDB(),
+        ]);
+        if (!mounted) return;
 
-  useEffect(() => {
-    localStorage.setItem('scm-gallery', JSON.stringify(galleryImages));
-  }, [galleryImages]);
-
-  const addReview = (review: Omit<Review, 'id' | 'date'>) => {
-    const newReview: Review = {
-      ...review,
-      id: Date.now().toString(),
-      date: new Date().toISOString(),
+        setReviews((r || []).map(normalizeReview));
+        setContactSubmissions((c || []).map(normalizeContact));
+      } catch (err) {
+        console.error("Initial load failed:", err);
+      }
     };
-    setReviews([...reviews, newReview]);
-  };
 
-  const updateReview = (id: string, updatedReview: Partial<Review>) => {
-    setReviews(reviews.map(r => r.id === id ? { ...r, ...updatedReview } : r));
-  };
+    loadInitial();
 
-  const deleteReview = (id: string) => {
-    setReviews(reviews.filter(r => r.id !== id));
-  };
+    // 🔥 When website adds review → force reload for admin panel
+    window.addEventListener("scm:reviews-updated", async () => {
+      const fresh = await getReviewsFromDB(false);
+      setReviews((fresh || []).map(normalizeReview));
+    });
 
-  const addContactSubmission = (submission: Omit<ContactSubmission, 'id' | 'date' | 'status'>) => {
-    const newSubmission: ContactSubmission = {
-      ...submission,
-      id: Date.now().toString(),
-      date: new Date().toISOString(),
-      status: 'new',
+    // --- realtime reviews ---
+    reviewsChannelRef.current = supabase
+      .channel("public:reviews")
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "reviews" },
+        () => {
+          getReviewsFromDB(false)
+            .then((res) => setReviews((res || []).map(normalizeReview)))
+            .catch(console.error);
+        }
+      )
+      .subscribe();
+
+    // --- realtime contacts ---
+    contactsChannelRef.current = supabase
+      .channel("public:contact_submissions")
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "contact_submissions" },
+        () => {
+          getContactsFromDB()
+            .then((res) =>
+              setContactSubmissions((res || []).map(normalizeContact))
+            )
+            .catch(console.error);
+        }
+      )
+      .subscribe();
+
+    return () => {
+      mounted = false;
+      supabase.removeChannel(reviewsChannelRef.current);
+      supabase.removeChannel(contactsChannelRef.current);
     };
-    setContactSubmissions([...contactSubmissions, newSubmission]);
+  }, []);
+
+  /* ===============================
+      REVIEWS CRUD
+================================= */
+  const addReview = async (review: {
+    name: string;
+    text: string;
+    rating: number;
+    projectType: string;
+    visible?: boolean;
+  }) => {
+    const created = await addReviewToDB(review);
+    const all = await getReviewsFromDB(false);
+    setReviews((all || []).map(normalizeReview));
+    return created;
   };
 
-  const updateSubmissionStatus = (id: string, status: 'new' | 'read') => {
-    setContactSubmissions(contactSubmissions.map(s => s.id === id ? { ...s, status } : s));
+  const updateReview = async (id: string, data: Partial<Review>) => {
+    await updateReviewInDB(id, {
+      ...data,
+      project_type: data.projectType ?? data.project_type,
+    });
+    const all = await getReviewsFromDB(false);
+    setReviews((all || []).map(normalizeReview));
   };
 
-  const deleteSubmission = (id: string) => {
-    setContactSubmissions(contactSubmissions.filter(s => s.id !== id));
+  const deleteReview = async (id: string) => {
+    await deleteReviewFromDB(id);
+    setReviews((prev) => prev.filter((r) => r.id !== id));
   };
 
-  const addGalleryImage = (image: Omit<GalleryImage, 'id'>) => {
-    const newImage: GalleryImage = {
-      ...image,
-      id: Date.now().toString(),
-    };
-    setGalleryImages([...galleryImages, newImage]);
+  /* ===============================
+      CONTACT CRUD
+================================= */
+  const addContactSubmission = async (sub) => {
+    await addContactToDB(sub);
+    const all = await getContactsFromDB();
+    setContactSubmissions((all || []).map(normalizeContact));
   };
 
-  const deleteGalleryImage = (id: string) => {
-    setGalleryImages(galleryImages.filter(img => img.id !== id));
+  const updateSubmissionStatus = async (id: string, status: "new" | "read") => {
+    await updateContactStatusInDB(id, status);
+    setContactSubmissions((prev) =>
+      prev.map((c) => (c.id === id ? { ...c, status } : c))
+    );
   };
 
-  const reorderGalleryImages = (images: GalleryImage[]) => {
-    setGalleryImages(images);
+  const deleteSubmission = async (id: string) => {
+    await deleteContactFromDB(id);
+    setContactSubmissions((prev) => prev.filter((c) => c.id !== id));
   };
 
+  /* ===============================
+      GALLERY CRUD
+================================= */
+  const addGalleryImage = async (image: {
+    file: File;
+    category: string;
+    alt?: string;
+    subcategory?: string;
+  }) => {
+    try {
+      const saved = await uploadGalleryImage({
+        file: image.file,
+        category: image.category,
+        alt: image.alt,
+        subcategory: image.subcategory,
+      });
+
+      if (!saved) throw new Error("Upload failed");
+
+      setGalleryImages((prev) => [
+        ...prev,
+        {
+          id: saved.id,
+          url: saved.url,
+          alt: saved.alt ?? "",
+          category: saved.category as "residential" | "commercial",
+          subcategory: saved.subcategory ?? undefined,
+          order: saved.order_index ?? 0,
+        },
+      ]);
+    } catch (err) {
+      console.error("Failed to add image:", err);
+      throw err;
+    }
+  };
+
+  const deleteGalleryImage = async (id: string, url: string) => {
+    await supabaseDeleteGalleryImage(id, url);
+    setGalleryImages((prev) => prev.filter((i) => i.id !== id));
+  };
+
+  const reorderGalleryImages = (imgs: GalleryImage[]) => {
+    setGalleryImages(imgs);
+  };
+
+  /* ===============================
+      EXPORT / IMPORT
+================================= */
   const exportData = () => {
     const data = {
       reviews,
       contactSubmissions,
       galleryImages,
-      exportDate: new Date().toISOString(),
+      exportedAt: new Date().toISOString(),
     };
-    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const blob = new Blob([JSON.stringify(data, null, 2)], {
+      type: "application/json",
+    });
     const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
+    const a = document.createElement("a");
     a.href = url;
-    a.download = `scm-interiors-backup-${Date.now()}.json`;
+    a.download = "scm-interiors-backup.json";
     a.click();
-    URL.revokeObjectURL(url);
+    setTimeout(() => URL.revokeObjectURL(url), 2000);
   };
 
-  const importData = (jsonString: string) => {
+  const importData = (json: string) => {
     try {
-      const data = JSON.parse(jsonString);
-      if (data.reviews) setReviews(data.reviews);
-      if (data.contactSubmissions) setContactSubmissions(data.contactSubmissions);
+      const data = JSON.parse(json);
+      if (data.reviews) setReviews(data.reviews.map(normalizeReview));
+      if (data.contactSubmissions)
+        setContactSubmissions(data.contactSubmissions.map(normalizeContact));
       if (data.galleryImages) setGalleryImages(data.galleryImages);
-    } catch (error) {
-      console.error('Failed to import data:', error);
+    } catch (err) {
+      console.error("Import failed:", err);
     }
   };
 
@@ -218,18 +416,22 @@ export const AdminProvider = ({ children }: { children: ReactNode }) => {
         isAuthenticated,
         login,
         logout,
+
         reviews,
         addReview,
         updateReview,
         deleteReview,
+
         contactSubmissions,
         addContactSubmission,
         updateSubmissionStatus,
         deleteSubmission,
+
         galleryImages,
         addGalleryImage,
         deleteGalleryImage,
         reorderGalleryImages,
+
         exportData,
         importData,
       }}
@@ -240,9 +442,7 @@ export const AdminProvider = ({ children }: { children: ReactNode }) => {
 };
 
 export const useAdmin = () => {
-  const context = useContext(AdminContext);
-  if (!context) {
-    throw new Error('useAdmin must be used within AdminProvider');
-  }
-  return context;
+  const ctx = useContext(AdminContext);
+  if (!ctx) throw new Error("useAdmin must be used inside AdminProvider");
+  return ctx;
 };

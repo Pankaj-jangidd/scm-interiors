@@ -1,156 +1,167 @@
-import { useState } from 'react';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
-import ReviewCard from '@/components/ReviewCard';
-import AddReviewDialog from '@/components/AddReviewDialog';
-import { Button } from '@/components/ui/button';
+// ===============================
+//  WEBSITE REVIEWS PAGE (FINAL)
+// ===============================
+
+import { useState, useEffect } from "react";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import ReviewCard from "@/components/ReviewCard";
+import AddReviewDialog from "@/components/AddReviewDialog";
+import { Button } from "@/components/ui/button";
+import PageTransition from "@/components/admin/PageTransition";
+import { getReviews } from "@/integrations/supabase/reviews";
+import { supabase } from "@/integrations/supabase/client";
 
 const Reviews = () => {
   const [showAll, setShowAll] = useState(false);
-  
-  const allReviews = [
-    {
-      name: 'Rajesh Kumar',
-      rating: 5,
-      review:
-        'Outstanding work! The team transformed our home beautifully. Very professional and delivered on time. The attention to detail was remarkable.',
-    },
-    {
-      name: 'Priya Sharma',
-      rating: 5,
-      review:
-        'Excellent modular kitchen design. The quality of materials and finish is top-notch. Highly recommended! They made the entire process smooth and stress-free.',
-    },
-    {
-      name: 'Anil Patel',
-      rating: 5,
-      review:
-        'Great attention to detail. The false ceiling work was done perfectly. Very satisfied with the results and the professionalism of the team.',
-    },
-    {
-      name: 'Meena Reddy',
-      rating: 5,
-      review:
-        'Professional team and excellent craftsmanship. They understood our requirements perfectly and delivered beyond our expectations.',
-    },
-    {
-      name: 'Suresh Naidu',
-      rating: 5,
-      review:
-        'Best interior designers in Bangalore! They renovated our entire apartment and it looks stunning. Great work on the furniture and paint.',
-    },
-    {
-      name: 'Lakshmi Iyer',
-      rating: 5,
-      review:
-        'Very happy with the wardrobe design and execution. The team was courteous and finished the work within the promised timeline.',
-    },
-    {
-      name: 'Vikram Singh',
-      rating: 5,
-      review:
-        'Exceptional quality and reasonable pricing. The modular kitchen they designed for us is both functional and beautiful. Highly satisfied!',
-    },
-    {
-      name: 'Divya Ramesh',
-      rating: 5,
-      review:
-        'SCM Interiors did a fantastic job with our office renovation. Professional approach and excellent finishing work. Would definitely recommend.',
-    },
-    {
-      name: 'Karthik Rao',
-      rating: 5,
-      review:
-        'Outstanding craftsmanship! They helped us design a beautiful pooja room and TV unit. The wood work quality is excellent.',
-    },
-    {
-      name: 'Anjali Desai',
-      rating: 5,
-      review:
-        'Very impressed with their professionalism. The false ceiling and lighting design transformed our living room completely. Thank you!',
-    },
-    {
-      name: 'Madhav Kulkarni',
-      rating: 5,
-      review:
-        'Best decision we made for our home interiors. The team was responsive, creative, and delivered exceptional results within budget.',
-    },
-    {
-      name: 'Preeti Joshi',
-      rating: 5,
-      review:
-        'Excellent service from start to finish. They helped us with complete interior design including painting, furniture, and false ceiling. Highly recommended!',
-    },
+  const [dbReviews, setDbReviews] = useState<any[]>([]);
+
+  // STATIC REVIEWS
+  const staticReviews = [
+    { name: "Rajesh Kumar", rating: 5, review: "Outstanding work!" },
+    { name: "Priya Sharma", rating: 5, review: "Amazing modular kitchen." },
+    { name: "Anil Patel", rating: 5, review: "Great attention to detail." },
+    { name: "Meena Reddy", rating: 5, review: "Very professional team." },
+    { name: "Suresh Naidu", rating: 5, review: "Stunning renovation work." },
+    { name: "Lakshmi Iyer", rating: 5, review: "Beautiful wardrobe design." },
   ];
+
+  // Load Reviews
+  const load = async () => {
+    try {
+      const data = await getReviews(true);
+
+      const normalized = (data || []).map((r: any) => ({
+        id: r.id,
+        name: r.name ?? "Anonymous",
+        rating: Number(r.rating) || 5,
+        review: r.text ?? r.review ?? "",
+        created_at: r.created_at,
+      }));
+
+      normalized.sort(
+        (a, b) =>
+          new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+      );
+
+      setDbReviews(normalized);
+    } catch (err) {
+      console.error("Load reviews failed:", err);
+    }
+  };
+
+  useEffect(() => {
+    load();
+
+    // Realtime Listener
+    const channel = supabase
+      .channel("realtime:reviews")
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "reviews" },
+        () => load()
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, []);
+
+  const allReviews = [...dbReviews, ...staticReviews];
 
   return (
     <div className="min-h-screen">
       <Navbar />
 
-      {/* Page Header */}
-      <section className="py-16 md:py-20 bg-card">
-        <div className="container mx-auto px-4 text-center">
-          <h1 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-foreground">
+      {/* HERO (not inside PageTransition, same as Contact page) */}
+      <section className="relative h-[70vh] min-h-[500px] flex items-center justify-center">
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: `url(/public/images/review.jpg)` }}
+        >
+          <div className="absolute inset-0 bg-black/40" />
+        </div>
+        <div className="relative z-10 text-center text-white px-4 max-w-4xl mx-auto animate-fade-in">
+          <h1 className="font-serif text-5xl font-bold mb-4">
             Our Happy Customers
           </h1>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Hear what our clients say about their experience with Sri Chamundeshwari Interiors.
+          <p className="text-xl font-light">
+            Our work ends only when your satisfaction begins
           </p>
-          <div className="w-24 h-1 bg-primary mx-auto mt-6 rounded-full" />
         </div>
       </section>
 
-      {/* Reviews Grid */}
-      <section className="py-16 md:py-20">
-        <div className="container mx-auto px-4">
-          <div className="grid sm:grid-cols-2 lg:grid-cols-2 gap-6 max-w-7xl mx-auto mb-12 relative">
-            {allReviews.slice(0, 6).map((review, index) => (
-              <div
-                key={index}
-                className="animate-fade-in"
-                style={{ animationDelay: `${index * 0.05}s` }}
-              >
-                <ReviewCard {...review} />
-              </div>
-            ))}
-            
-            {!showAll && allReviews.length > 6 && (
-              <div className="col-span-full relative">
-                <div className="absolute inset-0 backdrop-blur-md bg-white/50 z-10 rounded-xl" />
-                <div className="absolute inset-0 z-20 flex items-center justify-center">
-                  <Button
-                    onClick={() => setShowAll(true)}
-                    className="bg-accent hover:bg-accent/90 text-accent-foreground shadow-lg"
-                    size="lg"
+      {/* CONTENT (ONLY this has the PageTransition animation) */}
+      <PageTransition>
+        {/* INTRO SECTION */}
+        <section className="py-10 bg-secondary">
+          <div className="container mx-auto px-4 text-center">
+            <h2 className="font-serif text-3xl font-bold mb-3 text-primary">
+              Hear what our clients say
+            </h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              Stories of trust, satisfaction, and beautifully transformed
+              spaces.
+            </p>
+          </div>
+        </section>
+
+        {/* REVIEWS */}
+        <section className="py-16">
+          <div className="container mx-auto px-4">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-2 gap-6 max-w-7xl mx-auto mb-12">
+              {allReviews.slice(0, 4).map((review, index) => (
+                <div
+                  key={review.id ?? index}
+                  className="animate-fade-in"
+                  style={{ animationDelay: `${index * 0.05}s` }}
+                >
+                  <ReviewCard {...review} />
+                </div>
+              ))}
+
+              {!showAll && allReviews.length > 4 && (
+                <div className="col-span-full relative">
+                  <div className="absolute inset-0 backdrop-blur-md bg-white/50 z-10 rounded-xl" />
+                  <div className="absolute inset-0 z-20 flex items-center justify-center">
+                    <Button
+                      onClick={() => setShowAll(true)}
+                      size="lg"
+                      className="bg-accent hover:bg-accent/90 text-accent-foreground"
+                    >
+                      Read More
+                    </Button>
+                  </div>
+
+                  <div className="grid sm:grid-cols-2 gap-6 blur-sm pointer-events-none">
+                    {allReviews.slice(4, 6).map((review, index) => (
+                      <div key={index + 4}>
+                        <ReviewCard {...review} />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {showAll &&
+                allReviews.map((review, index) => (
+                  <div
+                    key={review.id ?? index}
+                    className="animate-fade-in"
+                    style={{ animationDelay: `${index * 0.05}s` }}
                   >
-                    Read More
-                  </Button>
-                </div>
-                <div className="grid sm:grid-cols-2 gap-6 blur-sm pointer-events-none">
-                  {allReviews.slice(6, 8).map((review, index) => (
-                    <div key={index + 6}>
-                      <ReviewCard {...review} />
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-            
-            {showAll && allReviews.slice(6).map((review, index) => (
-              <div
-                key={index + 6}
-                className="animate-fade-in"
-                style={{ animationDelay: `${index * 0.05}s` }}
-              >
-                <ReviewCard {...review} />
-              </div>
-            ))}
+                    <ReviewCard {...review} />
+                  </div>
+                ))}
+            </div>
+
+            <div className="text-center">
+              <AddReviewDialog />
+            </div>
           </div>
-          <div className="text-center">
-            <AddReviewDialog />
-          </div>
-        </div>
-      </section>
+        </section>
+      </PageTransition>
 
       <Footer />
     </div>

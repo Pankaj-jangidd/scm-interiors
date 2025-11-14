@@ -1,29 +1,57 @@
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
-import { Award, Users, Gem, IndianRupee } from 'lucide-react';
-import founderImage from '@/assets/founder.jpg';
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import PageTransition from "@/components/admin/PageTransition";
+import { Award, Users, Gem, IndianRupee } from "lucide-react";
+import founderImage from "@/assets/founder.jpg";
 
 const About = () => {
   const values = [
     {
       icon: Award,
-      title: '30+ Years Experience',
-      description: 'Three decades of excellence in interior execution and craftsmanship across Bangalore.',
+      title: "30+ Years Experience",
+      description:
+        "Three decades of excellence in interior execution and craftsmanship across Bangalore.",
     },
     {
       icon: Users,
-      title: 'Expert Team',
-      description: 'Skilled professionals dedicated to bringing your vision to life with precision.',
+      title: "Expert Team",
+      description:
+        "Skilled professionals dedicated to bringing your vision to life with precision.",
     },
     {
       icon: Gem,
-      title: 'Quality Materials',
-      description: 'We use only premium materials and finishes for long-lasting, beautiful interiors.',
+      title: "Quality Materials",
+      description:
+        "We use only premium materials and finishes for long-lasting, beautiful interiors.",
     },
     {
       icon: IndianRupee,
-      title: 'Reasonable Rates',
-      description: 'Transparent pricing with no hidden costs, making quality interiors accessible to all.',
+      title: "Reasonable Rates",
+      description:
+        "Transparent pricing with no hidden costs, making quality interiors accessible to all.",
+    },
+  ];
+
+  const teamCategories = [
+    {
+      title: "Skilled Carpenters",
+      image: "/public/images/carpenter.jpeg",
+      alt: "Skilled carpenters working on wooden furniture and cabinetry",
+    },
+    {
+      title: "Expert Painters",
+      image: "/public/images/painter.jpeg",
+      alt: "Expert painters delivering flawless finishes",
+    },
+    {
+      title: "Flooring Specialists",
+      image: "/public/images/flooring.jpeg",
+      alt: "Flooring team installing tiles and wooden flooring",
+    },
+    {
+      title: "POP and Ceiling Experts",
+      image: "/public/images/pop.jpeg",
+      alt: "POP and false ceiling installation specialists",
     },
   ];
 
@@ -31,143 +59,148 @@ const About = () => {
     <div className="min-h-screen">
       <Navbar />
 
-      {/* Company Introduction Section */}
-      <section className="py-16 md:py-20 bg-secondary">
-        <div className="container mx-auto px-4 max-w-6xl">
-          <h2 className="font-serif text-3xl md:text-4xl font-bold text-primary mb-12">
-            Our Story
-          </h2>
-          
-          <div className="space-y-6">
-            <p className="text-base md:text-lg leading-relaxed text-muted-foreground">
-              Established over three decades ago, Sri Chamundeshwari Interiors & Contractors has been transforming spaces across Bangalore with dedication and craftsmanship. What began as a small venture has grown into a comprehensive interior solutions provider, trusted by hundreds of satisfied clients. Our journey has been shaped by our commitment to quality, timely execution, and transparent dealings that put client satisfaction above everything else.
-            </p>
+      {/* HERO should NOT be inside PageTransition */}
+      <section className="relative h-[70vh] min-h-[500px] flex items-center justify-center">
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{
+            backgroundImage: `url(/public/images/about.jpg)`,
+          }}
+        >
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent" />
+        </div>
 
-            <p className="text-base md:text-lg leading-relaxed text-muted-foreground">
-              Today, we stand as a complete interior execution firm offering services from carpentry and paint works to modular fittings and false ceilings. Our team of skilled professionals brings years of experience to every project, ensuring precision in execution and excellence in finish. We take pride in creating functional, beautiful spaces that reflect our clients' vision while staying within budget and timeline commitments.
-            </p>
-          </div>
+        <div className="relative z-10 text-center text-white px-6 max-w-4xl mx-auto animate-fade-in">
+          <h1 className="font-serif text-4xl md:text-5xl font-bold mb-6">
+            The Journey Behind SCM Interiors
+          </h1>
+          <p className="text-base md:text-lg leading-relaxed font-light text-white/90">
+            For over three decades, Sri Chamundeshwari Interiors has been
+            shaping beautiful spaces across Bangalore with passion, precision,
+            and trust. What began as a humble family-run venture has now evolved
+            into a complete interior solutions firm built on quality, honesty,
+            and timely delivery.
+          </p>
         </div>
       </section>
 
-      {/* Founder Section */}
-      <section className="py-16 md:py-20 bg-card">
-        <div className="container mx-auto px-4 max-w-6xl">
-          <h2 className="font-serif text-3xl md:text-4xl font-bold text-center mb-12 text-primary">
-            Meet Our Founder
-          </h2>
-          
-          <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-start">
-            <div className="flex flex-col items-center">
-              <img
-                src={founderImage}
-                alt="Mr. Ganapathlal - Founder"
-                className="w-full h-[400px] object-cover rounded-lg shadow-lg mb-4"
-              />
-              <div className="text-center">
-                <h3 className="text-2xl font-bold text-foreground">Mr. Ganapathlal</h3>
-                <p className="text-base text-muted-foreground">Founder & Principal Contractor</p>
+      {/* Everything below animates — like Contact page */}
+      <PageTransition>
+        {/* Founder Section */}
+        <section className="py-24 md:py-28 bg-gradient-to-b from-[#F5EFE7] to-[#F9F7F3] flex items-center">
+          <div className="container mx-auto px-4 max-w-6xl">
+            <div className="flex flex-col md:flex-row items-center md:items-center gap-10 md:gap-14">
+              <div className="md:w-1/2 w-full relative">
+                <img
+                  src={founderImage}
+                  alt="Mr. Ganapathlal - Founder"
+                  className="w-full h-[420px] md:h-[460px] object-cover rounded-2xl shadow-lg border border-[#E7DED2]"
+                />
               </div>
-            </div>
-            
-            <div className="space-y-6">
-              <p className="text-base md:text-lg leading-relaxed text-muted-foreground">
-                With over three decades of hands-on experience in interior execution, Mr. Ganapathlal has built Sri Chamundeshwari Interiors into one of Bangalore's most trusted names. His commitment to precision craftsmanship and client satisfaction has shaped countless residential and commercial spaces across the city.
-              </p>
 
-              <p className="text-base md:text-lg leading-relaxed text-muted-foreground">
-                Every project reflects his dedication to quality and attention to detail, ensuring spaces that truly feel like home. His expertise spans traditional carpentry to modern modular solutions, bringing together time-tested techniques with contemporary design sensibilities.
-              </p>
+              <div className="md:w-1/2 w-full space-y-5">
+                <h2 className="font-serif text-3xl md:text-4xl font-bold text-primary mb-2 text-left">
+                  The Man Behind the Legacy
+                </h2>
 
-              <div className="pt-4 border-t border-border">
-                <p className="text-base text-muted-foreground mb-2">
-                  <strong>Contact:</strong> +91 8824374977
-                </p>
-                <p className="text-base text-muted-foreground break-all">
-                  <strong>Email:</strong> srichamundeshwariinteriors@gmail.com
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Why Choose Us Section */}
-      <section className="py-16 md:py-20 bg-muted">
-        <div className="container mx-auto px-4 max-w-6xl">
-          <h2 className="font-serif text-3xl md:text-4xl font-bold text-center mb-12 text-primary">
-            Why Choose Us
-          </h2>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {values.map((value) => {
-              const Icon = value.icon;
-              return (
-                <div
-                  key={value.title}
-                  className="bg-card p-7 rounded-xl border border-border shadow-sm hover:-translate-y-1 hover:shadow-lg transition-all duration-300"
-                >
-                  <Icon className="h-12 w-12 text-primary mb-4" />
-                  <h3 className="text-xl font-bold mb-3 text-foreground">{value.title}</h3>
-                  <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
-                    {value.description}
+                <div className="space-y-1">
+                  <h3 className="text-xl md:text-2xl font-semibold text-foreground leading-tight">
+                    Mr. Ganapathlal
+                  </h3>
+                  <p className="text-base text-muted-foreground">
+                    Founder & Principal Contractor
                   </p>
                 </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
 
-      {/* Our Expert Team Section */}
-      <section className="py-16 md:py-20 bg-card">
-        <div className="container mx-auto px-4 max-w-6xl">
-          <h2 className="font-serif text-3xl md:text-4xl font-bold text-center mb-4 text-primary">
-            Our Expert Team
-          </h2>
-          <p className="text-center text-base md:text-lg text-muted-foreground mb-12 max-w-2xl mx-auto">
-            Skilled professionals dedicated to bringing your vision to life
-          </p>
+                <p className="text-base md:text-lg leading-relaxed text-muted-foreground">
+                  With over three decades of experience,{" "}
+                  <span className="font-medium text-foreground">
+                    Mr. Ganapathlal
+                  </span>{" "}
+                  has built SCM Interiors into one of Bangalore’s most trusted
+                  interior execution firms. His principles — quality, honesty,
+                  and timely execution — define every project we deliver.
+                </p>
 
-          <div className="space-y-10">
-            {/* Paint Team */}
-            <div className="bg-background rounded-xl overflow-hidden shadow-lg hover:-translate-y-1.5 transition-all duration-300">
-              <img
-                src="https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=1200&h=350&fit=crop"
-                alt="Paint Team at work"
-                className="w-full h-[300px] md:h-[350px] object-cover"
-              />
-              <div className="p-6 text-center">
-                <h3 className="text-xl md:text-2xl font-bold text-foreground">Paint Team</h3>
-              </div>
-            </div>
+                <p className="text-base md:text-lg leading-relaxed text-muted-foreground">
+                  From residential to commercial spaces, his dedication to
+                  craftsmanship continues to inspire our entire team.
+                </p>
 
-            {/* Carpentry Team */}
-            <div className="bg-background rounded-xl overflow-hidden shadow-lg hover:-translate-y-1.5 transition-all duration-300">
-              <img
-                src="https://images.unsplash.com/photo-1504148455328-c376907d081c?w=1200&h=350&fit=crop"
-                alt="Carpentry Team crafting furniture"
-                className="w-full h-[300px] md:h-[350px] object-cover"
-              />
-              <div className="p-6 text-center">
-                <h3 className="text-xl md:text-2xl font-bold text-foreground">Carpentry Team</h3>
-              </div>
-            </div>
-
-            {/* Flooring Team */}
-            <div className="bg-background rounded-xl overflow-hidden shadow-lg hover:-translate-y-1.5 transition-all duration-300">
-              <img
-                src="https://images.unsplash.com/photo-1621905252507-b35492cc74b4?w=1200&h=350&fit=crop"
-                alt="Flooring Team installing tiles"
-                className="w-full h-[300px] md:h-[350px] object-cover"
-              />
-              <div className="p-6 text-center">
-                <h3 className="text-xl md:text-2xl font-bold text-foreground">Flooring Team</h3>
+                <div className="pt-2 border-t border-border mt-4">
+                  <p className="text-base md:text-lg text-muted-foreground font-semibold mt-1">
+                    Contact: +91 8824374977
+                  </p>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+
+        {/* Why Choose Us */}
+        <section className="py-16 md:py-20 bg-muted">
+          <div className="container mx-auto px-4 max-w-6xl">
+            <h2 className="font-serif text-3xl md:text-4xl font-bold text-center mb-12 text-primary">
+              Why Choose Us
+            </h2>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {values.map((value) => {
+                const Icon = value.icon;
+                return (
+                  <div
+                    key={value.title}
+                    className="bg-card p-7 rounded-xl border border-border shadow-sm hover:-translate-y-1 hover:shadow-lg transition-all duration-300"
+                  >
+                    <Icon className="h-12 w-12 text-primary mb-4" />
+                    <h3 className="text-xl font-bold mb-3 text-foreground">
+                      {value.title}
+                    </h3>
+                    <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
+                      {value.description}
+                    </p>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+
+        {/* Team */}
+        <section className="py-16 md:py-20 bg-card">
+          <div className="container mx-auto px-4 max-w-6xl">
+            <h2 className="font-serif text-3xl md:text-4xl font-bold text-center mb-4 text-primary">
+              Our Expert Team
+            </h2>
+            <p className="text-center text-base md:text-lg text-muted-foreground mb-12 max-w-2xl mx-auto">
+              Skilled professionals dedicated to bringing your vision to life
+            </p>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+              {teamCategories.map((team) => (
+                <div
+                  key={team.title}
+                  className="bg-background rounded-xl overflow-hidden shadow-lg hover:-translate-y-2 hover:shadow-2xl transition-all duration-300"
+                >
+                  <div className="relative h-[350px] md:h-[400px] overflow-hidden">
+                    <img
+                      src={team.image}
+                      alt={team.alt}
+                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+                  </div>
+                  <div className="p-6 text-center bg-gradient-to-b from-background to-muted/30">
+                    <h3 className="text-xl md:text-2xl font-bold text-foreground">
+                      {team.title}
+                    </h3>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      </PageTransition>
 
       <Footer />
     </div>

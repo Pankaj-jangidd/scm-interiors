@@ -1,207 +1,283 @@
-import { useState } from 'react';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import { Phone, Mail, MessageCircle, MapPin } from 'lucide-react';
-import { toast } from 'sonner';
-import { useAdmin } from '@/contexts/AdminContext';
+  Phone,
+  MessageCircle,
+  Mail,
+  MapPin,
+  Ruler,
+  LayoutDashboard,
+  Hammer,
+  Wrench,
+  Heart,
+  icons,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import ContactForm from "@/components/ContactForm";
+import PageTransition from "@/components/admin/PageTransition";
 
 const Contact = () => {
-  const { addContactSubmission } = useAdmin();
-  const [formData, setFormData] = useState({
-    name: '',
-    phone: '',
-    email: '',
-    projectType: '',
-    message: '',
-  });
+  const contactOptions = [
+    {
+      icon: Phone,
+      title: "Call Now",
+      description: "Speak directly with our design experts.",
+      action: "tel:+918824374977",
+      buttonText: "CALL NOW",
+      color: "text-primary",
+    },
+    {
+      icon: () => (
+        <div
+          style={{
+            width: "52px",
+            height: "52px",
+            backgroundColor: "#25D366",
+            borderRadius: "50%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            boxShadow: "0 4px 10px rgba(0, 0, 0, 0.15)",
+          }}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 32 32"
+            fill="none"
+            width="50"
+            height="50"
+          >
+            <path
+              fill="#fff"
+              d="M16.04 2C8.84 2 3 7.85 3 15.05c0 2.57.74 5.05 2.14 7.21L3 29l6.89-2.09A12.9 12.9 0 0 0 16.04 28c7.2 0 13.04-5.85 13.04-12.95S23.24 2 16.04 2Z"
+            />
+            <path
+              fill="#25D366"
+              d="M16.04 4.5c6.3 0 11.54 5.1 11.54 10.55 0 5.95-4.6 10.55-11.54 10.55-2.18 0-4.3-.64-6.1-1.85l-.43-.28-4.06 1.23 1.24-3.93-.29-.45A9.6 9.6 0 0 1 4.5 15c0-5.45 5.24-10.55 11.54-10.55Z"
+            />
+            <path
+              fill="#fff"
+              d="M12.75 9.75c-.26-.56-.54-.57-.8-.58h-.67c-.23 0-.6.09-.92.43s-1.2 1.17-1.2 2.85 1.23 3.3 1.4 3.52 2.36 3.68 5.81 5.01c2.87 1.13 3.44.9 4.07.85.63-.05 2-1.03 2.28-2.03s.28-1.86.2-2.03c-.08-.17-.29-.26-.6-.46s-1.88-.93-2.17-1.03c-.29-.1-.47-.15-.67.15s-.77 1.03-.95 1.25c-.17.22-.34.25-.64.09-.3-.17-1.28-.47-2.44-1.47-.9-.8-1.5-1.78-1.68-2.08-.17-.3-.02-.47.13-.62.13-.13.3-.34.45-.51.15-.17.2-.3.3-.5.1-.2.05-.38-.03-.55-.09-.17-.8-1.87-1.13-2.55Z"
+            />
+          </svg>
+        </div>
+      ),
+      title: "WhatsApp Us",
+      description: "Chat with our design team instantly.",
+      action:
+        "https://wa.me/918824374977?text=Hi%20SCM%20Interiors,%20I%27m%20interested%20in%20your%20interior%20design%20services!",
+      buttonText: "WHATSAPP US",
+    },
+    {
+      icon: Mail,
+      title: "Mail Us",
+      description: "Send us your project details and queries.",
+      action: "mailto:scminteriorss@gmail.com",
+      buttonText: "MAIL US",
+      color: "text-primary",
+    },
+    {
+      icon: MapPin,
+      title: "Get Directions",
+      description: "Visit our office in Electronic City, Bengaluru.",
+      action:
+        "https://www.google.com/maps/search/?api=1&query=Sri%20Chamundeshwari%20Interiors%2C%20VM6H%2B8FF%2C%20Vinayaka%20Layout%20Main%20Rd%2C%20Silicon%20Town%2C%20Electronic%20City%2C%20Bengaluru%2C%20Karnataka%20560100",
+      buttonText: "GET DIRECTIONS",
+      color: "text-red-600",
+    },
+  ];
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (!formData.name || !formData.phone || !formData.projectType) {
-      toast.error('Please fill in all required fields');
-      return;
-    }
-
-    if (formData.phone.length < 10) {
-      toast.error('Please enter a valid phone number');
-      return;
-    }
-
-    addContactSubmission({
-      name: formData.name,
-      phone: formData.phone,
-      email: formData.email,
-      projectType: formData.projectType,
-      message: formData.message,
-    });
-    
-    toast.success("Thank you! We'll get back to you shortly.");
-    setFormData({ name: '', phone: '', email: '', projectType: '', message: '' });
-  };
+  const processSteps = [
+    {
+      icon: Phone,
+      title: "Call / Consultation",
+      description: "Initial discussion",
+    },
+    {
+      icon: Ruler,
+      title: "Site Visit",
+      description: "Measurement & analysis",
+    },
+    {
+      icon: LayoutDashboard,
+      title: "Planning & Design",
+      description: "Proposal creation",
+    },
+    {
+      icon: Hammer,
+      title: "Execution",
+      description: "Development begins",
+    },
+    {
+      icon: Wrench,
+      title: "Installation",
+      description: "Final touches",
+    },
+    {
+      icon: Heart,
+      title: "Support",
+      description: "Post-project care",
+    },
+  ];
 
   return (
     <div className="min-h-screen">
       <Navbar />
 
-      {/* Page Header */}
-      <section className="py-16 md:py-20 bg-secondary">
-        <div className="container mx-auto px-4 text-center">
-          <h1 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-primary">
+      {/* Hero Section */}
+      <section className="relative h-[70vh] min-h-[500px] flex items-center justify-center">
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{
+            backgroundImage: `url(/public/images/contactt.jpg)`,
+          }}
+        >
+          <div className="absolute inset-0 bg-black/40" />
+        </div>
+        <div className="relative z-10 text-center text-white px-4 animate-fade-in max-w-4xl mx-auto">
+          <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
             Get in Touch With Us
           </h1>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            We'd love to discuss your next interior project — connect with us directly or book a
-            free visit.
+          <p className="text-lg md:text-xl font-light">
+            We'd love to discuss your next interior project — connect with us
+            directly or book a free visit.
           </p>
         </div>
       </section>
 
-      {/* Quick Contact Options */}
-      <section className="py-16 md:py-20 bg-card">
-        <div className="container mx-auto px-4">
-          <div className="grid sm:grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto mb-16">
-            <a
-              href="tel:+918824374977"
-              className="bg-secondary p-10 rounded-xl shadow-md hover-lift text-center min-h-[240px] flex flex-col items-center justify-center"
-            >
-              <Phone className="h-14 w-14 text-primary mx-auto mb-4" />
-              <h3 className="font-semibold text-xl mb-3 text-foreground">Call Now</h3>
-              <p className="text-muted-foreground text-base">+91 8824374977</p>
-            </a>
-
-            <div className="bg-secondary p-10 rounded-xl shadow-md text-center min-h-[240px] flex flex-col items-center justify-center">
-              <Mail className="h-14 w-14 text-primary mx-auto mb-4" />
-              <h3 className="font-semibold text-xl mb-3 text-foreground">Mail Us</h3>
-              <a
-                href="mailto:srichamundeshwariinteriors@gmail.com"
-                className="text-muted-foreground text-base break-all hover:text-primary transition-colors"
-                style={{ wordBreak: 'break-all' }}
-              >
-                srichamundeshwariinteriors@gmail.com
-              </a>
-            </div>
-
-            <div className="bg-secondary p-10 rounded-xl shadow-md text-center min-h-[240px] flex flex-col items-center justify-center">
-              <MapPin className="h-14 w-14 text-primary mx-auto mb-4" />
-              <h3 className="font-semibold text-xl mb-3 text-foreground">Location</h3>
-              <p className="text-muted-foreground text-base">Bangalore, Karnataka</p>
-            </div>
-          </div>
-
-          {/* Booking Form */}
-          <div className="max-w-2xl mx-auto">
-            <h2 className="font-serif text-2xl md:text-3xl font-bold text-center mb-8 text-primary">
-              Book a Free Design Visit
-            </h2>
-            <form
-              onSubmit={handleSubmit}
-              className="bg-card p-8 rounded-xl shadow-lg"
-            >
-              <div className="space-y-4">
-                <div>
-                  <Label htmlFor="name">Full Name *</Label>
-                  <Input
-                    id="name"
-                    type="text"
-                    value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    placeholder="Your full name"
-                    required
-                    className="mt-1"
-                  />
-                </div>
-
-                <div>
-                  <Label htmlFor="phone">Phone Number *</Label>
-                  <Input
-                    id="phone"
-                    type="tel"
-                    value={formData.phone}
-                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    placeholder="+91 XXXXX XXXXX"
-                    required
-                    className="mt-1"
-                  />
-                </div>
-
-                <div>
-                  <Label htmlFor="email">Email Address</Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    placeholder="your.email@example.com"
-                    className="mt-1"
-                  />
-                </div>
-
-                <div>
-                  <Label htmlFor="projectType">Type of Project *</Label>
-                  <Select
-                    value={formData.projectType}
-                    onValueChange={(value) => setFormData({ ...formData, projectType: value })}
+      <PageTransition>
+        {/* Contact Options Section */}
+        <section className="py-16 md:py-20 bg-card">
+          <div className="container mx-auto px-4 max-w-6xl">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {contactOptions.map((option, index) => {
+                const Icon = option.icon;
+                return (
+                  <div
+                    key={index}
+                    className="bg-secondary rounded-lg p-6 shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col items-center text-center"
+                    style={{ animationDelay: `${index * 0.1}s` }}
                   >
-                    <SelectTrigger className="mt-1">
-                      <SelectValue placeholder="Select project type" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="residential">Residential</SelectItem>
-                      <SelectItem value="commercial">Commercial</SelectItem>
-                      <SelectItem value="renovation">Renovation</SelectItem>
-                      <SelectItem value="modular-kitchen">Modular Kitchen</SelectItem>
-                      <SelectItem value="other">Other</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div>
-                  <Label htmlFor="message">Message / Additional Details</Label>
-                  <Textarea
-                    id="message"
-                    value={formData.message}
-                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    placeholder="Tell us about your project..."
-                    rows={4}
-                    className="mt-1"
-                  />
-                </div>
-
-                <Button type="submit" className="w-full bg-accent hover:bg-accent/90 mt-4">
-                  Schedule My Visit
-                </Button>
-              </div>
-            </form>
+                    <div className="w-16 h-16 rounded-full bg-card flex items-center justify-center mb-4">
+                      <Icon className={`w-8 h-8 ${option.color}`} />
+                    </div>
+                    <h3 className="text-xl font-bold text-foreground mb-2">
+                      {option.title}
+                    </h3>
+                    <p className="text-sm text-muted-foreground mb-6 flex-grow">
+                      {option.description}
+                    </p>
+                    <Button
+                      asChild
+                      className="bg-accent hover:bg-accent/90 text-accent-foreground shadow-md w-full"
+                    >
+                      <a
+                        href={option.action}
+                        target={
+                          option.action.startsWith("http")
+                            ? "_blank"
+                            : undefined
+                        }
+                        rel={
+                          option.action.startsWith("http")
+                            ? "noopener noreferrer"
+                            : undefined
+                        }
+                      >
+                        {option.buttonText}
+                      </a>
+                    </Button>
+                  </div>
+                );
+              })}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Location Section */}
-      <section className="py-16 md:py-20 bg-secondary">
-        <div className="container mx-auto px-4">
-          <h2 className="font-serif text-2xl md:text-3xl font-bold text-center mb-8 text-primary">
-            Visit Our Workspace
-          </h2>
-          <div className="flex items-center justify-center gap-2 text-muted-foreground text-lg max-w-2xl mx-auto text-center">
-            <MapPin className="h-5 w-5 flex-shrink-0 text-primary" />
-            <p>
-              #25 Vinayaka Layout, Doddanagamangala, Electronic City Phase 2, Bangalore 560-100
-            </p>
+        {/* Our Process Section */}
+        <section className="py-16 md:py-20 bg-secondary">
+          <div className="container mx-auto px-4 max-w-6xl">
+            <div className="text-center mb-12">
+              <h2 className="font-serif text-3xl md:text-4xl font-bold text-primary mb-4">
+                Our Process
+              </h2>
+              <p className="text-lg text-muted-foreground">
+                From consultation to completion, we make interiors effortless.
+              </p>
+            </div>
+
+            {/* Desktop Flow - Horizontal */}
+            <div className="hidden lg:flex items-center justify-between relative">
+              {processSteps.map((step, index) => {
+                const Icon = step.icon;
+                return (
+                  <div key={index} className="flex items-center">
+                    <div className="flex flex-col items-center">
+                      <div className="w-24 h-24 rounded-full bg-card border-4 border-primary/20 flex items-center justify-center mb-4 shadow-lg hover:scale-110 transition-transform duration-300">
+                        <Icon className="w-10 h-10 text-primary" />
+                      </div>
+                      <h3 className="font-bold text-foreground text-center max-w-[120px] mb-1">
+                        {step.title}
+                      </h3>
+                      <p className="text-xs text-muted-foreground text-center max-w-[120px]">
+                        {step.description}
+                      </p>
+                    </div>
+                    {index < processSteps.length - 1 && (
+                      <div className="w-20 border-t-2 border-dashed border-primary/30 mx-4" />
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Mobile Flow - Vertical */}
+            <div className="lg:hidden space-y-8">
+              {processSteps.map((step, index) => {
+                const Icon = step.icon;
+                return (
+                  <div key={index} className="relative">
+                    <div className="flex items-start gap-4">
+                      <div className="w-16 h-16 rounded-full bg-card border-4 border-primary/20 flex items-center justify-center shadow-lg flex-shrink-0">
+                        <Icon className="w-8 h-8 text-primary" />
+                      </div>
+                      <div className="flex-grow pt-2">
+                        <h3 className="font-bold text-foreground mb-1">
+                          {step.title}
+                        </h3>
+                        <p className="text-sm text-muted-foreground">
+                          {step.description}
+                        </p>
+                      </div>
+                    </div>
+                    {index < processSteps.length - 1 && (
+                      <div className="ml-8 mt-2 mb-2 h-8 border-l-2 border-dashed border-primary/30" />
+                    )}
+                  </div>
+                );
+              })}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+
+        {/* Contact Form Section */}
+        <section className="py-16 md:py-20 bg-card">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-12">
+              <h2 className="font-serif text-3xl md:text-4xl font-bold text-primary mb-4">
+                Send Us a Message
+              </h2>
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                Fill out the form below and our team will get back to you within
+                24 hours.
+              </p>
+            </div>
+            <div className="max-w-2xl mx-auto">
+              <ContactForm />
+            </div>
+          </div>
+        </section>
+      </PageTransition>
 
       <Footer />
     </div>
