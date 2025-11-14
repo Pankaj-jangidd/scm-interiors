@@ -32,7 +32,7 @@ const EndToEndSection = () => {
         </p>
 
         {/* Icons Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-5">
+        <div className="grid grid-cols-3 md:grid-cols-5 gap-5">
           {services.map((service) => (
             <Card
               key={service.id}

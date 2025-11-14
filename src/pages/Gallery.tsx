@@ -13,6 +13,10 @@ const Gallery = () => {
   const [selectedImage, setSelectedImage] = useState<number | null>(null);
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
+  const [isAnimating, setIsAnimating] = useState(false);
+  const [slideDirection, setSlideDirection] = useState<"left" | "right" | "">(
+    ""
+  );
 
   const categoryParam = searchParams.get("category") || "main";
   const currentCategory = categoryParam;
@@ -94,19 +98,31 @@ const Gallery = () => {
   }, [selectedImage]);
 
   const openLightbox = (index: number) => setSelectedImage(index);
-  const closeLightbox = () => setSelectedImage(null);
+  const closeLightbox = () => {
+    setSelectedImage(null);
+    setSlideDirection("");
+    setIsAnimating(false);
+  };
 
   const navigateLightbox = (direction: "prev" | "next") => {
-    if (selectedImage === null) return;
-    if (direction === "prev") {
-      setSelectedImage(
-        selectedImage > 0 ? selectedImage - 1 : currentImages.length - 1
-      );
-    } else {
-      setSelectedImage(
-        selectedImage < currentImages.length - 1 ? selectedImage + 1 : 0
-      );
-    }
+    if (selectedImage === null || isAnimating) return;
+
+    setIsAnimating(true);
+    setSlideDirection(direction === "next" ? "left" : "right");
+
+    setTimeout(() => {
+      if (direction === "prev") {
+        setSelectedImage(
+          selectedImage > 0 ? selectedImage - 1 : currentImages.length - 1
+        );
+      } else {
+        setSelectedImage(
+          selectedImage < currentImages.length - 1 ? selectedImage + 1 : 0
+        );
+      }
+      setIsAnimating(false);
+      setSlideDirection("");
+    }, 100);
   };
 
   const handleBackButton = () => navigate(-1);
@@ -320,28 +336,37 @@ const Gallery = () => {
             <X className="h-6 w-6" />
           </button>
 
-          {/* Prev */}
+          {/* Prev - Hidden on mobile */}
           <button
             onClick={() => navigateLightbox("prev")}
-            className="absolute left-4 text-white hover:text-gray-300 transition-colors z-20 bg-black/50 p-3 rounded-full backdrop-blur-sm"
+            disabled={isAnimating}
+            className="hidden md:block absolute left-4 text-white hover:text-gray-300 transition-colors z-20 bg-black/50 p-3 rounded-full backdrop-blur-sm disabled:opacity-50"
           >
             <ChevronLeft className="h-8 w-8" />
           </button>
 
-          {/* Next */}
+          {/* Next - Hidden on mobile */}
           <button
             onClick={() => navigateLightbox("next")}
-            className="absolute right-4 text-white hover:text-gray-300 transition-colors z-20 bg-black/50 p-3 rounded-full backdrop-blur-sm"
+            disabled={isAnimating}
+            className="hidden md:block absolute right-4 text-white hover:text-gray-300 transition-colors z-20 bg-black/50 p-3 rounded-full backdrop-blur-sm disabled:opacity-50"
           >
             <ChevronRight className="h-8 w-8" />
           </button>
 
-          <img
-            src={currentImages[selectedImage].url}
-            alt={currentImages[selectedImage].alt}
-            className="max-h-screen max-w-screen object-contain select-none"
-            draggable={false}
-          />
+          {/* Image with Slide Animation */}
+          <div className="relative w-full h-full flex items-center justify-center overflow-hidden bg-black">
+            <img
+              src={currentImages[selectedImage].url}
+              alt={currentImages[selectedImage].alt}
+              className={`max-h-screen max-w-screen object-contain select-none transition-all duration-200 ease-out ${
+                slideDirection === "left" ? "lightbox-slide-out-left" : ""
+              } ${
+                slideDirection === "right" ? "lightbox-slide-out-right" : ""
+              } ${!slideDirection ? "lightbox-slide-in" : ""}`}
+              draggable={false}
+            />
+          </div>
 
           <div className="absolute bottom-6 left-1/2 -translate-x-1/2 text-white text-sm bg-black/70 px-4 py-2 rounded-full backdrop-blur-sm">
             {selectedImage + 1} / {currentImages.length}
@@ -350,6 +375,53 @@ const Gallery = () => {
       )}
 
       <Footer />
+
+      <style>{`
+        @keyframes lightboxSlideOutLeft {
+          from {
+            transform: translateX(0);
+            opacity: 1;
+          }
+          to {
+            transform: translateX(-30%);
+            opacity: 0;
+          }
+        }
+
+        @keyframes lightboxSlideOutRight {
+          from {
+            transform: translateX(0);
+            opacity: 1;
+          }
+          to {
+            transform: translateX(30%);
+            opacity: 0;
+          }
+        }
+
+        @keyframes lightboxSlideIn {
+          from {
+            transform: translateX(0);
+            opacity: 0;
+          }
+          to {
+            transform: translateX(0);
+            opacity: 1;
+          }
+        }
+
+        .lightbox-slide-out-left {
+          animation: lightboxSlideOutLeft 0.2s ease-out forwards;
+        }
+
+        .lightbox-slide-out-right {
+          animation: lightboxSlideOutRight 0.2s ease-out forwards;
+        }
+
+        .lightbox-slide-in {
+          animation: lightboxSlideIn 0.2s ease-out forwards;
+        }
+      `}</style>
     </div>
   );
 };
