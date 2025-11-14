@@ -129,7 +129,7 @@ const Contact = () => {
         <div
           className="absolute inset-0 bg-cover bg-center"
           style={{
-            backgroundImage: `url(/public/images/contactt.jpg)`,
+            backgroundImage: `url(/images/contactt.jpg)`,
           }}
         >
           <div className="absolute inset-0 bg-black/40" />
