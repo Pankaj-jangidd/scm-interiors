@@ -21,6 +21,7 @@ const Contact = () => {
     {
       icon: Phone,
       title: "Call Now",
+      mobileTitle: "Call Now",
       description: "Speak directly with our design experts.",
       action: "tel:+918824374977",
       buttonText: "CALL NOW",
@@ -63,14 +64,17 @@ const Contact = () => {
         </div>
       ),
       title: "WhatsApp Us",
+      mobileTitle: "WhatsApp",
       description: "Chat with our design team instantly.",
       action:
         "https://wa.me/918824374977?text=Hi%20SCM%20Interiors,%20I%27m%20interested%20in%20your%20interior%20design%20services!",
       buttonText: "WHATSAPP US",
+      color: "text-green-600",
     },
     {
       icon: Mail,
       title: "Mail Us",
+      mobileTitle: "Mail Us",
       description: "Send us your project details and queries.",
       action: "mailto:scminteriorss@gmail.com",
       buttonText: "MAIL US",
@@ -79,6 +83,7 @@ const Contact = () => {
     {
       icon: MapPin,
       title: "Get Directions",
+      mobileTitle: "Directions",
       description: "Visit our office in Electronic City, Bengaluru.",
       action:
         "https://www.google.com/maps/search/?api=1&query=Sri%20Chamundeshwari%20Interiors%2C%20VM6H%2B8FF%2C%20Vinayaka%20Layout%20Main%20Rd%2C%20Silicon%20Town%2C%20Electronic%20City%2C%20Bengaluru%2C%20Karnataka%20560100",
@@ -149,7 +154,7 @@ const Contact = () => {
         {/* Contact Options Section */}
         <section className="py-16 md:py-20 bg-card">
           <div className="container mx-auto px-4 max-w-6xl">
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
               {contactOptions.map((option, index) => {
                 const Icon = option.icon;
                 return (
@@ -162,9 +167,10 @@ const Contact = () => {
                       <Icon className={`w-8 h-8 ${option.color}`} />
                     </div>
                     <h3 className="text-xl font-bold text-foreground mb-2">
-                      {option.title}
+                      <span className="md:hidden">{option.mobileTitle}</span>
+                      <span className="hidden md:inline">{option.title}</span>
                     </h3>
-                    <p className="text-sm text-muted-foreground mb-6 flex-grow">
+                    <p className="text-sm text-muted-foreground mb-6 flex-grow hidden md:block">
                       {option.description}
                     </p>
                     <Button

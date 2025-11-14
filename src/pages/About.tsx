@@ -9,24 +9,28 @@ const About = () => {
     {
       icon: Award,
       title: "30+ Years Experience",
+      mobileTitle: "30+ Years",
       description:
         "Three decades of excellence in interior execution and craftsmanship across Bangalore.",
     },
     {
       icon: Users,
       title: "Expert Team",
+      mobileTitle: "Expert Team",
       description:
         "Skilled professionals dedicated to bringing your vision to life with precision.",
     },
     {
       icon: Gem,
       title: "Quality Materials",
+      mobileTitle: "Quality Materials",
       description:
         "We use only premium materials and finishes for long-lasting, beautiful interiors.",
     },
     {
       icon: IndianRupee,
       title: "Reasonable Rates",
+      mobileTitle: "Reasonable Rates",
       description:
         "Transparent pricing with no hidden costs, making quality interiors accessible to all.",
     },
@@ -87,8 +91,15 @@ const About = () => {
       {/* Everything below animates — like Contact page */}
       <PageTransition>
         {/* Founder Section */}
-        <section className="py-24 md:py-28 bg-gradient-to-b from-[#F5EFE7] to-[#F9F7F3] flex items-center">
+        <section className="py-24 md:py-28 bg-card flex items-center">
+          {" "}
           <div className="container mx-auto px-4 max-w-6xl">
+            <div className="text-center mb-16">
+              <h2 className="font-serif text-3xl md:text-4xl font-bold text-primary tracking-wide">
+                THE FOUNDER
+              </h2>
+              <div className="w-24 h-[3px] bg-primary mx-auto mt-4 rounded-full"></div>
+            </div>
             <div className="flex flex-col md:flex-row items-center md:items-center gap-10 md:gap-14">
               <div className="md:w-1/2 w-full relative">
                 <img
@@ -117,7 +128,7 @@ const About = () => {
                   <span className="font-medium text-foreground">
                     Mr. Ganapathlal
                   </span>{" "}
-                  has built SCM Interiors into one of Bangalore’s most trusted
+                  has built SCM Interiors into one of Bangalore's most trusted
                   interior execution firms. His principles — quality, honesty,
                   and timely execution — define every project we deliver.
                 </p>
@@ -144,19 +155,20 @@ const About = () => {
               Why Choose Us
             </h2>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="grid grid-cols-2 md:grid-cols-2 gap-4 md:gap-8">
               {values.map((value) => {
                 const Icon = value.icon;
                 return (
                   <div
                     key={value.title}
-                    className="bg-card p-7 rounded-xl border border-border shadow-sm hover:-translate-y-1 hover:shadow-lg transition-all duration-300"
+                    className="bg-card p-4 md:p-7 rounded-xl border border-border shadow-sm hover:-translate-y-1 hover:shadow-lg transition-all duration-300 flex flex-col items-center md:items-start text-center md:text-left"
                   >
-                    <Icon className="h-12 w-12 text-primary mb-4" />
-                    <h3 className="text-xl font-bold mb-3 text-foreground">
-                      {value.title}
+                    <Icon className="h-10 w-10 md:h-12 md:w-12 text-primary mb-3 md:mb-4" />
+                    <h3 className="text-sm md:text-xl font-bold text-foreground">
+                      <span className="md:hidden">{value.mobileTitle}</span>
+                      <span className="hidden md:block">{value.title}</span>
                     </h3>
-                    <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
+                    <p className="hidden md:block text-sm md:text-base text-muted-foreground leading-relaxed mt-3">
                       {value.description}
                     </p>
                   </div>
@@ -176,13 +188,13 @@ const About = () => {
               Skilled professionals dedicated to bringing your vision to life
             </p>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+            <div className="grid grid-cols-2 md:grid-cols-2 gap-4 md:gap-6 md:gap-8">
               {teamCategories.map((team) => (
                 <div
                   key={team.title}
                   className="bg-background rounded-xl overflow-hidden shadow-lg hover:-translate-y-2 hover:shadow-2xl transition-all duration-300"
                 >
-                  <div className="relative h-[350px] md:h-[400px] overflow-hidden">
+                  <div className="relative h-[200px] md:h-[400px] overflow-hidden">
                     <img
                       src={team.image}
                       alt={team.alt}
@@ -190,8 +202,8 @@ const About = () => {
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
                   </div>
-                  <div className="p-6 text-center bg-gradient-to-b from-background to-muted/30">
-                    <h3 className="text-xl md:text-2xl font-bold text-foreground">
+                  <div className="p-4 md:p-6 text-center bg-gradient-to-b from-background to-muted/30">
+                    <h3 className="text-base md:text-2xl font-bold text-foreground">
                       {team.title}
                     </h3>
                   </div>
