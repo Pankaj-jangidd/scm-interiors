@@ -24,21 +24,22 @@ const Gallery = () => {
   const RESIDENTIAL_CATEGORIES = [
     {
       name: "Modular Kitchen",
-      bg: "/images/kitchen.jpeg",
+      bg: "https://res.cloudinary.com/dp8syhcsf/image/upload/f_auto,q_auto,w_350,h_220,c_fill,dpr_auto/v1763230593/kitchen_mwplnp.jpg",
     },
     {
       name: "Living Rooms",
-      bg: "/images/living.jpeg",
+      bg: "https://res.cloudinary.com/dp8syhcsf/image/upload/f_auto,q_auto,w_350,h_220,c_fill,dpr_auto/v1763230594/living_bl7005.jpg",
     },
     {
       name: "Bedrooms",
-      bg: "/images/bedroom.jpeg",
+      bg: "https://res.cloudinary.com/dp8syhcsf/image/upload/f_auto,q_auto,w_350,h_220,c_fill,dpr_auto/v1763230591/bedroom_acdycq.jpg",
     },
     {
       name: "False Ceiling",
-      bg: "/images/false-ceiling.avif",
+      bg: "https://res.cloudinary.com/dp8syhcsf/image/upload/f_auto,q_auto,w_350,h_220,c_fill,dpr_auto/v1763230592/painter_vejlgd.jpg",
     },
   ];
+
   const setCurrentCategory = (category: string) => {
     setSearchParams({ category });
   };
