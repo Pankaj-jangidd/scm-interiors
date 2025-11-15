@@ -1,5 +1,9 @@
 import { supabase } from "@/integrations/supabase/client";
+import { uploadToCloudinary } from "@/lib/cloudinary";
 
+/**
+ * Upload image to Cloudinary and save URL to Supabase
+ */
 export async function uploadGalleryImage({
   file,
   category,
@@ -12,31 +16,13 @@ export async function uploadGalleryImage({
   subcategory?: string;
 }) {
   try {
-    const timestamp = Date.now();
-    const cleanName = file.name.replace(/\s+/g, "-");
-
-    const baseFolder =
+    // 1. Upload to Cloudinary
+    const folder =
       category === "residential" ? `residential/${subcategory}` : "commercial";
+    const cloudinaryResult = await uploadToCloudinary(file, folder);
+    const imageUrl = cloudinaryResult.secure_url;
 
-    const fullPath = `${baseFolder}/${timestamp}-${cleanName}`;
-
-    const { error: uploadError } = await supabase.storage
-      .from("images")
-      .upload(fullPath, file, {
-        upsert: true,
-        contentType: file.type,
-        cacheControl: "3600",
-      });
-
-    if (uploadError) throw uploadError;
-
-    const { data: publicData } = supabase.storage
-      .from("images")
-      .getPublicUrl(fullPath);
-
-    const imageUrl = publicData.publicUrl;
-
-    // GET MAX ORDER INDEX FOR THIS CATEGORY
+    // 2. Get next order index
     const { data: existingImages } = await supabase
       .from("gallery_images")
       .select("order_index")
@@ -49,7 +35,7 @@ export async function uploadGalleryImage({
         ? (existingImages[0].order_index || 0) + 1
         : 0;
 
-    // INSERT WITH ORDER
+    // 3. Save to Supabase database
     const { data, error: insertError } = await supabase
       .from("gallery_images")
       .insert([
@@ -58,17 +44,17 @@ export async function uploadGalleryImage({
           alt: alt ?? null,
           category,
           subcategory: subcategory ?? null,
-          order_index: nextOrder, // <-- ADD THIS
+          order_index: nextOrder,
         },
       ])
       .select()
       .single();
 
     if (insertError) {
-      await supabase.storage.from("images").remove([fullPath]);
       throw insertError;
     }
 
+    console.log("✅ Image saved to database:", data);
     return data;
   } catch (err) {
     console.error("Upload error:", err);
@@ -76,31 +62,37 @@ export async function uploadGalleryImage({
   }
 }
 
+/**
+ * Delete image from database (Cloudinary deletion requires backend)
+ */
 export async function deleteGalleryImage(id: string, url: string) {
   try {
-    // Extract file path
-    const path = url.split("/images/")[1];
-
-    await supabase.storage.from("images").remove([path]);
-
+    // Delete from Supabase database
     const { error } = await supabase
       .from("gallery_images")
       .delete()
       .eq("id", id);
 
     if (error) throw error;
+
+    // Note: Cloudinary deletion requires signed requests from backend
+    // The image will remain in Cloudinary but won't be referenced
+    console.log("✅ Image removed from database");
   } catch (err) {
     console.error("Delete error:", err);
     throw err;
   }
 }
 
+/**
+ * Fetch all gallery images
+ */
 export async function getGalleryImages() {
   try {
     const { data, error } = await supabase
       .from("gallery_images")
       .select("*")
-      .order("order_index", { ascending: true }); // <-- CHANGE THIS
+      .order("order_index", { ascending: true });
 
     if (error) throw error;
     return data;

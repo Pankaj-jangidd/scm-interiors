@@ -78,7 +78,9 @@ const Reviews = () => {
       <section className="relative h-[70vh] min-h-[500px] flex items-center justify-center">
         <div
           className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url(/images/review.jpg)` }}
+          style={{
+            backgroundImage: `url("https://res.cloudinary.com/dp8syhcsf/image/upload/v1763230594/review_jhpjuz.jpg")`,
+          }}
         >
           <div className="absolute inset-0 bg-black/40" />
         </div>

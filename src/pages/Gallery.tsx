@@ -24,19 +24,19 @@ const Gallery = () => {
   const RESIDENTIAL_CATEGORIES = [
     {
       name: "Modular Kitchen",
-      bg: "https://images.unsplash.com/photo-1556911220-bff31c812dba",
+      bg: "https://res.cloudinary.com/dp8syhcsf/image/upload/v1763230593/kitchen_mwplnp.jpg",
     },
     {
       name: "Living Rooms",
-      bg: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0",
+      bg: "https://res.cloudinary.com/dp8syhcsf/image/upload/v1763230594/living_bl7005.jpg",
     },
     {
       name: "Bedrooms",
-      bg: "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af",
+      bg: "https://res.cloudinary.com/dp8syhcsf/image/upload/v1763230591/bedroom_acdycq.jpg",
     },
     {
       name: "False Ceiling",
-      bg: "https://images.unsplash.com/photo-1615873968403-89e068629265",
+      bg: "https://res.cloudinary.com/dp8syhcsf/image/upload/v1763230592/painter_vejlgd.jpg",
     },
   ];
 
@@ -150,7 +150,7 @@ const Gallery = () => {
                   <div
                     className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-[1.08]"
                     style={{
-                      backgroundImage: `url(https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=1200&h=800&fit=crop)`,
+                      backgroundImage: `url("https://res.cloudinary.com/dp8syhcsf/image/upload/v1763230593/residential_atsi3m.avif")`,
                     }}
                   >
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
@@ -171,7 +171,7 @@ const Gallery = () => {
                   <div
                     className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-[1.08]"
                     style={{
-                      backgroundImage: `url(https://images.unsplash.com/photo-1497366216548-37526070297c?w=1200&h=800&fit=crop)`,
+                      backgroundImage: `url("https://res.cloudinary.com/dp8syhcsf/image/upload/v1763230591/commercial_m9o5us.jpg")`,
                     }}
                   >
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
@@ -235,7 +235,7 @@ const Gallery = () => {
                       <div
                         className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-[1.08]"
                         style={{
-                          backgroundImage: `url(${category.bg}?w=1200&h=800&fit=crop)`,
+                          backgroundImage: `url(${category.bg})`,
                         }}
                       >
                         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />

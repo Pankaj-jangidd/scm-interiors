@@ -2,7 +2,6 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import PageTransition from "@/components/admin/PageTransition";
 import { Award, Users, Gem, IndianRupee } from "lucide-react";
-import founderImage from "@/assets/founder.jpg";
 
 const About = () => {
   const values = [
@@ -39,22 +38,26 @@ const About = () => {
   const teamCategories = [
     {
       title: "Skilled Carpenters",
-      image: "/images/carpenter.jpeg",
+      image:
+        "https://res.cloudinary.com/dp8syhcsf/image/upload/v1763230591/carpenter_cigqwe.jpg",
       alt: "Skilled carpenters working on wooden furniture and cabinetry",
     },
     {
       title: "Expert Painters",
-      image: "/images/painter.jpeg",
+      image:
+        "https://res.cloudinary.com/dp8syhcsf/image/upload/v1763230592/painter_vejlgd.jpg",
       alt: "Expert painters delivering flawless finishes",
     },
     {
       title: "Flooring Specialists",
-      image: "/images/flooring.jpeg",
+      image:
+        "https://res.cloudinary.com/dp8syhcsf/image/upload/v1763230591/flooring_sedbgm.jpg",
       alt: "Flooring team installing tiles and wooden flooring",
     },
     {
       title: "POP and Ceiling Experts",
-      image: "/images/pop.jpeg",
+      image:
+        "https://res.cloudinary.com/dp8syhcsf/image/upload/v1763230592/pop_biws8p.jpg",
       alt: "POP and false ceiling installation specialists",
     },
   ];
@@ -68,7 +71,7 @@ const About = () => {
         <div
           className="absolute inset-0 bg-cover bg-center"
           style={{
-            backgroundImage: `url(/images/about.jpg)`,
+            backgroundImage: `url("https://res.cloudinary.com/dp8syhcsf/image/upload/v1763230591/about_qunq9g.jpg")`,
           }}
         >
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent" />
@@ -103,7 +106,7 @@ const About = () => {
             <div className="flex flex-col md:flex-row items-center md:items-center gap-10 md:gap-14">
               <div className="md:w-1/2 w-full relative">
                 <img
-                  src={founderImage}
+                  src="https://res.cloudinary.com/dp8syhcsf/image/upload/v1763230592/founder_kv8phh.jpg"
                   alt="Mr. Ganapathlal - Founder"
                   className="w-full h-[420px] md:h-[460px] object-cover rounded-2xl shadow-lg border border-[#E7DED2]"
                 />
