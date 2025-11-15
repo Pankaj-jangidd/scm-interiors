@@ -39,22 +39,22 @@ const About = () => {
   const teamCategories = [
     {
       title: "Skilled Carpenters",
-      image: "/public/images/carpenter.jpeg",
+      image: "/images/carpenter.jpeg",
       alt: "Skilled carpenters working on wooden furniture and cabinetry",
     },
     {
       title: "Expert Painters",
-      image: "/public/images/painter.jpeg",
+      image: "/images/painter.jpeg",
       alt: "Expert painters delivering flawless finishes",
     },
     {
       title: "Flooring Specialists",
-      image: "/public/images/flooring.jpeg",
+      image: "/images/flooring.jpeg",
       alt: "Flooring team installing tiles and wooden flooring",
     },
     {
       title: "POP and Ceiling Experts",
-      image: "/public/images/pop.jpeg",
+      image: "/images/pop.jpeg",
       alt: "POP and false ceiling installation specialists",
     },
   ];
