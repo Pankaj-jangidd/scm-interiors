@@ -6,6 +6,7 @@ import ServicesSection from "@/components/ServicesSection";
 import EndToEndSection from "@/components/EndToEndSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import { Phone, MessageCircle, Mail, MapPin } from "lucide-react";
+import PageTransition from "@/components/admin/PageTransition";
 
 const Index = () => {
   const navigate = useNavigate();
@@ -88,34 +89,34 @@ const Index = () => {
   return (
     <div className="min-h-screen">
       <Navbar />
-
-      {/* Hero Section */}
-      <section className="relative h-[70vh] min-h-[500px] flex items-center justify-center">
-        <div
-          className="absolute inset-0 bg-cover bg-center"
-          style={{
-            backgroundImage: `url("https://res.cloudinary.com/dp8syhcsf/image/upload/v1763230592/hero-bg_h6ylfk.jpg")`,
-          }}
-        >
-          <div className="absolute inset-0 bg-black/40" />
-        </div>
-        <div className="relative z-10 text-center text-white px-4 animate-fade-in max-w-4xl mx-auto">
-          <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
-            End-to-end interior solutions in Bangalore
-          </h1>
-          <p className="text-lg md:text-xl mb-8 font-light">
-            30+ years of Experience | Bangalore, Karnataka
-          </p>
-          <Button
-            size="lg"
-            className="bg-accent hover:bg-accent/90 text-lg"
-            onClick={() => navigate("/contact")}
+      <PageTransition>
+        {/* Hero Section */}
+        <section className="relative h-[70vh] min-h-[500px] flex items-center justify-center">
+          <div
+            className="absolute inset-0 bg-cover bg-center"
+            style={{
+              backgroundImage: `url("https://res.cloudinary.com/dp8syhcsf/image/upload/v1763230592/hero-bg_h6ylfk.jpg")`,
+            }}
           >
-            Book Free Design Session
-          </Button>
-        </div>
-      </section>
-
+            <div className="absolute inset-0 bg-black/40" />
+          </div>
+          <div className="relative z-10 text-center text-white px-4 animate-fade-in max-w-4xl mx-auto">
+            <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
+              End-to-end interior solutions in Bangalore
+            </h1>
+            <p className="text-lg md:text-xl mb-8 font-light">
+              30+ years of Experience | Bangalore, Karnataka
+            </p>
+            <Button
+              size="lg"
+              className="bg-accent hover:bg-accent/90 text-lg"
+              onClick={() => navigate("/contact")}
+            >
+              Book Free Design Session
+            </Button>
+          </div>
+        </section>
+      </PageTransition>
       {/* Founder Section */}
       <section
         className="pt-16 md:pt-20 pb-24 md:pb-28 flex items-center"
