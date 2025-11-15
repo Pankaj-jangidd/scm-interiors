@@ -39,29 +39,28 @@ const About = () => {
     {
       title: "Skilled Carpenters",
       image:
-        "https://res.cloudinary.com/dp8syhcsf/image/upload/v1763230591/carpenter_cigqwe.jpg",
+        "https://res.cloudinary.com/dp8syhcsf/image/upload/f_auto,q_auto,w_600,h_600,c_fill/v1763230591/carpenter_cigqwe.jpg",
       alt: "Skilled carpenters working on wooden furniture and cabinetry",
     },
     {
       title: "Expert Painters",
       image:
-        "https://res.cloudinary.com/dp8syhcsf/image/upload/v1763230592/painter_vejlgd.jpg",
+        "https://res.cloudinary.com/dp8syhcsf/image/upload/f_auto,q_auto,w_600,h_600,c_fill/v1763230592/painter_vejlgd.jpg",
       alt: "Expert painters delivering flawless finishes",
     },
     {
       title: "Flooring Specialists",
       image:
-        "https://res.cloudinary.com/dp8syhcsf/image/upload/v1763230591/flooring_sedbgm.jpg",
+        "https://res.cloudinary.com/dp8syhcsf/image/upload/f_auto,q_auto,w_600,h_600,c_fill/v1763230591/flooring_sedbgm.jpg",
       alt: "Flooring team installing tiles and wooden flooring",
     },
     {
       title: "POP and Ceiling Experts",
       image:
-        "https://res.cloudinary.com/dp8syhcsf/image/upload/v1763230592/pop_biws8p.jpg",
+        "https://res.cloudinary.com/dp8syhcsf/image/upload/f_auto,q_auto,w_600,h_600,c_fill/v1763230592/pop_biws8p.jpg",
       alt: "POP and false ceiling installation specialists",
     },
   ];
-
   return (
     <div className="min-h-screen">
       <Navbar />
@@ -71,7 +70,7 @@ const About = () => {
         <div
           className="absolute inset-0 bg-cover bg-center"
           style={{
-            backgroundImage: `url("https://res.cloudinary.com/dp8syhcsf/image/upload/v1763230591/about_qunq9g.jpg")`,
+            backgroundImage: `url("https://res.cloudinary.com/dp8syhcsf/image/upload/f_auto,q_auto,c_fill,w_2000,h_1400/v1763230591/about_qunq9g.jpg")`,
           }}
         >
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent" />
@@ -106,7 +105,7 @@ const About = () => {
             <div className="flex flex-col md:flex-row items-center md:items-center gap-10 md:gap-14">
               <div className="md:w-1/2 w-full relative">
                 <img
-                  src="https://res.cloudinary.com/dp8syhcsf/image/upload/v1763230592/founder_kv8phh.jpg"
+                  src="https://res.cloudinary.com/dp8syhcsf/image/upload/f_auto,q_auto,w_900,h_900,c_fill/v1763230592/founder_kv8phh.jpg"
                   alt="Mr. Ganapathlal - Founder"
                   className="w-full h-[420px] md:h-[460px] object-cover rounded-2xl shadow-lg border border-[#E7DED2]"
                 />

@@ -134,7 +134,7 @@ const Contact = () => {
         <div
           className="absolute inset-0 bg-cover bg-center"
           style={{
-            backgroundImage: `url("https://res.cloudinary.com/dp8syhcsf/image/upload/v1763230592/contactt_s4teki.jpg")`,
+            backgroundImage: `url("https://res.cloudinary.com/dp8syhcsf/image/upload/f_auto,q_auto,w_2000,h_1400,c_fill/v1763230592/contactt_s4teki.jpg")`,
           }}
         >
           <div className="absolute inset-0 bg-black/40" />

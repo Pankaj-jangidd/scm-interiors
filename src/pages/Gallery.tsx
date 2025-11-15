@@ -24,22 +24,21 @@ const Gallery = () => {
   const RESIDENTIAL_CATEGORIES = [
     {
       name: "Modular Kitchen",
-      bg: "https://res.cloudinary.com/dp8syhcsf/image/upload/v1763230593/kitchen_mwplnp.jpg",
+      bg: "/images/kitchen.jpeg",
     },
     {
       name: "Living Rooms",
-      bg: "https://res.cloudinary.com/dp8syhcsf/image/upload/v1763230594/living_bl7005.jpg",
+      bg: "/images/living.jpeg",
     },
     {
       name: "Bedrooms",
-      bg: "https://res.cloudinary.com/dp8syhcsf/image/upload/v1763230591/bedroom_acdycq.jpg",
+      bg: "/images/bedroom.jpeg",
     },
     {
       name: "False Ceiling",
-      bg: "https://res.cloudinary.com/dp8syhcsf/image/upload/v1763230592/painter_vejlgd.jpg",
+      bg: "/images/false-ceiling.avif",
     },
   ];
-
   const setCurrentCategory = (category: string) => {
     setSearchParams({ category });
   };
@@ -150,7 +149,7 @@ const Gallery = () => {
                   <div
                     className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-[1.08]"
                     style={{
-                      backgroundImage: `url("https://res.cloudinary.com/dp8syhcsf/image/upload/v1763230593/residential_atsi3m.avif")`,
+                      backgroundImage: `url("https://res.cloudinary.com/dp8syhcsf/image/upload/f_auto,q_auto,w_2000,h_1400,c_fill/v1763230593/residential_atsi3m.avif")`,
                     }}
                   >
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
@@ -171,7 +170,7 @@ const Gallery = () => {
                   <div
                     className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-[1.08]"
                     style={{
-                      backgroundImage: `url("https://res.cloudinary.com/dp8syhcsf/image/upload/v1763230591/commercial_m9o5us.jpg")`,
+                      backgroundImage: `url("https://res.cloudinary.com/dp8syhcsf/image/upload/f_auto,q_auto,w_2000,h_1400,c_fill/v1763230591/commercial_m9o5us.jpg")`,
                     }}
                   >
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />

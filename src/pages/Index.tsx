@@ -95,7 +95,7 @@ const Index = () => {
           <div
             className="absolute inset-0 bg-cover bg-center"
             style={{
-              backgroundImage: `url("https://res.cloudinary.com/dp8syhcsf/image/upload/v1763230592/hero-bg_h6ylfk.jpg")`,
+              backgroundImage: `url("https://res.cloudinary.com/dp8syhcsf/image/upload/f_auto,q_auto,c_fill,w_2000/v1763230592/hero-bg_h6ylfk.jpg")`,
             }}
           >
             <div className="absolute inset-0 bg-black/40" />
@@ -133,7 +133,7 @@ const Index = () => {
           <div className="flex flex-col md:flex-row items-center md:items-center gap-10 md:gap-14">
             <div className="md:w-1/2 w-full relative">
               <img
-                src="https://res.cloudinary.com/dp8syhcsf/image/upload/v1763230592/founder_kv8phh.jpg"
+                src="https://res.cloudinary.com/dp8syhcsf/image/upload/f_auto,q_auto,w_800/v1763230592/founder_kv8phh.jpg"
                 alt="Mr. Ganapathlal - Founder"
                 className="w-full h-[420px] md:h-[460px] object-cover rounded-2xl shadow-lg border border-[#E7DED2]"
               />
@@ -208,7 +208,7 @@ const Index = () => {
               <div
                 className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-[1.08]"
                 style={{
-                  backgroundImage: `url("https://res.cloudinary.com/dp8syhcsf/image/upload/v1763230593/residential_atsi3m.avif")`,
+                  backgroundImage: `url("https://res.cloudinary.com/dp8syhcsf/image/upload/f_auto,q_auto,c_fill,w_1600/v1763230593/residential_atsi3m.avif")`,
                 }}
               >
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
@@ -229,7 +229,7 @@ const Index = () => {
               <div
                 className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-[1.08]"
                 style={{
-                  backgroundImage: `url("https://res.cloudinary.com/dp8syhcsf/image/upload/v1763230591/commercial_m9o5us.jpg")`,
+                  backgroundImage: `url("https://res.cloudinary.com/dp8syhcsf/image/upload/f_auto,q_auto,c_fill,w_1600/v1763230591/commercial_m9o5us.jpg")`,
                 }}
               >
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
