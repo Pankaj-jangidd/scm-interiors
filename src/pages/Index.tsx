@@ -5,7 +5,7 @@ import Footer from "@/components/Footer";
 import ServicesSection from "@/components/ServicesSection";
 import EndToEndSection from "@/components/EndToEndSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
-import { Phone, MessageCircle, Mail, MapPin } from "lucide-react";
+import { Phone, Mail, MapPin } from "lucide-react";
 import PageTransition from "@/components/admin/PageTransition";
 
 const Index = () => {

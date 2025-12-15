@@ -92,9 +92,29 @@ const Gallery = () => {
 
   useEffect(() => {
     document.body.style.overflow = selectedImage !== null ? "hidden" : "unset";
+
+    // Push a fake history state when lightbox opens
+    if (selectedImage !== null) {
+      window.history.pushState({ lightboxOpen: true }, "");
+    }
+
     return () => {
       document.body.style.overflow = "unset";
     };
+  }, [selectedImage]);
+
+  // Handle browser back button / mobile swipe back
+  useEffect(() => {
+    const handlePopState = (e: PopStateEvent) => {
+      // If lightbox is open and user goes back, close it
+      if (selectedImage !== null) {
+        e.preventDefault();
+        closeLightbox();
+      }
+    };
+
+    window.addEventListener("popstate", handlePopState);
+    return () => window.removeEventListener("popstate", handlePopState);
   }, [selectedImage]);
 
   const openLightbox = (index: number) => setSelectedImage(index);
@@ -125,7 +145,14 @@ const Gallery = () => {
     }, 100);
   };
 
-  const handleBackButton = () => navigate(-1);
+  const handleBackButton = () => {
+    // Close lightbox if open before navigating
+    if (selectedImage !== null) {
+      closeLightbox();
+    } else {
+      navigate(-1);
+    }
+  };
 
   // ========================
   // MAIN CATEGORY PAGE
