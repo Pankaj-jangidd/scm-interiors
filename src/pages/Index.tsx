@@ -95,7 +95,7 @@ const Index = () => {
           <div
             className="absolute inset-0 bg-cover bg-center"
             style={{
-              backgroundImage: `url("https://res.cloudinary.com/dp8syhcsf/image/upload/f_auto,q_60,c_fill,w_1200,h_700/v1763230592/hero-bg_h6ylfk.jpg")`,
+              backgroundImage: `url("https://res.cloudinary.com/dp8syhcsf/image/upload/f_auto,q_80,c_fill,w_1400,h_800/v1763230592/hero-bg_h6ylfk.jpg")`,
             }}
           >
             <div className="absolute inset-0 bg-black/40" />

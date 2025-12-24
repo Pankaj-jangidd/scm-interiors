@@ -79,7 +79,7 @@ const Reviews = () => {
         <div
           className="absolute inset-0 bg-cover bg-center"
           style={{
-            backgroundImage: `url("https://res.cloudinary.com/dp8syhcsf/image/upload/f_auto,q_60,w_1000,h_600,c_fill/v1763230594/review_jhpjuz.jpg")`,
+            backgroundImage: `url("https://res.cloudinary.com/dp8syhcsf/image/upload/f_auto,q_80,w_1200,h_700,c_fill/v1763230594/review_jhpjuz.jpg")`,
           }}
         >
           <div className="absolute inset-0 bg-black/40" />
