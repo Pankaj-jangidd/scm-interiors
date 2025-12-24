@@ -5,6 +5,7 @@ import { useAdmin } from "@/contexts/AdminContext";
 import { X, ChevronLeft, ChevronRight, ArrowLeft } from "lucide-react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import PageTransition from "@/components/admin/PageTransition";
+import { getThumbnailUrl, getFullSizeUrl } from "@/lib/cloudinary";
 
 const Gallery = () => {
   const { galleryImages } = useAdmin();
@@ -177,7 +178,7 @@ const Gallery = () => {
                   <div
                     className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-[1.08]"
                     style={{
-                      backgroundImage: `url("https://res.cloudinary.com/dp8syhcsf/image/upload/f_auto,q_auto,w_2000,h_1400,c_fill/v1763230593/residential_atsi3m.avif")`,
+                      backgroundImage: `url("https://res.cloudinary.com/dp8syhcsf/image/upload/f_auto,q_auto,w_800,h_500,c_fill/v1763230593/residential_atsi3m.avif")`,
                     }}
                   >
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
@@ -198,7 +199,7 @@ const Gallery = () => {
                   <div
                     className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-[1.08]"
                     style={{
-                      backgroundImage: `url("https://res.cloudinary.com/dp8syhcsf/image/upload/f_auto,q_auto,w_2000,h_1400,c_fill/v1763230591/commercial_m9o5us.jpg")`,
+                      backgroundImage: `url("https://res.cloudinary.com/dp8syhcsf/image/upload/f_auto,q_auto,w_800,h_500,c_fill/v1763230591/commercial_m9o5us.jpg")`,
                     }}
                   >
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
@@ -332,8 +333,9 @@ const Gallery = () => {
                     onClick={() => openLightbox(index)}
                   >
                     <img
-                      src={image.url}
+                      src={getThumbnailUrl(image.url)}
                       alt={image.alt}
+                      loading="lazy"
                       className="w-full h-full object-cover"
                     />
                   </div>
@@ -384,7 +386,7 @@ const Gallery = () => {
           {/* Image with Slide Animation */}
           <div className="relative w-full h-full flex items-center justify-center overflow-hidden bg-black">
             <img
-              src={currentImages[selectedImage].url}
+              src={getFullSizeUrl(currentImages[selectedImage].url)}
               alt={currentImages[selectedImage].alt}
               className={`max-h-screen max-w-screen object-contain select-none transition-all duration-200 ease-out ${
                 slideDirection === "left" ? "lightbox-slide-out-left" : ""
