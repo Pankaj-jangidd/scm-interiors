@@ -1,73 +1,197 @@
-# Welcome to your Lovable project
+# SCM INTERIORS - Premium Interior Design Website
 
-## Project info
+A modern, responsive website for SCM Interiors - a premium interior design and renovation company. Built with React, TypeScript, and Tailwind CSS with a beautiful dark theme and smooth animations.
 
-**URL**: https://lovable.dev/projects/19a6a3a3-ad49-44b1-a0ee-33e2a88d6975
+🔗 **Live Demo**: [https://scm-interiors.vercel.app](https://scm-interiors.vercel.app)
 
-## How can I edit this code?
+![SCM Interiors Preview](https://via.placeholder.com/800x400/1a1a2e/C9A962?text=SCM+INTERIORS+-+Premium+Design)
 
-There are several ways of editing your application.
+## 🚀 Features
 
-**Use Lovable**
+### Modern Landing Page
+- Stunning hero section with premium typography and animations
+- Showcase of services with elegant card designs
+- End-to-end service visualization
+- Customer testimonials carousel
+- Responsive navigation with mobile menu
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/19a6a3a3-ad49-44b1-a0ee-33e2a88d6975) and start prompting.
+### Project Gallery
+- Beautiful masonry-style gallery layout
+- Category filtering (Living Room, Bedroom, Kitchen, etc.)
+- Lightbox image viewing with zoom
+- Optimized image loading via Cloudinary CDN
 
-Changes made via Lovable will be committed automatically to this repo.
+### Customer Reviews
+- Dynamic reviews section with star ratings
+- User-submitted reviews functionality
+- Verified customer testimonials
 
-**Use your preferred IDE**
+### Contact & Booking
+- Professional contact form with validation
+- EmailJS integration for instant notifications
+- Location map integration
+- Multiple contact methods (Phone, Email, Location)
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### Admin Dashboard
+- Secure admin authentication
+- Contact submissions management
+- Reviews moderation and management
+- Gallery management with Cloudinary integration
+- Settings and configuration panel
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+## 🛠️ Tech Stack
 
-Follow these steps:
+- **Frontend**: React 18, TypeScript, Vite
+- **Styling**: Tailwind CSS with custom design system
+- **UI Components**: shadcn/ui (Radix UI primitives)
+- **Backend**: Supabase (PostgreSQL database & Auth)
+- **Image Storage**: Cloudinary CDN
+- **Email Service**: EmailJS
+- **State Management**: React Query + React Context
+- **Routing**: React Router DOM
+- **Icons**: Lucide React
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+## 📦 Installation
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+### Prerequisites
+- Node.js 18+
+- npm or bun
 
-# Step 3: Install the necessary dependencies.
-npm i
+### Setup
+1. **Clone the repository**
+```bash
+git clone https://github.com/Pankaj-jangidd/SCM-INTERIORS.git
+cd SCM-INTERIORS/scminteriors
+```
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+2. **Install dependencies**
+```bash
+npm install
+# or
+bun install
+```
+
+3. **Set up environment variables**
+```bash
+cp .env.example .env
+```
+Add your Supabase and EmailJS credentials to `.env`
+
+4. **Run the development server**
+```bash
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+5. **Open the application**
+```
+http://localhost:5173
+```
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## 📁 Project Structure
+```
+├── src/
+│   ├── app/
+│   │   ├── App.tsx            # Main application with routes
+│   │   ├── main.tsx           # Application entry point
+│   │   └── index.css          # Global styles
+│   ├── components/
+│   │   ├── Navbar.tsx         # Navigation bar
+│   │   ├── Footer.tsx         # Footer section
+│   │   ├── ServicesSection.tsx
+│   │   ├── TestimonialsSection.tsx
+│   │   ├── ContactForm.tsx
+│   │   ├── admin/             # Admin components
+│   │   └── ui/                # shadcn/ui components
+│   ├── pages/
+│   │   ├── Index.tsx          # Landing page
+│   │   ├── About.tsx          # About us page
+│   │   ├── Gallery.tsx        # Project gallery
+│   │   ├── Reviews.tsx        # Customer reviews
+│   │   ├── Contact.tsx        # Contact page
+│   │   └── admin/             # Admin pages
+│   │       ├── Login.tsx
+│   │       ├── Dashboard.tsx
+│   │       ├── ReviewsManagement.tsx
+│   │       ├── ContactSubmissions.tsx
+│   │       ├── GalleryManagement.tsx
+│   │       └── Settings.tsx
+│   ├── integrations/
+│   │   └── supabase/          # Supabase client & queries
+│   ├── contexts/              # React contexts
+│   ├── hooks/                 # Custom React hooks
+│   └── lib/                   # Utility functions
+├── public/                    # Static assets
+├── tailwind.config.ts         # Tailwind configuration
+├── vite.config.ts             # Vite configuration
+└── package.json
+```
 
-**Use GitHub Codespaces**
+## 🎨 Pages & Features
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+| Route | Description |
+|-------|-------------|
+| `/` | Landing page with hero, services, testimonials |
+| `/about` | About the company page |
+| `/gallery` | Project gallery with category filters |
+| `/reviews` | Customer reviews and ratings |
+| `/contact` | Contact form and company information |
+| `/admin` | Admin login portal |
+| `/admin/dashboard` | Admin dashboard overview |
+| `/admin/reviews` | Reviews management |
+| `/admin/contacts` | Contact submissions |
+| `/admin/gallery` | Gallery image management |
+| `/admin/settings` | Admin settings |
 
-## What technologies are used for this project?
+## 🎯 Services Offered
 
-This project is built with:
+| Service | Description |
+|---------|-------------|
+| Residential Design | Complete home interior solutions |
+| Commercial Design | Office and retail space design |
+| Modular Kitchen | Custom kitchen designs and fittings |
+| Furniture Design | Bespoke furniture solutions |
+| Renovation | Complete home and office renovation |
+| Consultation | Expert interior design consultation |
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## 🔧 Configuration
 
-## How can I deploy this project?
+### Environment Variables
+```env
+VITE_SUPABASE_URL=your_supabase_url
+VITE_SUPABASE_ANON_KEY=your_supabase_key
+VITE_EMAILJS_SERVICE_ID=your_emailjs_service
+VITE_EMAILJS_TEMPLATE_ID=your_emailjs_template
+VITE_EMAILJS_PUBLIC_KEY=your_emailjs_public_key
+```
 
-Simply open [Lovable](https://lovable.dev/projects/19a6a3a3-ad49-44b1-a0ee-33e2a88d6975) and click on Share -> Publish.
+### Cloudinary Setup
+Images are served via Cloudinary CDN for optimal performance. Configure your cloud name in the integration files.
 
-## Can I connect a custom domain to my Lovable project?
+## 🚀 Deployment
 
-Yes, you can!
+This application is deployed on **Vercel**:
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+```bash
+npm run build
+```
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+Then deploy to Vercel:
+```bash
+vercel --prod
+```
+
+Or connect your GitHub repository to Vercel for automatic deployments.
+
+## 📄 License
+
+MIT License - feel free to use this project for learning and personal purposes.
+
+## 👤 Author
+
+**Pankaj Kumar**
+
+- GitHub: [@Pankaj-jangidd](https://github.com/Pankaj-jangidd)
+
+---
+
+Built with ❤️ using React, TypeScript, and Tailwind CSS
