@@ -70,7 +70,7 @@ const About = () => {
         <div
           className="absolute inset-0 bg-cover bg-center"
           style={{
-            backgroundImage: `url("https://res.cloudinary.com/dp8syhcsf/image/upload/f_auto,q_80,c_fill,w_1200,h_700/v1763230591/about_qunq9g.jpg")`,
+            backgroundImage: `url("https://res.cloudinary.com/dp8syhcsf/image/upload/f_auto,q_auto,c_fill,w_1200,h_700/v1763230591/about_qunq9g.jpg")`,
           }}
         >
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent" />
