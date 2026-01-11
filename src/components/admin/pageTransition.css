@@ -1,0 +1,30 @@
+.page-transition {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.page-transition.fade-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.page-transition.fade-out {
+  opacity: 0;
+  transform: translateY(10px);
+}
+@keyframes heroFadeSmooth {
+  0% {
+    opacity: 0;
+    transform: scale(1.02);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.hero-image {
+  animation: heroFadeSmooth 1.3s ease-out forwards;
+  opacity: 0;
+}
