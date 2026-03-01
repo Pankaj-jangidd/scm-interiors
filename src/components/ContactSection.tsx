@@ -39,10 +39,13 @@ const ContactSection: React.FC = () => {
     register,
     handleSubmit,
     reset,
+    watch,
     formState: { errors },
   } = useForm<ContactFormData>({
     resolver: zodResolver(contactSchema),
   });
+
+  const watchProject = watch("project", "");
 
   // Typewriter effect - triggers on scroll into view, replays each time
   useEffect(() => {
@@ -343,13 +346,25 @@ const ContactSection: React.FC = () => {
                     {...register("project")}
                     className={`w-full px-4 py-3 rounded-lg border ${
                       errors.project ? "border-red-500" : "border-gray-200"
+                    } ${
+                      !watchProject ? "text-muted-foreground" : "text-gray-900"
                     } focus:outline-none focus:ring-2 focus:ring-[#6B7C59]/30 transition-all bg-white`}
                   >
-                    <option value="">Select a project type</option>
-                    <option value="Residential">Residential</option>
-                    <option value="Commercial">Commercial</option>
-                    <option value="Renovation">Renovation</option>
-                    <option value="Other">Other</option>
+                    <option value="" disabled hidden>
+                      Select a project type
+                    </option>
+                    <option value="Residential" className="text-gray-900">
+                      Residential
+                    </option>
+                    <option value="Commercial" className="text-gray-900">
+                      Commercial
+                    </option>
+                    <option value="Renovation" className="text-gray-900">
+                      Renovation
+                    </option>
+                    <option value="Other" className="text-gray-900">
+                      Other
+                    </option>
                   </select>
                   {errors.project && (
                     <p className="mt-1 text-xs text-red-500">
