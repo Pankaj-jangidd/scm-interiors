@@ -48,11 +48,14 @@ const Index = () => {
             <Button
               size="lg"
               className="bg-[#6B7C59] hover:bg-[#6B7C59] text-white hover:text-white text-lg px-8 py-6 shadow-lg transition-transform duration-300 hover:scale-105"
-              onClick={() =>
-                document
-                  .getElementById("gallery")
-                  ?.scrollIntoView({ behavior: "smooth" })
-              }
+              onClick={() => {
+                const el = document.getElementById("gallery");
+                if (el) {
+                  const offsetTop =
+                    el.getBoundingClientRect().top + window.scrollY - 72;
+                  window.scrollTo({ top: offsetTop, behavior: "smooth" });
+                }
+              }}
             >
               View Projects
             </Button>
@@ -60,11 +63,14 @@ const Index = () => {
               size="lg"
               variant="outline"
               className="bg-white hover:bg-white text-black hover:text-black border-white text-lg px-8 py-6 shadow-lg transition-transform duration-300 hover:scale-105"
-              onClick={() =>
-                document
-                  .getElementById("contact")
-                  ?.scrollIntoView({ behavior: "smooth" })
-              }
+              onClick={() => {
+                const el = document.getElementById("contact");
+                if (el) {
+                  const offsetTop =
+                    el.getBoundingClientRect().top + window.scrollY - 72;
+                  window.scrollTo({ top: offsetTop, behavior: "smooth" });
+                }
+              }}
             >
               Get a Quote
             </Button>

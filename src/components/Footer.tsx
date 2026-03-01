@@ -5,7 +5,8 @@ const Footer = () => {
     const id = href.replace("#", "");
     const el = document.getElementById(id);
     if (el) {
-      el.scrollIntoView({ behavior: "smooth" });
+      const offsetTop = el.getBoundingClientRect().top + window.scrollY - 72;
+      window.scrollTo({ top: offsetTop, behavior: "smooth" });
     }
   };
 
