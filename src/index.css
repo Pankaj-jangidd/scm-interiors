@@ -8,6 +8,11 @@
 */
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 72px;
+  }
+
   :root {
     /* Reference-inspired Color Scheme */
     --background: 0 0% 100%; /* Pure white */

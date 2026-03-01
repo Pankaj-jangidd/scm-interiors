@@ -93,8 +93,7 @@ const Navbar = () => {
 
     const el = document.getElementById(id);
     if (el) {
-      const offsetTop = el.getBoundingClientRect().top + window.scrollY - 72;
-      window.scrollTo({ top: offsetTop, behavior: "smooth" });
+      el.scrollIntoView({ behavior: "smooth" });
     }
   };
 
