@@ -1,381 +1,301 @@
-import { useState, useEffect, useRef } from "react";
-import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import ServicesSection from "@/components/ServicesSection";
 import EndToEndSection from "@/components/EndToEndSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
-import { Phone, Mail, MapPin } from "lucide-react";
-import PageTransition from "@/components/admin/PageTransition";
-
-// Hero slider images - Premium luxury interior categories
-const heroImages = [
-  // 1. Luxury Living Room - White sofas with grand TV unit
-  "https://images.unsplash.com/photo-1600210491892-03d54c0aaf87?auto=format&fit=crop&w=1600&h=900&q=90",
-  // 2. Modular Kitchen - full wall and base cabinets
-  "https://images.unsplash.com/photo-1600489000022-c2086d79f9d4?auto=format&fit=crop&w=1600&h=900&q=90",
-  // 3. Master Bedroom with Premium Wardrobes and Bed
-  "https://images.unsplash.com/photo-1616594039964-ae9021a400a0?auto=format&fit=crop&w=1600&h=900&q=90",
-  // 4. Textured Wall with Photos/Shelves - Feature wall design
-  "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=1600&h=900&q=90",
-  // 5. Luxury Corporate Office - Premium commercial workspace
-  "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1600&h=900&q=90",
-];
+import ContactSection from "@/components/ContactSection";
+import { Phone, Mail, MapPin, CheckCircle } from "lucide-react";
+import { motion } from "framer-motion";
 
 const Index = () => {
   const navigate = useNavigate();
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [isTransitioning, setIsTransitioning] = useState(true);
-  const sliderRef = useRef<HTMLDivElement>(null);
-
-  // Auto-slide every 3.5 seconds with infinite loop (always forward)
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentImageIndex((prevIndex) => prevIndex + 1);
-    }, 3500);
-
-    return () => clearInterval(interval);
-  }, []);
-
-  // Handle infinite loop - when we reach the cloned first image, jump back instantly
-  useEffect(() => {
-    if (currentImageIndex === heroImages.length) {
-      // We've reached the clone, wait for transition to finish then jump back
-      const timeout = setTimeout(() => {
-        setIsTransitioning(false);
-        setCurrentImageIndex(0);
-      }, 700);
-      return () => clearTimeout(timeout);
-    } else if (!isTransitioning) {
-      // Re-enable transition after instant jump
-      const timeout = setTimeout(() => {
-        setIsTransitioning(true);
-      }, 50);
-      return () => clearTimeout(timeout);
-    }
-  }, [currentImageIndex, isTransitioning]);
-
-  const contactOptions = [
-    {
-      icon: Phone,
-      title: "Call Now",
-      mobileTitle: "Call Now",
-      description: "Speak directly with our design experts.",
-      action: "tel:+918824374977",
-      buttonText: "CALL NOW",
-    },
-    {
-      icon: () => (
-        <img
-          src="/whatsapp-icon.png"
-          alt="WhatsApp"
-          className="w-[52px] h-[52px] object-contain"
-        />
-      ),
-      title: "WhatsApp Us",
-      mobileTitle: "WhatsApp",
-      description: "Chat with our design team instantly.",
-      action:
-        "https://wa.me/918824374977?text=Hi%20SCM%20Interiors,%20I%27m%20interested%20in%20your%20interior%20design%20services!",
-      buttonText: "WHATSAPP US",
-    },
-    {
-      icon: Mail,
-      title: "Mail Us",
-      mobileTitle: "Mail Us",
-      description: "Send us your project details and queries.",
-      action: "mailto:scminteriorss@gmail.com",
-      buttonText: "MAIL US",
-    },
-    {
-      icon: MapPin,
-      title: "Get Directions",
-      mobileTitle: "Directions",
-      description: "Visit our office in Electronic City, Bengaluru.",
-      action:
-        "https://www.google.com/maps/search/?api=1&query=Sri%20Chamundeshwari%20Interiors%2C%20VM6H%2B8FF%2C%20Vinayaka%20Layout%20Main%20Rd%2C%20Silicon%20Town%2C%20Electronic%20City%2C%20Bengaluru%2C%20Karnataka%20560100",
-      buttonText: "GET DIRECTIONS",
-    },
-  ];
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-background">
       <Navbar />
-      <PageTransition>
-        {/* Hero Section with Image Slider */}
-        <section className="relative h-[85vh] min-h-[650px] flex items-center justify-center overflow-hidden">
-          {/* Image Slider - Infinite loop sliding animation */}
-          <div
-            ref={sliderRef}
-            className={`absolute inset-0 flex ${
-              isTransitioning
-                ? "transition-transform duration-700 ease-in-out"
-                : ""
-            }`}
-            style={{
-              width: `${(heroImages.length + 1) * 100}%`,
-              transform: `translateX(-${
-                currentImageIndex * (100 / (heroImages.length + 1))
-              }%)`,
-            }}
-          >
-            {/* Original images */}
-            {heroImages.map((image, index) => (
-              <div
-                key={index}
-                className="h-full bg-cover bg-center flex-shrink-0"
-                style={{
-                  backgroundImage: `url("${image}")`,
-                  width: `${100 / (heroImages.length + 1)}%`,
-                }}
-              />
-            ))}
-            {/* Clone of first image for seamless infinite loop */}
-            <div
-              className="h-full bg-cover bg-center flex-shrink-0"
-              style={{
-                backgroundImage: `url("${heroImages[0]}")`,
-                width: `${100 / (heroImages.length + 1)}%`,
-              }}
-            />
-          </div>
 
-          {/* Gradient Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/40 to-black/60" />
+      {/* Hero Section — Single Premium Image */}
+      <section
+        id="home"
+        className="relative lg:h-[calc(100vh-71px)] flex items-center justify-center overflow-hidden"
+      >
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{
+            backgroundImage: `url("https://images.unsplash.com/photo-1600210491892-03d54c0aaf87?auto=format&fit=crop&w=2000&h=1200&q=95")`,
+          }}
+        >
+          <div className="absolute inset-0 bg-gradient-to-b from-slate-950/60 via-slate-950/40 to-slate-950/70" />
+        </div>
 
-          {/* Content */}
-          <div className="relative z-10 text-center text-white px-4 animate-fade-in max-w-4xl mx-auto">
-            <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
-              End-to-end interior solutions in Bangalore
-            </h1>
-            <p className="text-lg md:text-xl mb-10 font-light text-white/90">
-              30+ years of Experience | Bangalore, Karnataka
-            </p>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="relative z-10 text-center text-white px-4 max-w-5xl mx-auto"
+        >
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold mb-4 leading-[1.2] text-white">
+            End to End Interior Solutions
+            <br />
+            in Bangalore
+          </h1>
+          <p className="text-base md:text-lg mb-8 font-medium tracking-[0.2em] text-white/70 uppercase">
+            SINCE 1950 • BANGALORE
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button
               size="lg"
-              className="bg-accent hover:bg-accent/90 text-lg px-8 py-6 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105"
-              onClick={() => navigate("/contact")}
+              className="bg-[#6B7C59] hover:bg-[#6B7C59] text-white hover:text-white text-lg px-8 py-6 shadow-lg transition-transform duration-300 hover:scale-105"
+              onClick={() =>
+                document
+                  .getElementById("gallery")
+                  ?.scrollIntoView({ behavior: "smooth" })
+              }
             >
-              Book Free Design Session
+              View Projects
+            </Button>
+            <Button
+              size="lg"
+              variant="outline"
+              className="bg-white hover:bg-white text-black hover:text-black border-white text-lg px-8 py-6 shadow-lg transition-transform duration-300 hover:scale-105"
+              onClick={() =>
+                document
+                  .getElementById("contact")
+                  ?.scrollIntoView({ behavior: "smooth" })
+              }
+            >
+              Get a Quote
             </Button>
           </div>
+        </motion.div>
 
-          {/* Slide Indicators */}
-          <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 z-20 flex gap-2">
-            {heroImages.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => {
-                  setIsTransitioning(true);
-                  setCurrentImageIndex(index);
-                }}
-                className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
-                  currentImageIndex % heroImages.length === index
-                    ? "bg-accent w-8"
-                    : "bg-white/50 hover:bg-white/80"
-                }`}
-                aria-label={`Go to slide ${index + 1}`}
-              />
-            ))}
-          </div>
-        </section>
-      </PageTransition>
+        {/* Solid bottom line instead of fade */}
+        <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gray-200/40 z-20" />
+      </section>
 
-      {/* Founder Section */}
-      <section className="py-20 md:py-24 flex items-center bg-white">
-        <div className="container mx-auto px-4 max-w-6xl">
-          <div className="text-center mb-16">
-            <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground tracking-tight">
-              ABOUT SRI CHAMUNDESHWARI INTERIORS
+      {/* About Section */}
+      <section
+        id="about"
+        className="lg:h-[calc(100vh-71px)] bg-white py-16 lg:py-0 scroll-mt-[72px] overflow-hidden"
+      >
+        <div className="container mx-auto px-4 max-w-7xl lg:h-full lg:flex lg:flex-col lg:justify-center">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ margin: "-100px", once: false }}
+            transition={{ duration: 0.6 }}
+            className="flex flex-col items-center text-center mb-10"
+          >
+            <h2 className="text-3xl md:text-4xl font-black text-gray-950">
+              About Us
             </h2>
-            <div className="w-16 h-1 bg-accent mx-auto mt-6 rounded-full"></div>
-          </div>
+            <div className="w-16 h-1 bg-[#6B7C59] mt-2" />
+          </motion.div>
 
-          <div className="flex flex-col md:flex-row items-center md:items-center gap-10 md:gap-16">
-            <div className="md:w-1/2 w-full relative">
-              <img
-                src="https://res.cloudinary.com/dp8syhcsf/image/upload/f_auto,q_auto,w_600/v1763230592/founder_kv8phh.jpg"
-                alt="Mr. Ganapathlal - Founder"
-                loading="lazy"
-                className="w-full h-[420px] md:h-[480px] object-cover rounded-2xl shadow-2xl"
-              />
-              {/* Decorative element */}
-              <div className="absolute -bottom-4 -right-4 w-24 h-24 bg-accent/10 rounded-xl -z-10" />
-            </div>
-
-            <div className="md:w-1/2 w-full space-y-6">
-              <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground text-left">
-                The Man Behind the Legacy
-              </h2>
-
-              <div className="space-y-1">
-                <h3 className="text-xl md:text-2xl font-semibold text-foreground leading-tight">
-                  Mr. Ganapathlal
-                </h3>
-                <p className="text-base text-accent font-medium">
-                  Founder & Principal Contractor
-                </p>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-8 items-stretch">
+            {/* Image Collage */}
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ margin: "-100px", once: false }}
+              transition={{ duration: 0.6 }}
+              className="grid grid-cols-2 gap-2 h-[280px] lg:h-[90%] lg:w-[90%]"
+            >
+              <div className="flex flex-col gap-2 h-full">
+                <motion.div
+                  whileHover={{ scale: 1.02 }}
+                  className="relative h-1/2 rounded-2xl overflow-hidden shadow-lg border border-border/50"
+                >
+                  <img
+                    src="/images/about/painter.png"
+                    alt="Master Painter"
+                    className="w-full h-full object-cover"
+                  />
+                </motion.div>
+                <motion.div
+                  whileHover={{ scale: 1.02 }}
+                  className="relative h-1/2 rounded-2xl overflow-hidden shadow-lg border border-border/50"
+                >
+                  <img
+                    src="/images/about/modular.png"
+                    alt="Modular Fitting"
+                    className="w-full h-full object-cover"
+                  />
+                </motion.div>
               </div>
+              <motion.div
+                whileHover={{ scale: 1.02 }}
+                className="relative h-full rounded-2xl overflow-hidden shadow-lg border border-border/50"
+              >
+                <img
+                  src="/images/about/carpenter.png"
+                  alt="Expert Craftsmanship"
+                  className="w-full h-full object-cover"
+                />
+              </motion.div>
+            </motion.div>
 
-              <p className="text-base md:text-lg leading-relaxed text-muted-foreground">
-                With over three decades of experience,{" "}
-                <span className="font-medium text-foreground">
-                  Mr. Ganapathlal
-                </span>{" "}
-                has turned Sri Chamundeshwari Interiors into one of Bangalore's
-                most trusted interior execution firms. Starting from the ground
-                up, his vision, precision, and hard work have shaped countless
-                homes and commercial spaces across the city.
+            {/* Content */}
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ margin: "-100px", once: false }}
+              transition={{ duration: 0.6 }}
+              className="text-left"
+            >
+              <h3
+                className="text-2xl md:text-3xl lg:text-4xl font-bold leading-tight mb-4 text-slate-800"
+                style={{ fontFamily: "'Playfair Display', serif" }}
+              >
+                Transforming spaces with traditional craftsmanship and modern
+                design.
+              </h3>
+
+              <p className="text-gray-600 leading-relaxed mb-4 text-base md:text-lg">
+                Since 1950, we have been crafting interior experiences across
+                Bangalore, offering premium finishing, timely delivery, and
+                reasonable rates, making dream spaces accessible to all.
+                <br />
+                <br />
+                Our team of skilled craftsmen work closely with every client to
+                understand their vision and bring it to life with attention to
+                detail. From concept to completion, we ensure every project
+                reflects quality, elegance, and functionality.
               </p>
 
-              <p className="text-base md:text-lg leading-relaxed text-muted-foreground">
-                His leadership style is simple — focus on quality, be honest
-                with clients, and deliver on time. These principles have defined
-                SCM Interiors for over 30 years and continue to guide every
-                project we undertake.
+              {/* Services Label */}
+              <p className="text-sm font-extrabold uppercase tracking-widest text-[#6B7C59] mb-3">
+                Services we offer:
               </p>
 
-              <div className="pt-4 border-t border-border mt-6">
-                <p className="text-lg text-foreground font-semibold">
-                  Contact: +91 8824374977
-                </p>
+              {/* Features */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-1">
+                {[
+                  "Carpentry Works",
+                  "SS Fabrication",
+                  "Paint Works",
+                  "Modular Fittings",
+                  "False Ceiling",
+                  "Wall Scapes",
+                ].map((feature, index) => (
+                  <motion.div
+                    key={feature}
+                    initial={{ opacity: 0, x: 20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: false }}
+                    transition={{ duration: 0.4, delay: 0.2 + index * 0.1 }}
+                    className="flex items-center gap-3 p-2 group"
+                  >
+                    <CheckCircle
+                      className="text-[#6B7C59] flex-shrink-0 group-hover:scale-110 transition-transform"
+                      size={24}
+                    />
+                    <span className="text-gray-800 font-semibold group-hover:text-[#6B7C59] transition-colors">
+                      {feature}
+                    </span>
+                  </motion.div>
+                ))}
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Services Section */}
-      <ServicesSection />
+      {/* Our Services (End-to-End Steps) */}
+      <EndToEndSection />
 
       {/* Gallery Section */}
-      <section className="py-20 md:py-24 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-14">
-            <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground mb-4">
-              OUR GALLERY
+      <section
+        id="gallery"
+        className="lg:h-[calc(100vh-71px)] flex flex-col justify-center py-24 md:py-32 bg-white scroll-mt-[72px] overflow-hidden"
+      >
+        <div className="container mx-auto px-4 max-w-7xl">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ margin: "-100px", once: false }}
+            transition={{ duration: 0.6 }}
+            className="flex flex-col items-center text-center mb-16"
+          >
+            <h2 className="text-3xl md:text-4xl font-black text-gray-950">
+              Gallery
             </h2>
-            <div className="w-16 h-1 bg-accent mx-auto mb-6 rounded-full" />
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              CLICK to Explore our residential and commercial projects
-            </p>
-          </div>
+            <div className="w-16 h-1 bg-[#6B7C59] mt-2" />
+          </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 mx-auto overflow-hidden">
             {/* RESIDENTIAL */}
-            <button
-              onClick={() => navigate("/gallery?category=residential")}
-              className="relative group h-[300px] md:h-[360px] rounded-2xl overflow-hidden cursor-pointer shadow-xl transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl"
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ margin: "-100px", once: false }}
+              transition={{ duration: 0.6 }}
+              className="w-full"
             >
-              <div
-                className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
-                style={{
-                  backgroundImage: `url("https://res.cloudinary.com/dp8syhcsf/image/upload/f_auto,q_auto,c_fill,w_800,h_500/v1763230593/residential_atsi3m.avif")`,
-                }}
+              <button
+                onClick={() => navigate("/gallery?category=residential")}
+                className="relative group h-[300px] md:h-[400px] rounded-2xl overflow-hidden cursor-pointer shadow-xl transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl w-full block"
               >
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
-              </div>
-
-              <div className="absolute inset-0 flex flex-col items-center justify-center">
-                <h2 className="font-serif text-3xl md:text-4xl font-bold text-white drop-shadow-lg mb-2">
-                  RESIDENTIAL
-                </h2>
-                <div className="w-12 h-0.5 bg-accent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
-              </div>
-            </button>
+                <div
+                  className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                  style={{
+                    backgroundImage: `url("https://res.cloudinary.com/dp8syhcsf/image/upload/f_auto,q_auto,c_fill,w_800,h_500/v1763230593/residential_atsi3m.avif")`,
+                  }}
+                >
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-slate-950/30 to-transparent" />
+                </div>
+                <div className="absolute inset-0 flex flex-col items-start justify-end p-8">
+                  <h2 className="font-serif text-2xl md:text-3xl font-bold text-white drop-shadow-lg mb-3 text-left">
+                    RESIDENTIAL PROJECTS
+                  </h2>
+                  <span className="inline-flex items-center gap-2 bg-[#6B7C59] hover:bg-[#5A6B4A] text-white text-base font-medium px-8 py-3 rounded-full transition-all duration-300 shadow-lg group-hover:scale-105">
+                    View Gallery <span className="text-lg">→</span>
+                  </span>
+                </div>
+              </button>
+            </motion.div>
 
             {/* COMMERCIAL */}
-            <button
-              onClick={() => navigate("/gallery?category=commercial")}
-              className="relative group h-[300px] md:h-[360px] rounded-2xl overflow-hidden cursor-pointer shadow-xl transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl"
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ margin: "-100px", once: false }}
+              transition={{ duration: 0.6 }}
+              className="w-full"
             >
-              <div
-                className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
-                style={{
-                  backgroundImage: `url("https://res.cloudinary.com/dp8syhcsf/image/upload/f_auto,q_auto,c_fill,w_800,h_500/v1763230591/commercial_m9o5us.jpg")`,
-                }}
+              <button
+                onClick={() => navigate("/gallery?category=commercial")}
+                className="relative group h-[300px] md:h-[400px] rounded-2xl overflow-hidden cursor-pointer shadow-xl transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl w-full block"
               >
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
-              </div>
-
-              <div className="absolute inset-0 flex flex-col items-center justify-center">
-                <h2 className="font-serif text-3xl md:text-4xl font-bold text-white drop-shadow-lg mb-2">
-                  COMMERCIAL
-                </h2>
-                <div className="w-12 h-0.5 bg-accent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
-              </div>
-            </button>
+                <div
+                  className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                  style={{
+                    backgroundImage: `url("https://res.cloudinary.com/dp8syhcsf/image/upload/f_auto,q_auto,c_fill,w_800,h_500/v1763230591/commercial_m9o5us.jpg")`,
+                  }}
+                >
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-slate-950/30 to-transparent" />
+                </div>
+                <div className="absolute inset-0 flex flex-col items-start justify-end p-8">
+                  <h2 className="font-serif text-2xl md:text-3xl font-bold text-white drop-shadow-lg mb-3 text-left">
+                    COMMERCIAL PROJECTS
+                  </h2>
+                  <span className="inline-flex items-center gap-2 bg-[#6B7C59] hover:bg-[#5A6B4A] text-white text-base font-medium px-8 py-3 rounded-full transition-all duration-300 shadow-lg group-hover:scale-105">
+                    View Gallery <span className="text-lg">→</span>
+                  </span>
+                </div>
+              </button>
+            </motion.div>
           </div>
         </div>
       </section>
-
-      {/* End-to-End Solutions Section */}
-      <EndToEndSection />
 
       {/* Testimonials Section */}
       <TestimonialsSection />
 
-      {/* Contact Buttons Section */}
-      <section className="py-20 md:py-24 bg-secondary">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-14">
-            <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Get in Touch
-            </h2>
-            <div className="w-16 h-1 bg-accent mx-auto mb-6 rounded-full" />
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              Connect with us directly through your preferred channel
-            </p>
-          </div>
-
-          <div className="max-w-6xl mx-auto">
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
-              {contactOptions.map((option, index) => {
-                const Icon = option.icon;
-                return (
-                  <div
-                    key={index}
-                    className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl hover:-translate-y-2 transition-all duration-500 flex flex-col items-center text-center border-0"
-                    style={{ animationDelay: `${index * 100}ms` }}
-                  >
-                    <div className="w-16 h-16 rounded-xl bg-accent/10 flex items-center justify-center mb-4">
-                      <Icon className="w-8 h-8 text-accent" />
-                    </div>
-                    <h3 className="text-lg font-bold text-foreground mb-2">
-                      <span className="md:hidden">{option.mobileTitle}</span>
-                      <span className="hidden md:inline">{option.title}</span>
-                    </h3>
-                    <p className="text-sm text-muted-foreground mb-5 flex-grow hidden md:block">
-                      {option.description}
-                    </p>
-                    <Button
-                      asChild
-                      className="bg-accent hover:bg-accent/90 text-white shadow-md w-full transition-all duration-300 hover:shadow-lg"
-                    >
-                      <a
-                        href={option.action}
-                        target={
-                          option.action.startsWith("http")
-                            ? "_blank"
-                            : undefined
-                        }
-                        rel={
-                          option.action.startsWith("http")
-                            ? "noopener noreferrer"
-                            : undefined
-                        }
-                      >
-                        {option.buttonText}
-                      </a>
-                    </Button>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* Contact Section */}
+      <ContactSection />
 
       <Footer />
     </div>

@@ -77,7 +77,7 @@ const ContactForm = () => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="bg-card p-8 rounded-xl shadow-lg max-w-2xl mx-auto"
+      className="bg-card p-8 rounded-xl shadow-lg max-w-2xl mx-auto border border-border/50"
     >
       <div className="space-y-4">
         <div>
@@ -164,7 +164,7 @@ const ContactForm = () => {
         <Button
           type="submit"
           disabled={isSubmitting}
-          className="w-full bg-primary hover:bg-primary/90 mt-6"
+          className="w-full bg-[#6B3A2A] hover:bg-[#5C2E20] text-white mt-6 shadow-md"
         >
           {isSubmitting ? "Submitting..." : "Book a Visit"}
         </Button>

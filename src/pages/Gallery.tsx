@@ -1,26 +1,52 @@
 import { useState, useEffect } from "react";
 import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import { useAdmin } from "@/contexts/AdminContext";
 import { X, ChevronLeft, ChevronRight, ArrowLeft } from "lucide-react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import PageTransition from "@/components/admin/PageTransition";
 import { getThumbnailUrl, getFullSizeUrl } from "@/lib/cloudinary";
+import { motion, AnimatePresence } from "framer-motion";
+
+const variants = {
+  enter: (direction: number) => {
+    return {
+      x: direction > 0 ? 1000 : -1000,
+      opacity: 0,
+    };
+  },
+  center: {
+    zIndex: 1,
+    x: 0,
+    opacity: 1,
+  },
+  exit: (direction: number) => {
+    return {
+      zIndex: 0,
+      x: direction < 0 ? 1000 : -1000,
+      opacity: 0,
+    };
+  },
+};
+
+const swipeConfidenceThreshold = 10000;
+const swipePower = (offset: number, velocity: number) => {
+  return Math.abs(offset) * velocity;
+};
 
 const Gallery = () => {
   const { galleryImages } = useAdmin();
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const [selectedImage, setSelectedImage] = useState<number | null>(null);
-  const [touchStart, setTouchStart] = useState<number | null>(null);
-  const [touchEnd, setTouchEnd] = useState<number | null>(null);
-  const [isAnimating, setIsAnimating] = useState(false);
-  const [slideDirection, setSlideDirection] = useState<"left" | "right" | "">(
-    ""
-  );
+  const [direction, setDirection] = useState(0);
+  const [isSwiping, setIsSwiping] = useState(false);
 
   const categoryParam = searchParams.get("category") || "main";
   const currentCategory = categoryParam;
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [currentCategory]);
 
   const RESIDENTIAL_CATEGORIES = [
     {
@@ -54,29 +80,20 @@ const Gallery = () => {
     }
     return galleryImages.filter(
       (img) =>
-        img.category === "residential" && img.subcategory === currentCategory
+        img.category === "residential" && img.subcategory === currentCategory,
     );
   };
 
   const currentImages = getCurrentImages();
 
-  const minSwipeDistance = 50;
-
-  const onTouchStart = (e: React.TouchEvent) => {
-    setTouchEnd(null);
-    setTouchStart(e.targetTouches[0].clientX);
-  };
-
-  const onTouchMove = (e: React.TouchEvent) => {
-    setTouchEnd(e.targetTouches[0].clientX);
-  };
-
-  const onTouchEnd = () => {
-    if (!touchStart || !touchEnd) return;
-
-    const distance = touchStart - touchEnd;
-    if (distance > minSwipeDistance) navigateLightbox("next");
-    if (distance < -minSwipeDistance) navigateLightbox("prev");
+  const handleWheel = (e: React.WheelEvent) => {
+    if (isSwiping) return;
+    if (Math.abs(e.deltaX) > 40) {
+      if (e.deltaX > 0) navigateLightbox("next");
+      else navigateLightbox("prev");
+      setIsSwiping(true);
+      setTimeout(() => setIsSwiping(false), 500);
+    }
   };
 
   useEffect(() => {
@@ -118,36 +135,41 @@ const Gallery = () => {
   const openLightbox = (index: number) => setSelectedImage(index);
   const closeLightbox = () => {
     setSelectedImage(null);
-    setSlideDirection("");
-    setIsAnimating(false);
   };
 
-  const navigateLightbox = (direction: "prev" | "next") => {
-    if (selectedImage === null || isAnimating) return;
+  const navigateLightbox = (newDirection: "prev" | "next") => {
+    if (selectedImage === null) return;
 
-    setIsAnimating(true);
-    setSlideDirection(direction === "next" ? "left" : "right");
-
-    setTimeout(() => {
-      if (direction === "prev") {
-        setSelectedImage(
-          selectedImage > 0 ? selectedImage - 1 : currentImages.length - 1
-        );
-      } else {
-        setSelectedImage(
-          selectedImage < currentImages.length - 1 ? selectedImage + 1 : 0
-        );
-      }
-      setIsAnimating(false);
-      setSlideDirection("");
-    }, 100);
+    if (newDirection === "next") {
+      setDirection(1);
+      setSelectedImage(
+        selectedImage < currentImages.length - 1 ? selectedImage + 1 : 0,
+      );
+    } else {
+      setDirection(-1);
+      setSelectedImage(
+        selectedImage > 0 ? selectedImage - 1 : currentImages.length - 1,
+      );
+    }
   };
 
   const handleBackButton = () => {
     if (selectedImage !== null) {
       closeLightbox();
+      return;
+    }
+
+    if (currentCategory === "commercial" || currentCategory === "residential") {
+      navigate("/");
+      setTimeout(() => {
+        document
+          .getElementById("gallery")
+          ?.scrollIntoView({ behavior: "instant" });
+      }, 0);
+    } else if (RESIDENTIAL_CATEGORIES.some((c) => c.name === currentCategory)) {
+      setCurrentCategory("residential");
     } else {
-      navigate(-1);
+      navigate("/");
     }
   };
 
@@ -219,7 +241,6 @@ const Gallery = () => {
             </div>
           </section>
         </PageTransition>
-        <Footer />
       </div>
     );
   }
@@ -258,7 +279,7 @@ const Gallery = () => {
                   const imageCount = galleryImages.filter(
                     (img) =>
                       img.category === "residential" &&
-                      img.subcategory === category.name
+                      img.subcategory === category.name,
                   ).length;
 
                   return (
@@ -293,7 +314,6 @@ const Gallery = () => {
             </div>
           </section>
         </PageTransition>
-        <Footer />
       </div>
     );
   }
@@ -362,13 +382,8 @@ const Gallery = () => {
       {/* FULLSCREEN LIGHTBOX */}
       {selectedImage !== null && currentImages.length > 0 && (
         <div
-          className="fixed inset-0 bg-black z-50 flex items-center justify-center"
-          onTouchStart={onTouchStart}
-          onTouchMove={onTouchMove}
-          onTouchEnd={onTouchEnd}
-          onClick={(e) => {
-            if (e.target === e.currentTarget) closeLightbox();
-          }}
+          className="fixed inset-0 bg-black z-50 flex flex-col items-center justify-center overflow-hidden"
+          onWheel={handleWheel}
         >
           {/* Close Button */}
           <button
@@ -381,8 +396,7 @@ const Gallery = () => {
           {/* Prev - Hidden on mobile */}
           <button
             onClick={() => navigateLightbox("prev")}
-            disabled={isAnimating}
-            className="hidden md:block absolute left-4 text-white hover:text-accent transition-colors z-20 bg-black/50 p-3 rounded-full backdrop-blur-sm disabled:opacity-50"
+            className="hidden md:block absolute left-4 text-white hover:text-accent transition-colors z-20 bg-black/50 p-3 rounded-full backdrop-blur-sm"
           >
             <ChevronLeft className="h-8 w-8" />
           </button>
@@ -390,80 +404,50 @@ const Gallery = () => {
           {/* Next - Hidden on mobile */}
           <button
             onClick={() => navigateLightbox("next")}
-            disabled={isAnimating}
-            className="hidden md:block absolute right-4 text-white hover:text-accent transition-colors z-20 bg-black/50 p-3 rounded-full backdrop-blur-sm disabled:opacity-50"
+            className="hidden md:block absolute right-4 text-white hover:text-accent transition-colors z-20 bg-black/50 p-3 rounded-full backdrop-blur-sm"
           >
             <ChevronRight className="h-8 w-8" />
           </button>
 
           {/* Image with Slide Animation */}
-          <div className="relative w-full h-full flex items-center justify-center overflow-hidden bg-black">
-            <img
-              src={getFullSizeUrl(currentImages[selectedImage].url)}
-              alt={currentImages[selectedImage].alt}
-              className={`max-h-screen max-w-screen object-contain select-none transition-all duration-200 ease-out ${
-                slideDirection === "left" ? "lightbox-slide-out-left" : ""
-              } ${
-                slideDirection === "right" ? "lightbox-slide-out-right" : ""
-              } ${!slideDirection ? "lightbox-slide-in" : ""}`}
-              draggable={false}
-            />
+          <div className="relative w-full h-full flex items-center justify-center pt-10 pb-20">
+            <AnimatePresence initial={false} custom={direction}>
+              <motion.img
+                key={selectedImage}
+                src={getFullSizeUrl(currentImages[selectedImage].url)}
+                alt={currentImages[selectedImage].alt}
+                custom={direction}
+                variants={variants}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                transition={{
+                  x: { type: "spring", stiffness: 300, damping: 30 },
+                  opacity: { duration: 0.2 },
+                }}
+                drag="x"
+                dragConstraints={{ left: 0, right: 0 }}
+                dragElastic={1}
+                onDragEnd={(e, { offset, velocity }) => {
+                  const swipe = swipePower(offset.x, velocity.x);
+
+                  if (swipe < -swipeConfidenceThreshold) {
+                    navigateLightbox("next");
+                  } else if (swipe > swipeConfidenceThreshold) {
+                    navigateLightbox("prev");
+                  }
+                }}
+                className="absolute max-h-full max-w-full object-contain select-none px-2 md:px-16"
+                draggable={false}
+              />
+            </AnimatePresence>
           </div>
 
-          <div className="absolute bottom-6 left-1/2 -translate-x-1/2 text-white text-sm bg-black/70 px-4 py-2 rounded-full backdrop-blur-sm">
+          <div className="absolute bottom-6 left-1/2 -translate-x-1/2 text-white text-sm bg-black/70 px-4 py-2 rounded-full backdrop-blur-sm z-20">
             {selectedImage + 1} / {currentImages.length}
           </div>
         </div>
       )}
-
-      <Footer />
-
-      <style>{`
-        @keyframes lightboxSlideOutLeft {
-          from {
-            transform: translateX(0);
-            opacity: 1;
-          }
-          to {
-            transform: translateX(-30%);
-            opacity: 0;
-          }
-        }
-
-        @keyframes lightboxSlideOutRight {
-          from {
-            transform: translateX(0);
-            opacity: 1;
-          }
-          to {
-            transform: translateX(30%);
-            opacity: 0;
-          }
-        }
-
-        @keyframes lightboxSlideIn {
-          from {
-            transform: translateX(0);
-            opacity: 0;
-          }
-          to {
-            transform: translateX(0);
-            opacity: 1;
-          }
-        }
-
-        .lightbox-slide-out-left {
-          animation: lightboxSlideOutLeft 0.2s ease-out forwards;
-        }
-
-        .lightbox-slide-out-right {
-          animation: lightboxSlideOutRight 0.2s ease-out forwards;
-        }
-
-        .lightbox-slide-in {
-          animation: lightboxSlideIn 0.2s ease-out forwards;
-        }
-      `}</style>
     </div>
   );
 };

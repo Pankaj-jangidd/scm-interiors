@@ -5,119 +5,174 @@ import { Button } from "@/components/ui/button";
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [underlineStyle, setUnderlineStyle] = useState({ left: 0, width: 0 });
   const [isScrolled, setIsScrolled] = useState(false);
-  const navRef = useRef(null);
+  const [activeSection, setActiveSection] = useState("home");
   const location = useLocation();
 
+  // Single-page anchor links
   const navLinks = [
-    { name: "Home", path: "/" },
-    { name: "About Us", path: "/about" },
-    { name: "Gallery", path: "/gallery" },
-    { name: "Reviews", path: "/reviews" },
-    { name: "Contact", path: "/contact" },
+    { name: "Home", href: "#home" },
+    { name: "About", href: "#about" },
+    { name: "Services", href: "#solutions" },
+    { name: "Gallery", href: "#gallery" },
+    { name: "Contact", href: "#contact" },
   ];
 
-  const isActive = (path: string) => location.pathname === path;
-
-  // Handle scroll effect
+  // Handle scroll effect + active section detection
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
+
+      // Only do scroll-spy on the home page
+      if (location.pathname !== "/") return;
+
+      const sections = navLinks
+        .map((link) => {
+          const id = link.href.replace("#", "");
+          const el = document.getElementById(id);
+          return el ? { id, top: el.offsetTop - 80 } : null;
+        })
+        .filter(Boolean) as { id: string; top: number }[];
+
+      const scrollPos = window.scrollY + 120;
+      for (let i = sections.length - 1; i >= 0; i--) {
+        if (scrollPos >= sections[i].top) {
+          setActiveSection(sections[i].id);
+          return;
+        }
+      }
+      // Fallback for top of page
+      setActiveSection("home");
     };
+
     window.addEventListener("scroll", handleScroll);
+    handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [location.pathname]);
+
+  const [underlineStyle, setUnderlineStyle] = useState({ left: 0, width: 0 });
+  const navContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const updateUnderline = () => {
-      if (navRef.current) {
-        const activeLink = navRef.current.querySelector('[data-active="true"]');
-        if (activeLink) {
-          const { offsetLeft, offsetWidth } = activeLink;
-          setUnderlineStyle({ left: offsetLeft, width: offsetWidth });
-        }
+      if (!navContainerRef.current) return;
+
+      const activeBtn = navContainerRef.current.querySelector(
+        '[data-active="true"]',
+      ) as HTMLElement;
+      if (activeBtn) {
+        setUnderlineStyle({
+          left: activeBtn.offsetLeft,
+          width: activeBtn.offsetWidth,
+        });
+      } else {
+        setUnderlineStyle({ left: 0, width: 0 });
       }
     };
 
     updateUnderline();
+    // Also update on window resize to keep it aligned
     window.addEventListener("resize", updateUnderline);
     return () => window.removeEventListener("resize", updateUnderline);
-  }, [location.pathname]);
+  }, [activeSection, location.pathname]);
+
+  const handleNavClick = (href: string) => {
+    setMobileMenuOpen(false);
+    const id = href.replace("#", "");
+
+    if (location.pathname !== "/") {
+      // Navigate to homepage with hash
+      window.location.href = "/" + href;
+      return;
+    }
+
+    if (id === "home") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      return;
+    }
+
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  const isHomePage = location.pathname === "/";
 
   return (
     <nav
-      className={`sticky top-0 z-50 transition-all duration-500 ${
+      className={`sticky top-0 z-50 transition-all duration-500 border-b ${
         isScrolled
-          ? "bg-white/95 backdrop-blur-md shadow-lg"
-          : "bg-white shadow-sm"
+          ? "bg-white/95 backdrop-blur-md border-gray-200"
+          : "bg-white border-gray-100"
       }`}
     >
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-14">
-          {/* Mobile Logo - Centered */}
-          <Link to="/" className="flex md:hidden items-center gap-2 mx-auto">
-            <span className="font-serif text-xl font-bold text-accent tracking-wide">
-              SCM
-            </span>
-            <span className="font-serif text-sm font-bold text-foreground leading-tight tracking-tight">
-              SRI CHAMUNDESHWARI INTERIORS
-            </span>
-          </Link>
-
-          {/* Desktop Logo */}
-          <Link to="/" className="hidden md:flex items-center gap-3 group">
-            <span className="font-serif text-2xl font-bold text-accent tracking-wide group-hover:scale-110 transition-transform duration-300">
-              SCM
-            </span>
-            <span className="font-serif text-lg font-bold text-foreground leading-tight tracking-tight group-hover:text-accent transition-colors duration-300">
-              SRI CHAMUNDESHWARI INTERIORS
-            </span>
-          </Link>
-
-          {/* Desktop Navigation */}
-          <div
-            className="hidden md:flex items-center gap-8 relative"
-            ref={navRef}
+        <div className="flex items-center h-[72px] gap-4">
+          {/* Logo — Left Side */}
+          <Link
+            to="/"
+            className="flex items-center gap-3 group z-20 transition-transform duration-300 hover:scale-[1.02] flex-shrink-0"
           >
-            {navLinks.map((link) => (
-              <Link
-                key={link.path}
-                to={link.path}
-                data-active={isActive(link.path)}
-                className={`text-sm font-medium transition-all duration-300 relative py-2 ${
-                  isActive(link.path)
-                    ? "text-accent font-semibold"
-                    : "text-foreground/80 hover:text-accent"
-                }`}
-              >
-                {link.name}
-              </Link>
-            ))}
-
-            {/* Sliding underline */}
-            <div
-              className="absolute bottom-0 h-0.5 bg-accent transition-all duration-300 ease-out rounded-full"
-              style={{
-                left: `${underlineStyle.left}px`,
-                width: `${underlineStyle.width}px`,
-              }}
+            <img
+              src="/favicon.png"
+              alt="SCM"
+              className="w-8 h-8 object-contain"
             />
+            <span className="font-serif text-[12px] md:text-[16px] lg:text-lg font-bold text-gray-800 leading-tight tracking-tight whitespace-nowrap">
+              SRI CHAMUNDESHWARI INTERIORS
+            </span>
+          </Link>
 
-            <Button
-              asChild
-              className="bg-accent hover:bg-accent/90 ml-4 shadow-md transition-all duration-300 hover:shadow-lg hover:scale-105"
+          {/* Desktop Navigation — Centered in available space */}
+          <div className="hidden md:flex flex-1 items-center justify-center">
+            <div
+              ref={navContainerRef}
+              className="flex items-center gap-4 h-full relative"
             >
-              <a href="tel:+918824374977">
-                <Phone className="h-4 w-4 mr-2" />
-                Call Us
-              </a>
-            </Button>
+              {navLinks.map((link) => {
+                const isActive =
+                  isHomePage && activeSection === link.href.replace("#", "");
+                return (
+                  <button
+                    key={link.href}
+                    data-active={isActive}
+                    onClick={() => handleNavClick(link.href)}
+                    className={`text-[16px] font-medium transition-colors duration-300 px-2 py-2 ${
+                      isActive
+                        ? "text-gray-950"
+                        : "text-gray-500 hover:text-gray-950"
+                    }`}
+                  >
+                    {link.name}
+                  </button>
+                );
+              })}
+
+              {/* The Single Sliding Underline */}
+              <span
+                className="absolute bottom-[6px] h-[2.5px] bg-[#6B7C59] rounded-full transition-all duration-500 ease-in-out pointer-events-none"
+                style={{
+                  left: `${underlineStyle.left}px`,
+                  width: `${underlineStyle.width}px`,
+                  opacity: underlineStyle.width > 0 ? 1 : 0,
+                }}
+              />
+            </div>
           </div>
 
+          {/* Call Us — Right Side */}
+          <div className="hidden md:block z-20 flex-shrink-0">
+            <Button
+              asChild
+              className="bg-[#6B7C59] hover:bg-[#5A6B4A] text-white font-serif font-bold tracking-tight uppercase rounded-lg px-6 h-10 transition-all duration-300 shadow-sm hover:shadow-md active:scale-95"
+            >
+              <a href="tel:+918824374977">CALL US</a>
+            </Button>
+          </div>
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden p-2 absolute right-4"
+            className="md:hidden p-2 z-10"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label="Toggle menu"
           >
@@ -136,24 +191,27 @@ const Navbar = () => {
           }`}
         >
           <div className="flex flex-col gap-1 pt-2 border-t border-border">
-            {navLinks.map((link, index) => (
-              <Link
-                key={link.path}
-                to={link.path}
-                className={`text-base font-medium transition-all duration-300 py-3 px-4 rounded-lg ${
-                  isActive(link.path)
-                    ? "text-accent font-semibold bg-accent/5"
-                    : "text-foreground hover:text-accent hover:bg-accent/5"
-                }`}
-                onClick={() => setMobileMenuOpen(false)}
-                style={{ animationDelay: `${index * 50}ms` }}
-              >
-                {link.name}
-              </Link>
-            ))}
+            {navLinks.map((link, index) => {
+              const isActive =
+                isHomePage && activeSection === link.href.replace("#", "");
+              return (
+                <button
+                  key={link.href}
+                  onClick={() => handleNavClick(link.href)}
+                  className={`text-base text-left font-medium transition-all duration-300 py-3 px-4 rounded-lg ${
+                    isActive
+                      ? "text-[#6B7C59] font-bold bg-[#6B7C59]/5"
+                      : "text-foreground hover:text-[#6B7C59] hover:bg-[#6B7C59]/5"
+                  }`}
+                  style={{ animationDelay: `${index * 50}ms` }}
+                >
+                  {link.name}
+                </button>
+              );
+            })}
             <Button
               asChild
-              className="bg-accent hover:bg-accent/90 w-full mt-2 shadow-md"
+              className="bg-[#6B7C59] hover:bg-[#5A6B4A] w-full mt-2 shadow-md"
             >
               <a href="tel:+918824374977">
                 <Phone className="h-4 w-4 mr-2" />

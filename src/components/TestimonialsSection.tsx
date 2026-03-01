@@ -1,8 +1,6 @@
 import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { Star } from "lucide-react";
 import { useAdmin } from "@/contexts/AdminContext";
-import { Link } from "react-router-dom";
 
 const TestimonialsSection = () => {
   const { reviews } = useAdmin();
@@ -15,23 +13,23 @@ const TestimonialsSection = () => {
   const displayedReviews = visibleReviews.slice(0, 4);
 
   return (
-    <section className="py-20 md:py-24 bg-white">
+    <section
+      id="testimonials"
+      className="lg:h-[calc(100vh-71px)] flex flex-col justify-center py-24 md:py-32 bg-secondary/50 scroll-mt-[72px] overflow-hidden"
+    >
       <div className="container mx-auto px-4 max-w-6xl">
-        <div className="text-center mb-14">
-          <h2 className="font-serif text-3xl md:text-4xl font-bold mb-4 text-foreground">
-            What Our Clients Say
+        <div className="flex flex-col items-center text-center mb-16">
+          <h2 className="text-3xl md:text-4xl font-black text-gray-950">
+            Testimonials
           </h2>
-          <div className="w-16 h-1 bg-accent mx-auto mb-6 rounded-full" />
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            Trusted by hundreds of satisfied clients across Bangalore
-          </p>
+          <div className="w-16 h-1 bg-[#6B7C59] mt-2" />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {displayedReviews.map((review, index) => (
             <Card
               key={review.id}
-              className="bg-secondary p-6 md:p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-500 border-0"
+              className="bg-card p-6 md:p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-500 border border-border/50"
               style={{ animationDelay: `${index * 100}ms` }}
             >
               <div className="flex gap-1 mb-4">
@@ -40,8 +38,8 @@ const TestimonialsSection = () => {
                     key={i}
                     className={`h-5 w-5 ${
                       i < review.rating
-                        ? "fill-accent text-accent"
-                        : "text-gray-200"
+                        ? "fill-[#C9A96E] text-[#C9A96E]"
+                        : "text-border"
                     }`}
                   />
                 ))}
@@ -57,14 +55,6 @@ const TestimonialsSection = () => {
               </div>
             </Card>
           ))}
-        </div>
-
-        <div className="text-center">
-          <Link to="/reviews">
-            <Button className="bg-accent hover:bg-accent/90 text-white px-8 py-3 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
-              Read More Reviews
-            </Button>
-          </Link>
         </div>
       </div>
     </section>
