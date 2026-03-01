@@ -18,7 +18,7 @@ const Index = () => {
       {/* Hero Section — Single Premium Image */}
       <section
         id="home"
-        className="relative lg:h-[calc(100vh-71px)] flex items-center justify-center overflow-hidden"
+        className="relative min-h-[calc(100vh-71px)] lg:h-[calc(100vh-71px)] flex items-center justify-center overflow-hidden"
       >
         <div
           className="absolute inset-0 bg-cover bg-center"
@@ -101,7 +101,7 @@ const Index = () => {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ margin: "-100px", once: false }}
               transition={{ duration: 0.6 }}
-              className="grid grid-cols-2 gap-2 h-[280px] lg:h-[90%] lg:w-[90%]"
+              className="grid grid-cols-2 gap-2 h-[280px] lg:h-[90%] lg:w-[90%] mb-12 lg:mb-0"
             >
               <div className="flex flex-col gap-2 h-full">
                 <motion.div

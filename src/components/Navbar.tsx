@@ -108,7 +108,7 @@ const Navbar = () => {
       }`}
     >
       <div className="container mx-auto px-4">
-        <div className="flex items-center h-[72px] gap-4">
+        <div className="flex items-center justify-between h-[72px] gap-4">
           {/* Logo — Left Side */}
           <Link
             to="/"
@@ -119,7 +119,7 @@ const Navbar = () => {
               alt="SCM"
               className="w-8 h-8 object-contain"
             />
-            <span className="font-serif text-[12px] md:text-[16px] lg:text-lg font-bold text-gray-800 leading-tight tracking-tight whitespace-nowrap">
+            <span className="font-serif text-[14px] md:text-[16px] lg:text-lg font-bold text-gray-800 leading-tight tracking-tight whitespace-normal md:whitespace-nowrap max-w-[200px] md:max-w-none text-left">
               SRI CHAMUNDESHWARI INTERIORS
             </span>
           </Link>

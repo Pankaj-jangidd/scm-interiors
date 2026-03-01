@@ -146,7 +146,7 @@ const ContactSection: React.FC = () => {
               className="h-full flex flex-col"
             >
               <h2
-                className="text-4xl md:text-5xl lg:text-6xl text-gray-900 leading-tight mb-4"
+                className="text-4xl md:text-5xl lg:text-6xl text-gray-900 leading-tight mb-4 text-center lg:text-left"
                 style={{
                   fontWeight: 950,
                   WebkitTextStroke: "1.5px currentColor",
