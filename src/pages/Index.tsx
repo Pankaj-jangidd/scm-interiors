@@ -100,7 +100,7 @@ const Index = () => {
             <div className="w-16 h-1 bg-[#6B7C59] mt-2" />
           </motion.div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-8 items-stretch">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-stretch pt-4 pb-12 lg:py-0">
             {/* Image Collage */}
             <motion.div
               initial={{ opacity: 0, x: -50 }}
