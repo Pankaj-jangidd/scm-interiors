@@ -347,10 +347,10 @@ const ContactSection: React.FC = () => {
                     className={`w-full px-4 py-3 rounded-lg border ${
                       errors.project ? "border-red-500" : "border-gray-200"
                     } ${
-                      !watchProject ? "text-muted-foreground" : "text-gray-900"
+                      !watchProject ? "text-gray-400" : "text-gray-900"
                     } focus:outline-none focus:ring-2 focus:ring-[#6B7C59]/30 transition-all bg-white`}
                   >
-                    <option value="" disabled hidden>
+                    <option value="" className="text-gray-400">
                       Select a project type
                     </option>
                     <option value="Residential" className="text-gray-900">
