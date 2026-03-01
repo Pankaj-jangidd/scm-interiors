@@ -252,7 +252,14 @@ const Index = () => {
               className="w-full"
             >
               <button
-                onClick={() => navigate("/gallery?category=residential")}
+                onClick={() => {
+                  document.documentElement.style.scrollBehavior = "auto";
+                  window.scrollTo({
+                    top: 0,
+                    behavior: "instant" as ScrollBehavior,
+                  });
+                  navigate("/gallery?category=residential");
+                }}
                 className="relative group h-[300px] md:h-[400px] rounded-2xl overflow-hidden cursor-pointer shadow-xl transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl w-full block"
               >
                 <div
@@ -283,7 +290,14 @@ const Index = () => {
               className="w-full"
             >
               <button
-                onClick={() => navigate("/gallery?category=commercial")}
+                onClick={() => {
+                  document.documentElement.style.scrollBehavior = "auto";
+                  window.scrollTo({
+                    top: 0,
+                    behavior: "instant" as ScrollBehavior,
+                  });
+                  navigate("/gallery?category=commercial");
+                }}
                 className="relative group h-[300px] md:h-[400px] rounded-2xl overflow-hidden cursor-pointer shadow-xl transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl w-full block"
               >
                 <div

@@ -45,7 +45,16 @@ const Gallery = () => {
   const currentCategory = categoryParam;
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    // Force instant scroll by removing smooth behavior briefly
+    document.documentElement.style.scrollBehavior = "auto";
+    window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
+
+    // Restore smooth scroll after the snap
+    const timeout = setTimeout(() => {
+      document.documentElement.style.scrollBehavior = "smooth";
+    }, 50);
+
+    return () => clearTimeout(timeout);
   }, [currentCategory]);
 
   const RESIDENTIAL_CATEGORIES = [
