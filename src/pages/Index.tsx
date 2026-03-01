@@ -95,7 +95,7 @@ const Index = () => {
       {/* About Section */}
       <section
         id="about"
-        className="min-h-screen lg:min-h-0 lg:h-[calc(100vh-71px)] bg-white py-16 lg:py-0 scroll-mt-[72px]"
+        className="lg:h-[calc(100vh-71px)] bg-white py-16 lg:py-0 scroll-mt-[72px]"
       >
         <div className="container mx-auto px-4 max-w-7xl lg:h-full flex flex-col justify-center">
           <motion.div
@@ -118,7 +118,7 @@ const Index = () => {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ margin: "-100px", once: false }}
               transition={{ duration: 0.6 }}
-              className="w-full grid grid-cols-2 gap-3 h-[320px] md:h-[400px] lg:h-[90%] lg:w-[90%]"
+              className="w-full grid grid-cols-2 gap-3 h-auto aspect-square md:h-[400px] lg:h-[90%] lg:w-[90%]"
             >
               <div className="flex flex-col gap-3 h-full">
                 <motion.div
