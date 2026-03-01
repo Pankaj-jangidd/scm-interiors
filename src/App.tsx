@@ -1,13 +1,9 @@
+import { useEffect } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  ScrollRestoration,
-} from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { AdminProvider } from "./contexts/AdminContext";
 import Index from "./pages/Index";
 import Gallery from "./pages/Gallery";
@@ -21,6 +17,21 @@ import SettingsPage from "./pages/admin/Settings";
 
 const queryClient = new QueryClient();
 
+const ScrollToTop = () => {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    document.documentElement.style.scrollBehavior = "auto";
+    window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
+
+    setTimeout(() => {
+      document.documentElement.style.scrollBehavior = "smooth";
+    }, 50);
+  }, [pathname]);
+
+  return null;
+};
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
@@ -28,7 +39,7 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
-          <ScrollRestoration />
+          <ScrollToTop />
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/gallery" element={<Gallery />} />
