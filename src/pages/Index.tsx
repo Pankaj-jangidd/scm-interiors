@@ -111,19 +111,19 @@ const Index = () => {
             <div className="w-16 h-1 bg-[#6B7C59] mt-2" />
           </motion.div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-stretch pt-4 pb-12 lg:py-0">
+          <div className="flex flex-col lg:grid lg:grid-cols-2 gap-16 lg:gap-8 items-center lg:items-stretch pt-4 pb-12 lg:py-0">
             {/* Image Collage */}
             <motion.div
               initial={{ opacity: 0, x: -50 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ margin: "-100px", once: false }}
               transition={{ duration: 0.6 }}
-              className="grid grid-cols-2 gap-2 h-[280px] lg:h-[90%] lg:w-[90%] mb-12 lg:mb-0"
+              className="w-full grid grid-cols-2 gap-3 h-[320px] md:h-[400px] lg:h-[90%] lg:w-[90%]"
             >
-              <div className="flex flex-col gap-2 h-full">
+              <div className="flex flex-col gap-3 h-full">
                 <motion.div
                   whileHover={{ scale: 1.02 }}
-                  className="relative h-1/2 rounded-2xl overflow-hidden shadow-lg border border-border/50"
+                  className="relative flex-1 rounded-2xl overflow-hidden shadow-lg border border-border/50"
                 >
                   <img
                     src="/images/about/painter.png"
@@ -133,7 +133,7 @@ const Index = () => {
                 </motion.div>
                 <motion.div
                   whileHover={{ scale: 1.02 }}
-                  className="relative h-1/2 rounded-2xl overflow-hidden shadow-lg border border-border/50"
+                  className="relative flex-1 rounded-2xl overflow-hidden shadow-lg border border-border/50"
                 >
                   <img
                     src="/images/about/modular.png"
@@ -160,7 +160,7 @@ const Index = () => {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ margin: "-100px", once: false }}
               transition={{ duration: 0.6 }}
-              className="text-left"
+              className="w-full text-left"
             >
               <h3
                 className="text-2xl md:text-3xl lg:text-4xl font-bold leading-tight mb-4 text-slate-800"
