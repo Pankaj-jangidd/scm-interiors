@@ -97,7 +97,7 @@ const Index = () => {
         id="about"
         className="min-h-screen lg:min-h-0 lg:h-[calc(100vh-71px)] bg-white py-16 lg:py-0 scroll-mt-[72px]"
       >
-        <div className="container mx-auto px-4 max-w-7xl h-full flex flex-col justify-center">
+        <div className="container mx-auto px-4 max-w-7xl lg:h-full flex flex-col justify-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
