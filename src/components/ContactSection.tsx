@@ -206,7 +206,7 @@ const ContactSection: React.FC = () => {
 
                 {/* Email Address */}
                 <motion.a
-                  href="mailto:scminteriorss@gmail.com"
+                  href="mailto:admin.lakkdi@gmail.com"
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: false }}
@@ -225,7 +225,7 @@ const ContactSection: React.FC = () => {
                     className="w-9 h-9 flex-shrink-0"
                   />
                   <p className="text-base text-gray-900 transition-colors duration-75 font-medium break-all">
-                    scminteriorss@gmail.com
+                    admin.lakkdi@gmail.com
                   </p>
                 </motion.a>
 

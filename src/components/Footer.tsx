@@ -80,10 +80,10 @@ const Footer = () => {
               <div className="flex items-center gap-3 group">
                 <Mail className="h-5 w-5 flex-shrink-0 text-white" />
                 <a
-                  href="mailto:scminteriorss@gmail.com"
+                  href="mailto:admin.lakkdi@gmail.com"
                   className="text-white/70 hover:text-white transition-colors duration-300 break-all"
                 >
-                  scminteriorss@gmail.com
+                  admin.lakkdi@gmail.com
                 </a>
               </div>
               <div className="flex items-start gap-3 group">
