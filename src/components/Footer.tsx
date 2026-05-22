@@ -17,11 +17,8 @@ const Footer = () => {
           {/* Branding */}
           <div>
             <div className="mb-4">
-              <h3 className="font-serif text-lg font-bold leading-tight">
-                SRI CHAMUNDESHWARI
-              </h3>
-              <h3 className="font-serif text-lg font-bold leading-tight">
-                INTERIORS
+              <h3 className="font-serif text-lg font-bold leading-tight uppercase">
+                LAKKDI
               </h3>
             </div>
             <p className="text-sm text-white/70 mb-3">
@@ -108,7 +105,7 @@ const Footer = () => {
         {/* Bottom Bar */}
         <div className="border-t border-white/10 pt-8">
           <p className="text-center text-sm text-white/50">
-            © 2025 Sri Chamundeshwari Interiors. All rights reserved.
+            © 2025 Lakkdi. All rights reserved.
           </p>
         </div>
       </div>

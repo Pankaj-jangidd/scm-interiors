@@ -56,7 +56,7 @@ const AdminSidebar = ({ onClose }: AdminSidebarProps) => {
           </div>
           <div>
             <h3 className="font-semibold text-lg text-white">Pankaj Kumar</h3>
-            <p className="text-sm text-white/60">Admin / SCMi</p>
+            <p className="text-sm text-white/60">Admin / Lakkdi</p>
           </div>
         </div>
       </div>

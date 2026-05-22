@@ -123,7 +123,7 @@ const Navbar = () => {
               className="w-8 h-8 object-contain"
             />
             <span className="font-serif text-[14px] md:text-[16px] lg:text-lg font-bold text-gray-800 leading-tight tracking-tight whitespace-normal md:whitespace-nowrap max-w-[200px] md:max-w-none text-left">
-              SRI CHAMUNDESHWARI INTERIORS
+              LAKKDI
             </span>
           </Link>
 

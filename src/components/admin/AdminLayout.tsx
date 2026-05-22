@@ -49,12 +49,12 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
           <h1 className="font-serif font-bold tracking-tight flex-1 text-left text-xl md:text-2xl lg:text-2xl transition-all duration-300 text-white lg:text-foreground">
             <span className="block md:hidden flex items-center gap-2">
               <div className="w-10 h-10 bg-accent rounded-full flex items-center justify-center font-serif font-bold text-white text-sm shadow-md flex-shrink-0">
-                SCM
+                L
               </div>
-              SCM INTERIORS
+              LAKKDI
             </span>
             <span className="hidden md:block">
-              SRI CHAMUNDESHWARI INTERIORS
+              LAKKDI
             </span>
           </h1>
 

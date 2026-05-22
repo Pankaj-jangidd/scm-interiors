@@ -33,7 +33,7 @@ const AdminLogin = () => {
             <Lock className="h-8 w-8 text-white" />
           </div>
           <h1 className="font-serif text-2xl md:text-3xl font-bold mb-2 text-foreground">
-            Sri Chamundeshwari Interiors
+            Lakkdi
           </h1>
           <p className="text-muted-foreground text-sm tracking-wider">
             ADMIN LOGIN
